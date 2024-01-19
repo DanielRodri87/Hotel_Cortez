@@ -6,10 +6,20 @@ int main(void) {
     int op;
     oimundo();
     while(1) {
-        printf("MEnu: 1 - Daniel 2- Rita");
+        printf("Menu: 1 - Daniel 2- Rita");
         scanf("%d", &op);
+        if (op == 1)
+        {
+            printf("Escolheu o boy");
+        }else if(op == 2)
+        {
+           printf("Escolheu a gata");
+
+        }
+        
+        
     }
+
     return 0;
 
-    // rita passou aqui
 }
