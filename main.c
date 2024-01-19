@@ -1,6 +1,6 @@
 // main.c
 #include <stdio.h>
-#include "functor.h"
+#include "scripts/functor.h"
 
 int main(void) {
     oimundo();
