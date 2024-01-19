@@ -5,4 +5,6 @@
 int main(void) {
     oimundo();
     return 0;
+
+    // rita passou aqui
 }
