@@ -1,7 +1,7 @@
 #ifndef FUNCTOR_H
 #define FUNCTOR_H
 
-int quartos();
+void quartos();
 int financas();
 
 #endif // FUNCTOR_H

@@ -37,10 +37,10 @@ int main(void) {
                 break;
             case 2:
                 printf("Gerenciar Clientes\n");
-                // 
                 break;
         }
     }
 
     return 0;
 }
+
