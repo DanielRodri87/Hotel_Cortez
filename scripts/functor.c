@@ -1,4 +1,3 @@
-// functor.c
 #include "functor.h"
 #include <stdio.h>
 

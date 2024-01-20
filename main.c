@@ -1,25 +1,19 @@
 // main.c
 #include <stdio.h>
 #include "scripts/functor.h"
+#include <stdlib.h>
+#include <conio.h> 
 
 int main(void) {
-    int op;
-    oimundo();
-    while(1) {
-        printf("Menu: 1 - Daniel 2- Rita");
-        scanf("%d", &op);
-        if (op == 1)
-        {
-            printf("Escolheu o boy");
-        }else if(op == 2)
-        {
-           printf("Escolheu a gata");
+    while (1)
+    {
+        printf("\n=============================================\n");
+        printf("SEJA BEM-VINDO AO SISTEMA DO HOTEL CORTEZ\n");
+        printf("=============================================\n");
 
-        }
-        
+        printf("Informe qual operação você deseja usar: \n1 - Gerenciar Hotel\n2 - Gerenciar Clientes");
         
     }
-
     return 0;
 
 }
