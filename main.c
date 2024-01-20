@@ -4,9 +4,16 @@
 #include "scripts/functor.h"
 #include "scripts/gerenciar_quartos.c"
 #include "scripts/gerenciar_financas.c"
+#include "scripts/cadastrar_clientes.c"
 
 int main(void) {
     int opcao_menu1, opcao_menu_hotel;
+    char nome[50];
+    char cpf[15];
+    char rg[15];
+    char telefone[20];
+    char email[50];
+
 
     while (1) {
         system("clear || cls");
@@ -36,7 +43,9 @@ int main(void) {
                 }
                 break;
             case 2:
-                printf("Gerenciar Clientes\n");
+                printf("Gerenciar Clientes \n");
+                cadastrar_cliente(nome, cpf, rg, telefone,email);
+                printf("Cliente hóspede cadastrado com sucesso!");
                 break;
         }
     }
