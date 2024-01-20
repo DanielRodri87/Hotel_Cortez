@@ -8,12 +8,9 @@
 
 int main(void) {
     int opcao_menu1, opcao_menu_hotel;
-<<<<<<< HEAD
-=======
     char nome[50];
     int cpf, rg, telefone;
     char email[50];
->>>>>>> 30195c31f696b01e2ccfbf84e9f77f0c2f573dc1
 
     while (1) {
         system("clear || cls");
