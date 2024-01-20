@@ -1,3 +1,2 @@
 426 204 suite 40.00 livre
-663, 666, simples, 30.00, livre
-347, 444, duplo, 60.00, reservado
+555 300 suite 20.00 livre
