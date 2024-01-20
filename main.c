@@ -21,13 +21,13 @@ int main(void) {
         printf("SEJA BEM-VINDO AO SISTEMA DO HOTEL CORTEZ\n");
         printf("=============================================\n");
 
-        printf("Informe qual operação você deseja usar: \n1 - Gerenciar Hotel\n2 - Gerenciar Clientes\n");
+        printf("Informe qual operacao voce deseja usar: \n1 - Gerenciar Hotel\n2 - Gerenciar Clientes\n");
         scanf("%d", &opcao_menu1);
 
         switch (opcao_menu1) {
             case 1:
                 system("clear || cls");
-                printf("Seja bem-vindo ao gerenciamento do Hotel\nEscolha a opção desejada:\n1 - Gerenciar Quartos\n2 - Gerenciar Finanças\n");
+                printf("Seja bem-vindo ao gerenciamento do Hotel\nEscolha a op desejada:\n1 - Gerenciar Quartos\n2 - Gerenciar Finanças\n");
                 scanf("%d", &opcao_menu_hotel);   
                 switch (opcao_menu_hotel) {
                     case 1:
@@ -52,3 +52,4 @@ int main(void) {
 
     return 0;
 }
+
