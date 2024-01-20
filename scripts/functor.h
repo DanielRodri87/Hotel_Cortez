@@ -2,7 +2,7 @@
 #ifndef FUNCTOR_H
 #define FUNCTOR_H
 
-int oimundo();
-int rita();
+int quartos();
+int financas();
 
 #endif // FUNCTOR_H
