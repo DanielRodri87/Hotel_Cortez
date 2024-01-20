@@ -151,6 +151,88 @@ void buscar_quartos() {
     }
 }
 
+#include <stdio.h>
+#include <stdlib.h>
+
+void editar_quartos()
+{
+    system("clear || cls");
+    printf("\n=============================================\n");
+    printf("Editar Quartos:\n");
+    printf("=============================================\n");
+
+    FILE *arquivo, *temporario;
+    int id, busca_id, numero, busca_numero;
+    float valor, busca_valor;
+    char tipo[20], busca_tipo[20], status[20], busca_status[20];
+    int opcao_menu_busca_quartos;
+    int menu_editar_quartos;
+
+    arquivo = fopen("db/quartos.txt", "r");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return;
+    }
+
+    temporario = fopen("db/temporario.txt", "w");
+
+    if (temporario == NULL) {
+        printf("Erro ao criar o arquivo temporário.\n");
+        fclose(arquivo);
+        return;
+    }
+
+    printf("Informe o ID do quarto que deseja editar: ");
+    scanf("%d", &busca_id);
+
+    while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
+        if (busca_id == id) {
+            printf("Quarto encontrado!\n");
+            printf("Informe o que deseja editar:\n1 - Número\n2 - Tipo\n3 - Valor\n4 - Status\n5 - Voltar\n");
+            scanf("%d", &menu_editar_quartos);
+
+            switch (menu_editar_quartos) {
+                case 1:
+                    printf("Informe o novo número do quarto: ");
+                    scanf("%d", &numero);
+                    break;
+                case 2:
+                    printf("Informe o novo tipo do quarto: ");
+                    scanf("%s", tipo);
+                    break;
+                case 3:
+                    printf("Informe o novo valor da diária do quarto: ");
+                    scanf("%f", &valor);
+                    break;
+                case 4:
+                    printf("Informe o novo status do quarto: ");
+                    scanf("%s", status);
+                    break;
+                case 5:
+                    fclose(arquivo);
+                    fclose(temporario);
+                    remove("db/temporario.txt"); 
+                    return;
+            }
+            fprintf(temporario, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+        }
+        else {
+            fprintf(temporario, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+        }
+    }
+
+    fclose(arquivo);
+    fclose(temporario);
+
+    remove("db/quartos.txt");
+    rename("db/temporario.txt", "db/quartos.txt");
+
+    printf("Quarto editado com sucesso!\n");
+    system("pause");
+}
+
+
 void quartos() {
     while (1) {
         int opcao_menu_quartos;
@@ -174,6 +256,7 @@ void quartos() {
                 break;
             case 3:
                 printf("Editar quarto\n");
+                editar_quartos();    
                 break;
             case 4:
                 printf("Excluir quarto\n");
