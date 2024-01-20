@@ -4,13 +4,10 @@
 #include "scripts/functor.h"
 #include "scripts/gerenciar_quartos.c"
 #include "scripts/gerenciar_financas.c"
-#include "scripts/cadastrar_clientes.c"
+#include "scripts/gerenciar_clientes.c"
 
 int main(void) {
-    int opcao_menu1, opcao_menu_hotel;
-    char nome[50];
-    int cpf, rg, telefone;
-    char email[50];
+    int opcao_menu1, opcao_menu_hotel, opcao_menu_cliente;
 
     while (1) {
         system("clear || cls");
@@ -43,8 +40,20 @@ int main(void) {
                 break;
             case 2:
                 printf("Gerenciar Clientes \n");
-                cadastrar_cliente();
-                printf("Cliente hóspede cadastrado com sucesso!");
+                printf("Digite a opção que deseja escolher:\n1 - Cadastrar Cliente\n2 - Consultar Cliente\n3 - Editar Cliente\n4 - Excluir Cliente\n ");
+                scanf("%d", &opcao_menu_cliente);
+                switch (opcao_menu_cliente)
+                {
+                case 1:
+                    cadastrar_cliente();
+                    printf("Cliente hóspede cadastrado com sucesso!");
+                    break;
+                case 2:  
+                   
+                default:
+                    break;
+                }
+               
                 break;
             
             case 3:
