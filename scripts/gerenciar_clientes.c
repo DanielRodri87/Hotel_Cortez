@@ -25,5 +25,19 @@ void cadastrar_cliente() {
     printf("Informe o email do cliente: ");
     scanf("%s", email);
 
+    // Abrir o arquivo para escrita em modo de adição (append)
+    FILE *arquivo = fopen("db/clientes.txt", "a");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para escrita.\n");
+        return;
+    }
+
+    // Escrever as informações no arquivo
+    fprintf(arquivo, "%s, %d, %d, %d, %s\n", nome, cpf, rg, telefone, email);
+
+    // Fechar o arquivo
+    fclose(arquivo);
+
     system("Pause");
-}
+} 
