@@ -1,3 +1,5 @@
 426, 204, suite, 40.00, livre
 540, 300, suite, 50.00, livre
 419, 1, solteiro, 20.00, livre
+941, 122, simples, 98.00, livre
+85, 2053469298, rive\Documentos\Hotel_Cortez`–tuU, 60464934883605828000000000000.00, "c:\Users\Ritar\OneDrive\Documentos\Hotel_Cortez`–tuU
