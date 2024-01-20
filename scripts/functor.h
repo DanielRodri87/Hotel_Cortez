@@ -1,4 +1,3 @@
-// functor.h
 #ifndef FUNCTOR_H
 #define FUNCTOR_H
 
