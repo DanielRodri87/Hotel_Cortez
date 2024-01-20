@@ -20,13 +20,13 @@ void cadastrarQuarto() {
     printf("Informe o numero do quarto: ");
     scanf("%d", &numero);
 
-    printf("Informe o tipo do quarto: ");
+    printf("Informe o tipo do quarto: (simples, duplo ou suite) ");
     scanf("%s", tipo);
 
-    printf("Informe o valor da diária do quarto: ");
+    printf("Informe o valor da diaria do quarto: ");
     scanf("%f", &valor);
 
-    printf("Informe o status do quarto: ");
+    printf("Informe o status do quarto: (livre, ocupado ou reservado) ");
     scanf("%s", status);
 
     // Abrir o arquivo para escrita em modo de adição (append)
