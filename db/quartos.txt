@@ -1,0 +1,10 @@
+426, 204, suite, 40.00, livre
+596, 0, cd, 0.00, "c:\Users\danie\OneDrive\µrea
+596, 0, de, 0.00, Trabalho\Hotel_Cortez\"
+596, 0, ;, 0.00, if
+596, 0, ($?), 0.00, {
+596, 0, gcc, 0.00, main.c
+596, 0, o, 0.00, main
+599, 0, }, 0.00, ;
+599, 0, if, 0.00, ($?)
+599, 0, {, 0.00, \main

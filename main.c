@@ -9,11 +9,8 @@
 int main(void) {
     int opcao_menu1, opcao_menu_hotel;
     char nome[50];
-    char cpf[15];
-    char rg[15];
-    char telefone[20];
+    int cpf, rg, telefone;
     char email[50];
-
 
     while (1) {
         system("clear || cls");
@@ -28,13 +25,13 @@ int main(void) {
             case 1:
                 system("clear || cls");
                 printf("Seja bem-vindo ao gerenciamento do Hotel\nEscolha a op desejada:\n1 - Gerenciar Quartos\n2 - Gerenciar Finanças\n");
-                scanf("%d", &opcao_menu_hotel);   
+                scanf("%d", &opcao_menu_hotel);
                 switch (opcao_menu_hotel) {
                     case 1:
                         quartos();
                         break;
-                    
-                    case 2: 
+
+                    case 2:
                         financas();
                         break;
 
@@ -44,7 +41,7 @@ int main(void) {
                 break;
             case 2:
                 printf("Gerenciar Clientes \n");
-                cadastrar_cliente(nome, cpf, rg, telefone,email);
+                cadastrar_cliente();
                 printf("Cliente hóspede cadastrado com sucesso!");
                 break;
         }
@@ -52,4 +49,3 @@ int main(void) {
 
     return 0;
 }
-

@@ -22,7 +22,7 @@ void cadastrarQuarto() {
     printf("Informe o tipo do quarto: ");
     scanf("%s", tipo);
 
-    printf("Informe o valor do quarto: ");
+    printf("Informe o valor da diária do quarto: ");
     scanf("%f", &valor);
 
     printf("Informe o status do quarto: ");
@@ -43,6 +43,7 @@ void cadastrarQuarto() {
     fclose(arquivo);
 
     printf("Quarto cadastrado com sucesso!\n");
+    system("pause");
 }
 
 void quartos() {

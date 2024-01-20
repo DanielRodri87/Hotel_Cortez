@@ -1,18 +1,29 @@
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 
-void cadastrar_cliente(char nome[50], int cpf, int rg, int telefone, char email[20]){
+void cadastrar_cliente() {
+    char nome[50], email[50];
+    int cpf, rg, telefone;
 
-    printf("Digite o nome do Cliente:\n ");
+    system("clear || cls");
+    printf("\n=============================================\n");
+    printf("Cadastro de clientes:\n");
+    printf("=============================================\n");
+
+    printf("Informe o nome do cliente: ");
     scanf("%s", nome);
-    printf("Digite o CPF do Cliente:\n ");
+
+    printf("Informe o CPF do cliente: ");
     scanf("%d", &cpf);
-    printf("Digite o rg do Cliente:\n ");
+
+    printf("Informe o RG do cliente: ");
     scanf("%d", &rg);
-    printf("Digite o telefone do Cliente:\n ");
+
+    printf("Informe o telefone do cliente: ");
     scanf("%d", &telefone);
-    printf("Digite o email do Cliente:\n ");
-    scanf("%s", &email);
-    
+
+    printf("Informe o email do cliente: ");
+    scanf("%s", email);
+
     system("Pause");
 }
