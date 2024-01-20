@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 void cadastrarQuarto() {
     int numero;
@@ -46,6 +47,113 @@ void cadastrarQuarto() {
     system("pause");
 }
 
+void buscar_quartos() {
+    int opcao_menu_busca_quartos;
+    FILE *arquivo;
+    int id, numero;
+    float valor;
+    char tipo[20], status[20];
+
+    while (1) {
+        system("clear || cls");
+        printf("\n=============================================\n");
+        printf("Buscar Quartos:\n");
+        printf("=============================================\n");
+
+        arquivo = fopen("db/quartos.txt", "r");
+
+        if (arquivo == NULL) {
+            printf("Erro ao abrir o arquivo para leitura.\n");
+            return;
+        }
+
+        printf("Escolha uma opção de busca:\n1 - Buscar por número\n2 - Buscar por tipo\n3 - Buscar por valor\n4 - Buscar por status\n5 - Voltar\n");
+        scanf("%d", &opcao_menu_busca_quartos);
+
+        fseek(arquivo, 0, SEEK_SET);
+
+        switch (opcao_menu_busca_quartos) {
+            case 1:
+                printf("Informe o Número para pesquisar: ");
+                scanf("%d", &numero);
+
+                while (fscanf(arquivo, "%d, %d, %s, %f, %s\n", &id, &numero, tipo, &valor, status) != EOF) {
+                    if (numero == numero) {
+                        printf("Quarto encontrado!\n");
+                        printf("ID: %d\n", id);
+                        printf("Número: %d\n", numero);
+                        printf("Tipo: %s\n", tipo);
+                        printf("Valor: %.2f\n", valor);
+                        printf("Status: %s\n", status);
+                        system("pause");
+                        break;
+                    }
+                }
+                break;
+
+            case 2:
+                printf("Informe o Tipo para pesquisar: ");
+                scanf("%s", tipo);
+
+                while (fscanf(arquivo, "%d, %d, %s, %f, %s\n", &id, &numero, tipo, &valor, status) != EOF) {
+                    if (strcmp(tipo, tipo) == 0) {
+                        printf("Quarto encontrado!\n");
+                        printf("ID: %d\n", id);
+                        printf("Número: %d\n", numero);
+                        printf("Tipo: %s\n", tipo);
+                        printf("Valor: %.2f\n", valor);
+                        printf("Status: %s\n", status);
+                        system("pause");
+                        break;
+                    }
+                }
+                break;
+
+            case 3:
+                printf("Informe o Valor para pesquisar: ");
+                scanf("%f", &valor);
+
+                while (fscanf(arquivo, "%d, %d, %s, %f, %s\n", &id, &numero, tipo, &valor, status) != EOF) {
+                    if (valor == valor) {
+                        printf("Quarto encontrado!\n");
+                        printf("ID: %d\n", id);
+                        printf("Número: %d\n", numero);
+                        printf("Tipo: %s\n", tipo);
+                        printf("Valor: %.2f\n", valor);
+                        printf("Status: %s\n", status);
+                        system("pause");
+                        break;
+                    }
+                }
+                break;
+
+            case 4:
+                printf("Informe o Status para pesquisar: ");
+                scanf("%s", status);
+
+                while (fscanf(arquivo, "%d, %d, %s, %f, %s\n", &id, &numero, tipo, &valor, status) != EOF) {
+                    if (strcmp(status, status) == 0) {
+                        printf("Quarto encontrado!\n");
+                        printf("ID: %d\n", id);
+                        printf("Número: %d\n", numero);
+                        printf("Tipo: %s\n", tipo);
+                        printf("Valor: %.2f\n", valor);
+                        printf("Status: %s\n", status);
+                        system("pause");
+                        break;
+                    }
+                }
+                break;
+
+            case 5:
+                fclose(arquivo);
+                return;
+                break;
+        }
+        fclose(arquivo);
+    }
+}
+
 void quartos() {
     while (1) {
         int opcao_menu_quartos;
@@ -65,6 +173,7 @@ void quartos() {
                 
             case 2:
                 printf("Consultar quarto\n");
+                buscar_quartos();
                 break;
             case 3:
                 printf("Editar quarto\n");
