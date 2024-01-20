@@ -43,25 +43,6 @@ void cadastrar_cliente() {
 } 
 
 void consultar_cliente() {
-    int opcao_menu_consulta_cliente;
-    FILE *arquivo;
-    int cpf, rg, telefone;
-    char nome[50], email[20];
-
-    while (1) {
-        system("clear || cls");
-        printf("\n=============================================\n");
-        printf("Consultar Clientes:\n");
-        printf("=============================================\n");
-
-        arquivo = fopen("db/clientes.txt", "r");
-
-        if (arquivo == NULL) {
-            printf("Erro ao abrir o arquivo para leitura.\n");
-            return;
-        }
-
-        printf("Escolha uma opção de busca:\n1 - Buscar por nome\n2 - Buscar por CPF\n3 - Buscar por RG\n4 - Buscar por Telefone\n5 - Buscar por Email\n");
-        scanf("%d", &opcao_menu_consulta_cliente);
-    }
+   
 }
+  
