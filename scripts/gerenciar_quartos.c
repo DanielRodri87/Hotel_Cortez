@@ -1,7 +1,15 @@
 #include "functor.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int quartos() {
-    printf("Aqui vão as funções de quartos\n");
+    while (1)
+    {
+        system("clear || cls");
+        printf("\n=============================================\n");
+        printf("Voce esta acessando o gerenciamento de quartos: ");
+        printf("\n=============================================\n");
+    }
+    
     return 0;
 }

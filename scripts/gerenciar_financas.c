@@ -3,5 +3,6 @@
 
 int financas() {
     printf("Aqui vão as funções de finanças\n");
+    system("pause");
     return 0;
 }
