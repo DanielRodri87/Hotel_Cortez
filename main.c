@@ -46,9 +46,10 @@ int main(void) {
                 {
                 case 1:
                     cadastrar_cliente();
+                    printf("Cliente hóspede cadastrado com sucesso!");
                     break;
                 case 2:  
-                    consultar_cliente();
+                   
                 default:
                     break;
                 }
