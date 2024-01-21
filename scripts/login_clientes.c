@@ -14,11 +14,9 @@ void login_clientes()
 
     int busca_quarto;
 
-    // Aqui vou logar os clientes já cadastrados no banco de dados, e realizar as reservas dos quartos
     printf("Informe o CPF do cliente: ");
     scanf("%d", busca_cpf);
 
-    // Aqui vou verificar se o cliente existe no banco de dados
     FILE *arquivoC = fopen("db/clientes.txt", "r+");
     FILE *arquivoQ = fopen("db/quartos.txt", "r+");
     FILE *arquivoD = fopen("db/datas.txt", "w+");
@@ -37,20 +35,26 @@ void login_clientes()
             printf("Informe o número do quarto que deseja reservar: ");
             scanf("%d", busca_quarto);
 
-            while (fscanf(arquivoQ, "%d, %d, %d, %d, %d, %d, %d, %d\n", numero, status, andar, camas, banheiros, ar, frigobar, tv) != EOF)
+
+            while (fscanf(arquivoQ, "%d, %d, %s, %d, %s\n", id, numero, tipo, valor, status) != EOF)
             {
                 if (busca_quarto == numero)
                 {
-                    if (status == 0)
+
+                    if (status == "livre")
                     {
-                        printf("Quarto reservado com sucesso!\n");
-                        fprintf(arquivoQ, "%d, %d, %d, %d, %d, %d, %d, %d\n", numero, 1, andar, camas, banheiros, ar, frigobar, tv);
-                        fprintf(arquivoD, "%d, %d, %d, %d, %d, %d, %d, %d\n", numero, 1, andar, camas, banheiros, ar, frigobar, tv);
+                        printf("Quarto reservado com sucesso!\n");                        
+                        fprintf(arquivoD, "%d, %s, %d, %s, %s\n", id, nome, numero, data_entrada, data_saida);
+                        
                     }
                     else
                     {
-                        printf("Quarto ocupado, escolha outro quarto!\n");
+                        printf("Quarto ocupado!\n");
                     }
+                }
+                else
+                {
+                    printf("Quarto não encontrado!\n");
                 }
             }
 
