@@ -246,8 +246,6 @@ void excluir_quarto()
     int id, busca_id, numero;
     float valor;
     char tipo[20], status[20];
-    int opcao_menu_busca_quartos;
-    int menu_editar_quartos;
 
     arquivo = fopen("db/quartos.txt", "r");
 
@@ -267,7 +265,20 @@ void excluir_quarto()
     printf("Informe o ID do quarto que deseja excluir: ");
     scanf("%d", &busca_id);
 
-    
+    while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
+        if (busca_id == id) {
+            printf("Quarto encontrado!\n");
+            fprintf(temporario, "%d %d %s %.2f %s\n", id, numero, tipo, 0.0, "");  // Correção aqui
+        } else {
+            fprintf(temporario, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+        }
+    }
+
+    fclose(arquivo);  
+    fclose(temporario);  
+
+    remove("db/quartos.txt");
+    rename("db/temporario.txt", "db/quartos.txt");
 }
 
 
@@ -299,6 +310,7 @@ void quartos() {
                 break;
             case 4:
                 printf("Excluir quarto\n");
+                excluir_quarto();
                 break;
             case 5:
                 return;

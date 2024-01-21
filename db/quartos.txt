@@ -1,3 +1,4 @@
 426 204 suite 40.00 livre
-555 300 suite 20.00 Reservado
+555 300 suite 0.00 livre 
 572 101 duplo 10.00 ocupado
+451 600 simples 30.00 livre
