@@ -21,7 +21,7 @@ int main(void) {
         switch (opcao_menu1) {
             case 1:
                 system("clear || cls");
-                printf("Seja bem-vindo ao gerenciamento do Hotel\nEscolha a op desejada:\n1 - Gerenciar Quartos\n2 - Gerenciar Finanças\n3 - Voltar\n");
+                printf("Seja bem-vindo ao gerenciamento do Hotel\nEscolha a op desejada:\n1 - Gerenciar Quartos\n2 - Gerenciar Financas\n3 - Voltar\n");
                 scanf("%d", &opcao_menu_hotel);
                 switch (opcao_menu_hotel) {
                     case 1:

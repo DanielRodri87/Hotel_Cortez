@@ -64,21 +64,21 @@ void buscar_quartos() {
             return;
         }
 
-        printf("Escolha uma opção de busca:\n1 - Buscar por número\n2 - Buscar por tipo\n3 - Buscar por valor\n4 - Buscar por status\n5 - Voltar\n");
+        printf("Escolha uma opção de busca:\n1 - Buscar por numero\n2 - Buscar por tipo\n3 - Buscar por valor\n4 - Buscar por status\n5 - Voltar\n");
         scanf("%d", &opcao_menu_busca_quartos);
 
         fseek(arquivo, 0, SEEK_SET);
 
         switch (opcao_menu_busca_quartos) {
             case 1:
-                printf("Informe o Número para pesquisar: ");
+                printf("Informe o numero para pesquisar: ");
                 scanf("%d", &busca_numero);
 
                 while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
                     if (busca_numero == numero) {
                         printf("Quarto encontrado!\n");
                         printf("ID: %d\n", id);
-                        printf("Número: %d\n", numero);
+                        printf("numero: %d\n", numero);
                         printf("Tipo: %s\n", tipo);
                         printf("Valor: %.2f\n", valor);
                         printf("Status: %s\n", status);
@@ -96,7 +96,7 @@ void buscar_quartos() {
                     if (strcmp(busca_tipo, tipo) == 0) {
                         printf("Quarto encontrado!\n");
                         printf("ID: %d\n", id);
-                        printf("Número: %d\n", numero);
+                        printf("numero: %d\n", numero);
                         printf("Tipo: %s\n", tipo);
                         printf("Valor: %.2f\n", valor);
                         printf("Status: %s\n", status);
@@ -114,7 +114,7 @@ void buscar_quartos() {
                     if (busca_valor == valor) {
                         printf("Quarto encontrado!\n");
                         printf("ID: %d\n", id);
-                        printf("Número: %d\n", numero);
+                        printf("numero: %d\n", numero);
                         printf("Tipo: %s\n", tipo);
                         printf("Valor: %.2f\n", valor);
                         printf("Status: %s\n", status);
@@ -132,7 +132,7 @@ void buscar_quartos() {
                     if (strcmp(busca_status, status) == 0) {
                         printf("Quarto encontrado!\n");
                         printf("ID: %d\n", id);
-                        printf("Número: %d\n", numero);
+                        printf("numero: %d\n", numero);
                         printf("Tipo: %s\n", tipo);
                         printf("Valor: %.2f\n", valor);
                         printf("Status: %s\n", status);
@@ -162,11 +162,14 @@ void editar_quartos()
     printf("=============================================\n");
 
     FILE *arquivo, *temporario;
-    int id, busca_id, numero, busca_numero;
-    float valor, busca_valor;
-    char tipo[20], busca_tipo[20], status[20], busca_status[20];
+
+    int id, busca_id, numero;
+    float valor;
+    char tipo[20], status[20];
     int opcao_menu_busca_quartos;
     int menu_editar_quartos;
+
+    // int contador_erros = 0;
 
     arquivo = fopen("db/quartos.txt", "r");
 
@@ -189,12 +192,12 @@ void editar_quartos()
     while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
         if (busca_id == id) {
             printf("Quarto encontrado!\n");
-            printf("Informe o que deseja editar:\n1 - Número\n2 - Tipo\n3 - Valor\n4 - Status\n5 - Voltar\n");
+            printf("Informe o que deseja editar:\n1 - Numero\n2 - Tipo\n3 - Valor\n4 - Status\n5 - Voltar\n");
             scanf("%d", &menu_editar_quartos);
 
             switch (menu_editar_quartos) {
                 case 1:
-                    printf("Informe o novo número do quarto: ");
+                    printf("Informe o novo numero do quarto: ");
                     scanf("%d", &numero);
                     break;
                 case 2:
@@ -228,8 +231,43 @@ void editar_quartos()
     remove("db/quartos.txt");
     rename("db/temporario.txt", "db/quartos.txt");
 
-    printf("Quarto editado com sucesso!\n");
     system("pause");
+}
+
+void excluir_quarto()
+{
+    system("clear || cls");
+    printf("\n=============================================\n");
+    printf("Excluir Quartos:\n");
+    printf("=============================================\n");
+
+    FILE *arquivo, *temporario;
+
+    int id, busca_id, numero;
+    float valor;
+    char tipo[20], status[20];
+    int opcao_menu_busca_quartos;
+    int menu_editar_quartos;
+
+    arquivo = fopen("db/quartos.txt", "r");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return;
+    }
+
+    temporario = fopen("db/temporario.txt", "w");
+
+    if (temporario == NULL) {
+        printf("Erro ao criar o arquivo temporário.\n");
+        fclose(arquivo);
+        return;
+    }
+
+    printf("Informe o ID do quarto que deseja excluir: ");
+    scanf("%d", &busca_id);
+
+    
 }
 
 
@@ -247,6 +285,7 @@ void quartos() {
 
         switch (opcao_menu_quartos) {
             case 1:
+                printf("Cadastrar quarto\n");
                 cadastrarQuarto();
                 break;
                 
