@@ -268,9 +268,9 @@ void excluir_quarto()
     while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
         if (busca_id == id) {
             printf("Quarto encontrado!\n");
-            fprintf(temporario, "%d %d %s %.2f %s\n", id, numero, tipo, 0.0, "");  // Correção aqui
+            fprintf(temporario, "%d %d %s %.2f %s\n", "", "", "", "", "");
         } else {
-            fprintf(temporario, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+            fprintf(temporario, "%d %d %s %.2f %s\n", "", "", "", "", "");
         }
     }
 
@@ -310,7 +310,7 @@ void quartos() {
                 break;
             case 4:
                 printf("Excluir quarto\n");
-                excluir_quarto();
+                // excluir_quarto();
                 break;
             case 5:
                 return;
