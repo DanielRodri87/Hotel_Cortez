@@ -74,18 +74,13 @@ void login_clientes()
                     {
                         printf("Quarto reservado com sucesso!\n");
 
-                        // Adicione código para obter e processar datas
                         char data_entrada[20], data_saida[20];
                         printf("Informe a data de entrada (formato DD/MM/YYYY): ");
                         scanf("%s", data_entrada);
                         printf("Informe a data de saída (formato DD/MM/YYYY): ");
                         scanf("%s", data_saida);
 
-                        // Adicione código para calcular total de dias
-                        // (supondo que a estrutura da data seja conhecida)
-                        // Exemplo: total_dias = calcular_total_dias(data_entrada, data_saida);
-
-                        int total_dias;  // Substitua por seu cálculo real
+                        int total_dias = diferenca_dias(data_entrada, data_saida);
 
                         printf("Total de dias: %d\n", total_dias);
 
@@ -95,10 +90,10 @@ void login_clientes()
                     {
                         printf("Quarto não está livre!\n");
                     }
-                    break;  // Não é necessário continuar procurando quartos
+                    break;  
                 }
             }
-            break;  // Não é necessário continuar procurando clientes
+            break;  
         }
     }
 
