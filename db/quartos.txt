@@ -1,2 +1,5 @@
-451 600 simples 30.00 reservado
-967 101 simples 40.00 livre
+451 600 simples 30.000000 reservado
+967 101 simples 40.000000 livre
+843 999 simples 10.000000 reservado
+648 101 simples 90.00 livre
+883 101 simples 1010.00 livre

@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <string.h>
+#include <time.h>
 #include "scripts/functor.h"
 #include "scripts/gerenciar_quartos.c"
 #include "scripts/gerenciar_financas.c"
@@ -28,7 +30,6 @@ int main(void) {
                     case 1:
                         quartos();
                         break;
-
                     case 2:
                         financas();
                         break;
@@ -40,22 +41,9 @@ int main(void) {
                 }
                 break;
             case 2:
-                printf("Gerenciar Clientes \n");
-                printf("Digite a opção que deseja escolher:\n1 - Cadastrar Cliente\n2 - Consultar Cliente\n3 - Editar Cliente\n4 - Excluir Cliente\n ");
-                scanf("%d", &opcao_menu_cliente);
-                switch (opcao_menu_cliente)
-                {
-                case 1:
-                    cadastrar_cliente();
+                    clientes();
                     printf("Cliente hóspede cadastrado com sucesso!");
-                    break;
-                case 2:  
-                   
-                default:
-                    break;
-                }
                 break;
-
             case 3:
                 login_clientes();
                 break;
@@ -65,6 +53,5 @@ int main(void) {
                 break;
         }
     }
-
     return 0;
 }

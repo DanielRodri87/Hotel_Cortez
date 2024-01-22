@@ -1,10 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <conio.h>
-#include "functor.h"
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <conio.h>
+// #include "functor.h"
 
-#include <string.h>
-#include <time.h>
+// #include <string.h>
+// #include <time.h>
 
 int diferenca_dias(const char *data_entrada, const char *data_saida) {
     struct tm tm_entrada = {0};
@@ -70,7 +70,7 @@ void login_clientes()
 
             rewind(arquivoQ); 
 
-            while (fscanf(arquivoQ, "%d %d %s %2.f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+            while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
             {
                 if (busca_quarto == numero)
                 {
@@ -88,7 +88,6 @@ void login_clientes()
 
                         printf("Total de dias: %d\n", total_dias);
 
-                        // Atualiza o status do quarto no arquivo "quartos.txt"
                         FILE *arquivoQAtualizado = fopen("db/quartos_atualizado.txt", "w");
                         if (arquivoQAtualizado == NULL)
                         {
@@ -98,15 +97,15 @@ void login_clientes()
 
                         rewind(arquivoQ);
 
-                        while (fscanf(arquivoQ, "%d %d %s %2.f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                        while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
                         {
                             if (busca_quarto == numero)
                             {
-                                fprintf(arquivoQAtualizado, "%d %d %s %2.f %s\n", id, numero, tipo, valor, "reservado");
+                                fprintf(arquivoQAtualizado, "%d %d %s %f %s\n", id, numero, tipo, valor, "reservado");
                             }
                             else
                             {
-                                fprintf(arquivoQAtualizado, "%d %d %s %2.f %s\n", id, numero, tipo, valor, status);
+                                fprintf(arquivoQAtualizado, "%d %d %s %f %s\n", id, numero, tipo, valor, status);
                             }
                         }
 
@@ -116,7 +115,6 @@ void login_clientes()
                         remove("db/quartos.txt");
                         rename("db/quartos_atualizado.txt", "db/quartos.txt");
 
-                        // Salva a reserva no arquivo de datas
                         fprintf(arquivoD, "%d %s %d %s %s %d\n", id, nome, numero, data_entrada, data_saida, total_dias);
                     }
                     else

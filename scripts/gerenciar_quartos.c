@@ -1,8 +1,8 @@
 #include "functor.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <string.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <time.h>
+// #include <string.h>
 
 void cadastrarQuarto() {
     int numero;

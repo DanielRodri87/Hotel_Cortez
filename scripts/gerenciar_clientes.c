@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdlib.h>
 
 void cadastrar_cliente() {
     char nome[50], email[50];
@@ -38,11 +38,31 @@ void cadastrar_cliente() {
 
     // Fechar o arquivo
     fclose(arquivo);
-    printf("Cliente hóspede cadastrado com sucesso!");
+    printf("Cliente hóspede cadastrado com sucesso!\n");
     system("Pause");
 } 
 
 void consultar_cliente() {
    
 }
-  
+
+void clientes()
+{
+    int opcao_menu_cliente;
+    printf("Gerenciar Clientes \n");
+    printf("Digite a opcao que deseja escolher:\n1 - Cadastrar Cliente\n2 - Consultar Cliente\n3 - Editar Cliente\n4 - Excluir Cliente\n ");
+    scanf("%d", &opcao_menu_cliente);
+    switch (opcao_menu_cliente)
+    {
+    case 1:
+        cadastrar_cliente();
+        printf("Cliente hóspede cadastrado com sucesso!\n");
+        break;
+    case 2:
+        consultar_cliente();
+        break;
+        
+    default:
+        break;
+    }
+}  
