@@ -9,7 +9,6 @@
 #include "scripts/gerenciar_clientes.c"
 #include "scripts/login_clientes.c"
 
-
 int main(void) {
     int opcao_menu1, opcao_menu_hotel, opcao_menu_cliente;
 
@@ -34,7 +33,6 @@ int main(void) {
                     case 2:
                         financas();
                         break;
-
                     case 3:
                         printf("Voltando ao menu principal...");
                     default:
@@ -42,8 +40,7 @@ int main(void) {
                 }
                 break;
             case 2:
-                    clientes();
-                    printf("Cliente hóspede cadastrado com sucesso!");
+                clientes();
                 break;
             case 3:
                 login_clientes();
