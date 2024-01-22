@@ -4,7 +4,15 @@
 // #include <time.h>
 // #include <string.h>
 
-void cadastrarQuarto() {
+
+void limparBufferEntrada()
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+void cadastrarQuarto()
+{
     int numero, quantidade_livre;
     float valor;
     char tipo[20], status[20];
@@ -17,7 +25,8 @@ void cadastrarQuarto() {
     FILE *qtd_arquivo;
     qtd_arquivo = fopen("db/quantidade_quartos.txt", "r");
 
-    if (qtd_arquivo == NULL) {
+    if (qtd_arquivo == NULL)
+    {
         printf("Erro ao abrir o arquivo para leitura.\n");
         return;
     }
@@ -26,25 +35,51 @@ void cadastrarQuarto() {
 
     fclose(qtd_arquivo);
 
-    if (quantidade_livre > 0) {
+    if (quantidade_livre > 0)
+    {
         srand(time(NULL));
         int id = rand() % 1000;
 
-        printf("Informe o numero do quarto: ");
-        scanf("%d", &numero);
+        do
+        {
+            printf("Informe o numero do quarto: ");
+            if (scanf("%d", &numero) != 1 || numero <= 0) {
+                printf("Por favor, digite um numero de quarto valido.\n");
+                limparBufferEntrada();
+            }
+        } while (numero <= 0);
 
-        printf("Informe o tipo do quarto: (simples, duplo ou suite) ");
-        scanf("%s", tipo);
+        do
+        {
+            printf("Informe o tipo do quarto: (simples, duplo ou suite) ");
+            if (scanf("%19s", tipo) != 1) {
+                printf("Por favor, digite um tipo de quarto válido.\n");
+                limparBufferEntrada();
+            }
+        } while (!(strcmp(tipo, "simples") == 0 || strcmp(tipo, "duplo") == 0 || strcmp(tipo, "suite") == 0));
 
-        printf("Informe o valor da diaria do quarto: ");
-        scanf("%f", &valor);
+        do
+        {
+            printf("Informe o valor da diaria do quarto: ");
+            if (scanf("%f", &valor) != 1 || valor <= 0) {
+                printf("Por favor, digite um valor de diária válido.\n");
+                limparBufferEntrada();
+            }
+        } while (valor <= 0);
 
-        printf("Informe o status do quarto: (livre, ocupado ou reservado) ");
-        scanf("%s", status);
+        do
+        {
+            printf("Informe o status do quarto: (livre, ocupado ou reservado) ");
+            if (scanf("%19s", status) != 1) {
+                printf("Por favor, digite um status de quarto válido.\n");
+                limparBufferEntrada();
+            }
+        } while (!(strcmp(status, "livre") == 0 || strcmp(status, "ocupado") == 0 || strcmp(status, "reservado") == 0));
 
         FILE *arquivo = fopen("db/quartos.txt", "a");
 
-        if (arquivo == NULL) {
+        if (arquivo == NULL)
+        {
             printf("Erro ao abrir o arquivo para escrita.\n");
             return;
         }
@@ -56,7 +91,8 @@ void cadastrarQuarto() {
 
         qtd_arquivo = fopen("db/quantidade_quartos.txt", "w");
 
-        if (qtd_arquivo == NULL) {
+        if (qtd_arquivo == NULL)
+        {
             printf("Erro ao abrir o arquivo para escrita.\n");
             return;
         }
@@ -66,20 +102,23 @@ void cadastrarQuarto() {
         fclose(qtd_arquivo);
 
         system("pause");
-    } else {
+    } else
+    {
         printf("Não é possível cadastrar mais quartos.\n");
         system("pause");
     }
 }
 
-void buscar_quartos() {
+void buscar_quartos()
+{
     FILE *arquivo;
     int id, busca_id, numero, busca_numero;
     float valor, busca_valor;
     char tipo[20], busca_tipo[20], status[20], busca_status[20];
     int opcao_menu_busca_quartos;
 
-    while (1) {
+    while (1)
+    {
         system("clear || cls");
         printf("\n=============================================\n");
         printf("Buscar Quartos:\n");
@@ -87,7 +126,8 @@ void buscar_quartos() {
 
         arquivo = fopen("db/quartos.txt", "r");
 
-        if (arquivo == NULL) {
+        if (arquivo == NULL)
+        {
             printf("Erro ao abrir o arquivo para leitura.\n");
             return;
         }
@@ -97,13 +137,16 @@ void buscar_quartos() {
 
         fseek(arquivo, 0, SEEK_SET);
 
-        switch (opcao_menu_busca_quartos) {
+        switch (opcao_menu_busca_quartos)
+        {
             case 1:
                 printf("Informe o numero para pesquisar: ");
                 scanf("%d", &busca_numero);
 
-                while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
-                    if (busca_numero == numero) {
+                while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                {
+                    if (busca_numero == numero)
+                    {
                         printf("Quarto encontrado!\n");
                         printf("ID: %d\n", id);
                         printf("numero: %d\n", numero);
@@ -120,8 +163,10 @@ void buscar_quartos() {
                 printf("Informe o Tipo para pesquisar: ");
                 scanf("%s", busca_tipo);
 
-                while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
-                    if (strcmp(busca_tipo, tipo) == 0) {
+                while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                {
+                    if (strcmp(busca_tipo, tipo) == 0)
+                    {
                         printf("Quarto encontrado!\n");
                         printf("ID: %d\n", id);
                         printf("numero: %d\n", numero);
@@ -138,8 +183,10 @@ void buscar_quartos() {
                 printf("Informe o Valor para pesquisar: ");
                 scanf("%f", &busca_valor);
 
-                while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
-                    if (busca_valor == valor) {
+                while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                {
+                    if (busca_valor == valor)
+                    {
                         printf("Quarto encontrado!\n");
                         printf("ID: %d\n", id);
                         printf("numero: %d\n", numero);
@@ -156,8 +203,10 @@ void buscar_quartos() {
                 printf("Informe o Status para pesquisar: ");
                 scanf("%s", busca_status);
 
-                while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
-                    if (strcmp(busca_status, status) == 0) {
+                while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                {
+                    if (strcmp(busca_status, status) == 0)
+                    {
                         printf("Quarto encontrado!\n");
                         printf("ID: %d\n", id);
                         printf("numero: %d\n", numero);
@@ -208,7 +257,8 @@ void editar_quartos()
 
     temporario = fopen("db/temporario.txt", "w");
 
-    if (temporario == NULL) {
+    if (temporario == NULL)
+    {
         printf("Erro ao criar o arquivo temporário.\n");
         fclose(arquivo);
         return;
@@ -218,12 +268,14 @@ void editar_quartos()
     scanf("%d", &busca_id);
 
     while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
-        if (busca_id == id) {
+        if (busca_id == id)
+        {
             printf("Quarto encontrado!\n");
             printf("Informe o que deseja editar:\n1 - Numero\n2 - Tipo\n3 - Valor\n4 - Status\n5 - Quantidade de Quartos\n6 - Voltar\n");
             scanf("%d", &menu_editar_quartos);
 
-            switch (menu_editar_quartos) {
+            switch (menu_editar_quartos)
+            {
                 case 1:
                     printf("Informe o novo numero do quarto: ");
                     scanf("%d", &numero);
@@ -262,7 +314,8 @@ void editar_quartos()
     system("pause");
 }
 
-void excluir_quarto() {
+void excluir_quarto()
+{
     system("clear || cls");
     printf("\n=============================================\n");
     printf("Excluir Quarto:\n");
@@ -275,7 +328,8 @@ void excluir_quarto() {
 
     arquivo = fopen("db/quartos.txt", "r");
 
-    if (arquivo == NULL) {
+    if (arquivo == NULL)
+    {
         printf("Erro ao abrir o arquivo para leitura.\n");
         return;
     }
@@ -291,8 +345,10 @@ void excluir_quarto() {
     printf("Informe o ID do quarto que deseja excluir: ");
     scanf("%d", &busca_id);
 
-    while (fscanf(arquivo, "%d", &id) != EOF) {
-        if (busca_id == id) {
+    while (fscanf(arquivo, "%d", &id) != EOF)
+    {
+        if (busca_id == id)
+        {
             printf("Quarto encontrado!\n");
             printf("Deseja realmente excluir o quarto? (1 - Sim / 2 - Não): ");
             int opcao_menu_busca_quartos;
@@ -320,11 +376,13 @@ void excluir_quarto() {
     fclose(arquivo);
     fclose(temporario);
 
-    if (encontrado) {
+    if (encontrado)
+    {
         remove("db/quartos.txt");
         rename("db/temporario.txt", "db/quartos.txt");
         printf("Quarto excluído com sucesso!\n");
-    } else {
+    } else
+    {
         remove("db/temporario.txt");
         printf("Quarto não encontrado.\n");
     }
@@ -399,7 +457,8 @@ void quartos() {
         printf("O que deseja fazer?\n1 - Cadastrar quarto\n2 - Consultar quarto\n3 - Editar quarto\n4 - Excluir quarto\n5 - Quantidade de Quartos\n6 - Voltar\n");
         scanf("%d", &opcao_menu_quartos);
 
-        switch (opcao_menu_quartos) {
+        switch (opcao_menu_quartos)
+        {
             case 1:
                 printf("Cadastrar quarto\n");
                 cadastrarQuarto();
