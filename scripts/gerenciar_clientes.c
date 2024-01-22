@@ -2,7 +2,7 @@
 // #include <stdlib.h>
 
 void cadastrar_cliente() {
-    char nome[50], email[50];
+    char nome[50], email[50], cidade_estado[100];
     int cpf, rg, telefone;
 
     system("clear || cls");
@@ -22,6 +22,9 @@ void cadastrar_cliente() {
     printf("Informe o telefone do cliente: ");
     scanf("%d", &telefone);
 
+    printf("Informe Cidade - Estado do cliente: (Ex: Picos-PI) ");
+    scanf("%s", cidade_estado);
+
     printf("Informe o email do cliente: ");
     scanf("%s", email);
 
@@ -34,7 +37,7 @@ void cadastrar_cliente() {
     }
 
     // Escrever as informações no arquivo
-    fprintf(arquivo, "%s %d %d %d %s\n", nome, cpf, rg, telefone, email);
+    fprintf(arquivo, "%s %d %d %d %s %s\n", nome, cpf, rg, telefone, cidade_estado, email);
 
     // Fechar o arquivo
     fclose(arquivo);

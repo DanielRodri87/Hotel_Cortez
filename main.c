@@ -9,6 +9,7 @@
 #include "scripts/gerenciar_clientes.c"
 #include "scripts/login_clientes.c"
 
+
 int main(void) {
     int opcao_menu1, opcao_menu_hotel, opcao_menu_cliente;
 
