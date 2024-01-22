@@ -4,9 +4,8 @@
 // #include <time.h>
 // #include <string.h>
 
-
 void cadastrarQuarto() {
-    int numero;
+    int numero, quantidade_livre;
     float valor;
     char tipo[20], status[20];
 
@@ -15,34 +14,62 @@ void cadastrarQuarto() {
     printf("Cadastro de quartos:\n");
     printf("=============================================\n");
 
-    srand(time(NULL));
-    int id = rand() % 1000;
+    FILE *qtd_arquivo;
+    qtd_arquivo = fopen("db/quantidade_quartos.txt", "r");
 
-    printf("Informe o numero do quarto: ");
-    scanf("%d", &numero);
-
-    printf("Informe o tipo do quarto: (simples, duplo ou suite) ");
-    scanf("%s", tipo);
-
-    printf("Informe o valor da diaria do quarto: ");
-    scanf("%f", &valor);
-
-    printf("Informe o status do quarto: (livre, ocupado ou reservado) ");
-    scanf("%s", status);
-
-    FILE *arquivo = fopen("db/quartos.txt", "a");
-
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo para escrita.\n");
+    if (qtd_arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
         return;
     }
 
-    fprintf(arquivo, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+    fscanf(qtd_arquivo, "%d", &quantidade_livre);
 
-    fclose(arquivo);
+    fclose(qtd_arquivo);
 
-    printf("Quarto cadastrado com sucesso!\n");
-    system("pause");
+    if (quantidade_livre > 0) {
+        srand(time(NULL));
+        int id = rand() % 1000;
+
+        printf("Informe o numero do quarto: ");
+        scanf("%d", &numero);
+
+        printf("Informe o tipo do quarto: (simples, duplo ou suite) ");
+        scanf("%s", tipo);
+
+        printf("Informe o valor da diaria do quarto: ");
+        scanf("%f", &valor);
+
+        printf("Informe o status do quarto: (livre, ocupado ou reservado) ");
+        scanf("%s", status);
+
+        FILE *arquivo = fopen("db/quartos.txt", "a");
+
+        if (arquivo == NULL) {
+            printf("Erro ao abrir o arquivo para escrita.\n");
+            return;
+        }
+
+        fprintf(arquivo, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+        fclose(arquivo);
+
+        printf("Quarto cadastrado com sucesso!\n");
+
+        qtd_arquivo = fopen("db/quantidade_quartos.txt", "w");
+
+        if (qtd_arquivo == NULL) {
+            printf("Erro ao abrir o arquivo para escrita.\n");
+            return;
+        }
+
+        fprintf(qtd_arquivo, "%d", quantidade_livre - 1);
+
+        fclose(qtd_arquivo);
+
+        system("pause");
+    } else {
+        printf("Não é possível cadastrar mais quartos.\n");
+        system("pause");
+    }
 }
 
 void buscar_quartos() {
@@ -309,7 +336,7 @@ void quantidade_quartos()
 {
     system("clear || cls");
     printf("\n=============================================\n");
-    printf("Quantidade de Quartos:\n");
+    printf("Quantidade de Quartos sem cadastro:\n");
     printf("=============================================\n");
 
 
