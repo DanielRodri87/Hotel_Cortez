@@ -26,7 +26,7 @@
         {
             "type": "cppbuild",
             "label": "C/C++: gcc.exe arquivo de build ativo",
-            "command": "C:/MinGW/bin/gcc.exe",
+            "command": "C:Users//danie//OneDrive//Documentos//64bits//MinGW-8.1.0//mingw64//bin//gcc.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
