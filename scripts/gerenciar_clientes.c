@@ -22,14 +22,11 @@ void cadastrar_cliente() {
     printf("Informe o telefone do cliente:\n ");
     scanf("%d", &telefone);
 
-<<<<<<< HEAD
     printf("Informe o email do cliente:\n ");
-=======
     printf("Informe Cidade - Estado do cliente: (Ex: Picos-PI) ");
     scanf("%s", cidade_estado);
 
     printf("Informe o email do cliente: ");
->>>>>>> 180ab82f7f40f000697df201be9ef86264904bb2
     scanf("%s", email);
 
     // Abrir o arquivo para escrita em modo de adição (append)
