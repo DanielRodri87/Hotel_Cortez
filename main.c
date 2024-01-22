@@ -33,7 +33,6 @@ int main(void) {
                     case 2:
                         financas();
                         break;
-
                     case 3:
                         printf("Voltando ao menu principal...");
                     default:
