@@ -8,6 +8,7 @@
 
 int main(void) {
     int opcao_menu1, opcao_menu_hotel, opcao_menu_cliente;
+    int resultado_consulta;
 
     while (1) {
         system("clear || cls");
@@ -49,11 +50,8 @@ int main(void) {
                     printf("Cliente hóspede cadastrado com sucesso!");
                     break;
                 case 2:  
-                   
-                default:
+                    consultar_cliente();
                     break;
-                }
-                break;
             case 3:
                 printf("Saindo do sistema...");
                 exit(0);
