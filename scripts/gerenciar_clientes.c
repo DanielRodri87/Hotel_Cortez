@@ -172,8 +172,6 @@ int consultar_cliente() {
     }
 }
 
-<<<<<<< HEAD
-=======
 void clientes()
 {
     int opcao_menu_cliente;
@@ -194,4 +192,3 @@ void clientes()
         break;
     }
 }  
->>>>>>> 180ab82f7f40f000697df201be9ef86264904bb2
