@@ -3,7 +3,6 @@
 #include <conio.h>
 #include "functor.h"
 
-
 #include <string.h>
 #include <time.h>
 
@@ -39,6 +38,11 @@ void login_clientes()
     char nome[50], email[50];
     int cpf, busca_cpf, rg, telefone;
 
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    char data[20];
+    sprintf(data, "%d/%d/%d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+
     int busca_quarto, id, numero;
     char tipo[20], status[20];
     float valor;
@@ -66,7 +70,7 @@ void login_clientes()
 
             rewind(arquivoQ); 
 
-            while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+            while (fscanf(arquivoQ, "%d %d %s %2.f %s\n", &id, &numero, tipo, &valor, status) != EOF)
             {
                 if (busca_quarto == numero)
                 {
@@ -84,6 +88,35 @@ void login_clientes()
 
                         printf("Total de dias: %d\n", total_dias);
 
+                        // Atualiza o status do quarto no arquivo "quartos.txt"
+                        FILE *arquivoQAtualizado = fopen("db/quartos_atualizado.txt", "w");
+                        if (arquivoQAtualizado == NULL)
+                        {
+                            printf("Erro ao abrir o arquivo para escrita.\n");
+                            return;
+                        }
+
+                        rewind(arquivoQ);
+
+                        while (fscanf(arquivoQ, "%d %d %s %2.f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                        {
+                            if (busca_quarto == numero)
+                            {
+                                fprintf(arquivoQAtualizado, "%d %d %s %2.f %s\n", id, numero, tipo, valor, "reservado");
+                            }
+                            else
+                            {
+                                fprintf(arquivoQAtualizado, "%d %d %s %2.f %s\n", id, numero, tipo, valor, status);
+                            }
+                        }
+
+                        fclose(arquivoQ);
+                        fclose(arquivoQAtualizado);
+
+                        remove("db/quartos.txt");
+                        rename("db/quartos_atualizado.txt", "db/quartos.txt");
+
+                        // Salva a reserva no arquivo de datas
                         fprintf(arquivoD, "%d %s %d %s %s %d\n", id, nome, numero, data_entrada, data_saida, total_dias);
                     }
                     else
