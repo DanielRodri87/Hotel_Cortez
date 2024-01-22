@@ -234,18 +234,16 @@ void editar_quartos()
     system("pause");
 }
 
-void excluir_quarto()
-{
+void excluir_quarto() {
     system("clear || cls");
     printf("\n=============================================\n");
-    printf("Excluir Quartos:\n");
+    printf("Excluir Quarto:\n");
     printf("=============================================\n");
 
     FILE *arquivo, *temporario;
 
-    int id, busca_id, numero;
-    float valor;
-    char tipo[20], status[20];
+    int id, busca_id;
+    int encontrado = 0;
 
     arquivo = fopen("db/quartos.txt", "r");
 
@@ -265,20 +263,45 @@ void excluir_quarto()
     printf("Informe o ID do quarto que deseja excluir: ");
     scanf("%d", &busca_id);
 
-    while (fscanf(arquivo, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
+    while (fscanf(arquivo, "%d", &id) != EOF) {
         if (busca_id == id) {
             printf("Quarto encontrado!\n");
-            fprintf(temporario, "%d %d %s %.2f %s\n", "", "", "", "", "");
+            printf("Deseja realmente excluir o quarto? (1 - Sim / 2 - Não): ");
+            int opcao_menu_busca_quartos;
+            scanf("%d", &opcao_menu_busca_quartos);
+
+            if (opcao_menu_busca_quartos == 1) {
+                encontrado = 1;
+                while (fgetc(arquivo) != '\n'); 
+            } else {
+                fprintf(temporario, "%d\n", id);
+                char buffer[100];
+                while (fgets(buffer, sizeof(buffer), arquivo) != NULL) {
+                    fprintf(temporario, "%s", buffer);
+                }
+            }
         } else {
-            fprintf(temporario, "%d %d %s %.2f %s\n", "", "", "", "", "");
+            fprintf(temporario, "%d\n", id);
+            char buffer[100];
+            while (fgets(buffer, sizeof(buffer), arquivo) != NULL) {
+                fprintf(temporario, "%s", buffer);
+            }
         }
     }
 
-    fclose(arquivo);  
-    fclose(temporario);  
+    fclose(arquivo);
+    fclose(temporario);
 
-    remove("db/quartos.txt");
-    rename("db/temporario.txt", "db/quartos.txt");
+    if (encontrado) {
+        remove("db/quartos.txt");
+        rename("db/temporario.txt", "db/quartos.txt");
+        printf("Quarto excluído com sucesso!\n");
+    } else {
+        remove("db/temporario.txt");
+        printf("Quarto não encontrado.\n");
+    }
+
+    system("pause");
 }
 
 
@@ -310,7 +333,7 @@ void quartos() {
                 break;
             case 4:
                 printf("Excluir quarto\n");
-                // excluir_quarto();
+                excluir_quarto();
                 break;
             case 5:
                 return;

@@ -64,7 +64,7 @@ void login_clientes()
             printf("Informe o número do quarto que deseja reservar: ");
             scanf("%d", &busca_quarto);
 
-            rewind(arquivoQ);  // Reinicia a leitura do arquivo de quartos
+            rewind(arquivoQ); 
 
             while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
             {
