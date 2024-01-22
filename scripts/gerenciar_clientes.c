@@ -34,7 +34,7 @@ void cadastrar_cliente() {
     }
 
     // Escrever as informações no arquivo
-    fprintf(arquivo, "%s, %d, %d, %d, %s\n", nome, cpf, rg, telefone, email);
+    fprintf(arquivo, "%s %d %d %d %s\n", nome, cpf, rg, telefone, email);
 
     // Fechar o arquivo
     fclose(arquivo);
