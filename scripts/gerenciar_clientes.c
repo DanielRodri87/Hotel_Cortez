@@ -1,9 +1,12 @@
 // #include <stdio.h>
 // #include <stdlib.h>
 
+#include <stdio.h>
+#include <string.h>
+
 void cadastrar_cliente() {
     char nome[50], email[50], cidade_estado[100];
-    int cpf, rg, telefone;
+    long int cpf, rg, telefone;
 
     system("clear || cls");
     printf("\n=============================================\n");
@@ -14,20 +17,24 @@ void cadastrar_cliente() {
     scanf("%s", nome);
 
     printf("Informe o CPF do cliente:\n ");
-    scanf("%d", &cpf);
+    scanf("%ld", &cpf);
+    getchar(); // Limpar o caractere de nova linha do buffer
 
     printf("Informe o RG do cliente:\n ");
-    scanf("%d", &rg);
+    scanf("%ld", &rg);
+    getchar(); // Limpar o caractere de nova linha do buffer
 
     printf("Informe o telefone do cliente:\n ");
-    scanf("%d", &telefone);
+    scanf("%ld", &telefone);
+    getchar(); // Limpar o caractere de nova linha do buffer
 
-    printf("Informe o email do cliente:\n ");
     printf("Informe Cidade - Estado do cliente: (Ex: Picos-PI) ");
     scanf("%s", cidade_estado);
+    getchar;
 
     printf("Informe o email do cliente: ");
     scanf("%s", email);
+    getchar();
 
     // Abrir o arquivo para escrita em modo de adição (append)
     FILE *arquivo = fopen("db/clientes.txt", "a");
@@ -38,17 +45,14 @@ void cadastrar_cliente() {
     }
 
     // Escrever as informações no arquivo
-    fprintf(arquivo, "%s %d %d %d %s %s\n", nome, cpf, rg, telefone, cidade_estado, email);
+    fprintf(arquivo, "%s %ld %ld %ld %s %s\n", nome, cpf, rg, telefone, cidade_estado, email);
 
     // Fechar o arquivo
     fclose(arquivo);
     printf("Cliente hóspede cadastrado com sucesso!\n");
     system("Pause");
-} 
+}
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 int consultar_cliente() {
     FILE *arquivo;
@@ -88,6 +92,7 @@ int consultar_cliente() {
                         printf("Telefone: %d\n", telefone);
                         printf("Email: %s\n", email);
                         encontrado = 1;
+                        system("pause");
                         break;
                     }
                 }
@@ -105,6 +110,7 @@ int consultar_cliente() {
                         printf("Telefone: %d\n", telefone);
                         printf("Email: %s\n", email);
                         encontrado = 1;
+                        system("pause");
                         break;
                     }
                 }
@@ -122,6 +128,7 @@ int consultar_cliente() {
                         printf("Telefone: %d\n", telefone);
                         printf("Email: %s\n", email);
                         encontrado = 1;
+                        system("pause");
                         break;
                     }
                 }
@@ -139,6 +146,7 @@ int consultar_cliente() {
                         printf("RG: %d\n", rg);
                         printf("Email: %s\n", email);
                         encontrado = 1;
+                        system("pause");
                         break;
                     }
                 }
@@ -156,25 +164,23 @@ int consultar_cliente() {
                         printf("RG: %d\n", rg);
                         printf("Telefone: %d\n", telefone);
                         encontrado = 1;
+                        system("pause");
                         break;
                     }
                 }
                 break;    
             
-                if (encontrado == 0) {
-                      printf("Cliente não cadastrado/encontrado!\n");
-                } else if (encontrado == 1) {
-                printf("Cliente cadastrado ou encontrado!\n");
-                }
+                case 6:
                 fclose(arquivo);
                 return encontrado;
+                break;
         }
     }
 }
 
 void clientes()
 {
-    int opcao_menu_cliente;
+    int opcao_menu_cliente, resultado_consulta;
     printf("Gerenciar Clientes \n");
     printf("Digite a opcao que deseja escolher:\n1 - Cadastrar Cliente\n2 - Consultar Cliente\n3 - Editar Cliente\n4 - Excluir Cliente\n ");
     scanf("%d", &opcao_menu_cliente);
@@ -185,7 +191,14 @@ void clientes()
         printf("Cliente hóspede cadastrado com sucesso!\n");
         break;
     case 2:
-        consultar_cliente();
+        resultado_consulta = consultar_cliente();
+        if (resultado_consulta == 0)
+        {
+            printf("Cliente não encontrado!");
+        } else if (resultado_consulta == 1)
+        {
+            printf("Cliente encontrado!");
+        }
         break;
         
     default:
