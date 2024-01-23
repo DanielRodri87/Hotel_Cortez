@@ -1,2 +1,1 @@
-451 600 simples 30.000000 reservado
-967 101 simples 40.000000 livre
+34 100 simples 30.000000 reservado

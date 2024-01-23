@@ -130,10 +130,14 @@ void login_clientes() {
                         remove("db/quartos.txt");
                         rename("db/quartos_atualizado.txt", "db/quartos.txt");
 
-                        fprintf(arquivoD, "%d %s %d %s %s %d\n", id, nome, numero, data_entrada, data_saida, total_dias);
-                    } else {
+                        fprintf(arquivoD, "%d %s %d %s %s %s %s %s %s %s %s %d\n", id, nome, numero, data_entrada, data_saida, "00/00/0000", "00/00/0000", "00/00/0000", "00/00/0000", "00/00/0000", "00/00/0000", total_dias);
+                    } else if (strcmp(status, "reservado") == 0) {
                         printf("Quarto não está livre!\n");
                         system("pause");
+                    } else {
+                        printf("Quarto ocupado!\n");
+                        system("pause");
+                    
                     }
                     break;
                 }

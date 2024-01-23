@@ -3,7 +3,7 @@ void checkin() {
     int opcao;
     char cpf[12], numero_quarto[4], data_entrada[11], data_saida[11], valor[10], dias[3];
 
-    FILE *datasArquivo;  // Declaração única para datasArquivo
+    FILE *datasArquivo; 
 
     while (1) {
         system("clear || cls");
