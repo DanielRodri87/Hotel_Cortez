@@ -56,7 +56,7 @@ void cadastrar_cliente() {
 
 int consultar_cliente() {
     FILE *arquivo;
-    char nome[50], consulta_nome[50], email[50], consulta_email[50];
+    char nome[50], consulta_nome[50], email[50], consulta_email[50], cidade_estado[50], consulta_cidade[50];
     int cpf, consulta_cpf, rg, consulta_rg, telefone, consulta_telefone;
     int opcao_menu_consultar_clientes;
     int encontrado = 0;
@@ -84,7 +84,7 @@ int consultar_cliente() {
                 printf("Informe o Nome do cliente para pesquisar: ");
                 scanf("%s", consulta_nome);
 
-                while (fscanf(arquivo, "%s %d %d %d %s\n", nome, &cpf, &rg, &telefone, email) != EOF) {
+                while (fscanf(arquivo, "%s %d %d %d %s %s\n", nome, &cpf, &rg, &telefone, cidade_estado,email) != EOF) {
                     if (strcmp(consulta_nome, nome) == 0) {
                         printf("Cliente cadastrado!\n");
                         printf("CPF: %d\n", cpf);
@@ -102,7 +102,7 @@ int consultar_cliente() {
                 printf("Informe o CPF do cliente para pesquisar: ");
                 scanf("%d", &consulta_cpf);
 
-                while (fscanf(arquivo, "%s %d %d %d %s\n", nome, &cpf, &rg, &telefone, email) != EOF) {
+                while (fscanf(arquivo, "%s %d %d %d %s\n", nome, &cpf, &rg, &telefone, cidade_estado, email) != EOF) {
                     if (consulta_cpf == cpf) {
                         printf("Cliente cadastrado!\n");
                         printf("Nome: %s\n", nome);
@@ -120,7 +120,7 @@ int consultar_cliente() {
                 printf("Informe o RG do cliente para pesquisar: ");
                 scanf("%d", &consulta_rg);
 
-                while (fscanf(arquivo, "%s %d %d %d %s\n", nome, &cpf, &rg, &telefone, email) != EOF) {
+                while (fscanf(arquivo, "%s %d %d %d %s\n", nome, &cpf, &rg, &telefone, cidade_estado, email) != EOF) {
                     if (consulta_rg == rg) {
                         printf("Cliente cadastrado!\n");
                         printf("Nome: %s\n", nome);
@@ -138,7 +138,7 @@ int consultar_cliente() {
                 printf("Informe o Telefone do cliente para pesquisar: ");
                 scanf("%d", &consulta_telefone);
 
-                while (fscanf(arquivo, "%s %d %d %d %s\n", nome, &cpf, &rg, &telefone, email) != EOF) {
+                while (fscanf(arquivo, "%s %d %d %d %s\n", nome, &cpf, &rg, &telefone, cidade_estado, email) != EOF) {
                     if (consulta_telefone == telefone) {
                         printf("Cliente cadastrado!\n");
                         printf("Nome: %s\n", nome);
@@ -153,10 +153,29 @@ int consultar_cliente() {
                 break;
 
             case 5:
+                printf("Informe a Cidade-Estado do cliente para pesquisar: ");
+                scanf("%s", consulta_cidade);
+
+                while (fscanf(arquivo, "%s %d %d %d %s %s\n", nome, &cpf, &rg, &telefone, cidade_estado,email) != EOF) {
+                    if (strcmp(consulta_cidade, cidade_estado) == 0) {
+                        printf("Cliente cadastrado!\n");
+                        printf("Nome: ", nome);
+                        printf("CPF: %d\n", cpf);
+                        printf("RG: %d\n", rg);
+                        printf("Telefone: %d\n", telefone);
+                        printf("Email: %s\n", email);
+                        encontrado = 1;
+                        system("pause");
+                        break;
+                    }
+                }
+                break;
+
+            case 6:
                 printf("Informe o Email do cliente para pesquisar: ");
                 scanf("%s", consulta_email);
 
-                while (fscanf(arquivo, "%s %d %d %d %s\n", nome, &cpf, &rg, &telefone, email) != EOF) {
+                while (fscanf(arquivo, "%s %d %d %d %s\n", nome, &cpf, &rg, &telefone, cidade_estado, email) != EOF) {
                     if (strcmp(consulta_email, email) == 0) {
                         printf("Cliente cadastrado!\n");
                         printf("Nome: %s\n", nome);
