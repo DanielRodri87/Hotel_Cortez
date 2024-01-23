@@ -40,13 +40,14 @@ void cadastrarQuarto()
         srand(time(NULL));
         int id = rand() % 1000;
 
-        do
-        {
+       do 
+       {
             printf("Informe o numero do quarto: ");
-            if (scanf("%d", &numero) != 1 || numero <= 0) {
-                printf("Por favor, digite um numero de quarto valido.\n");
+            if (scanf("%d", &numero) != 1 || numero <= 0){
+                printf("Por favor, digite um número de quarto válido.\n");
                 limparBufferEntrada();
             }
+
         } while (numero <= 0);
 
         do

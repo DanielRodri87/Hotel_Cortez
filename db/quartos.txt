@@ -1,8 +1,2 @@
 451 600 simples 30.000000 reservado
 967 101 simples 40.000000 livre
-843 999 simples 10.000000 reservado
-648 101 simples 90.00 livre
-883 101 simples 1010.00 livre
-67 101 simples 10.00 livre
-671 887 simples 10.00 livre
-673 32763 simples 40.00 livre

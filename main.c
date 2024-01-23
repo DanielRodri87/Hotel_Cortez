@@ -8,6 +8,7 @@
 #include "scripts/gerenciar_financas.c"
 #include "scripts/gerenciar_clientes.c"
 #include "scripts/login_clientes.c"
+#include "scripts/checkin.c"
 
 int main(void) {
     int opcao_menu1, opcao_menu_hotel, opcao_menu_cliente;
@@ -18,7 +19,7 @@ int main(void) {
         printf("SEJA BEM-VINDO AO SISTEMA DO HOTEL CORTEZ\n");
         printf("=============================================\n");
 
-        printf("Informe qual operacao voce deseja usar: \n1 - Gerenciar Hotel\n2 - Gerenciar Clientes\n3 - Realizar Reserva\n4 - Sair\n");
+        printf("Informe qual operacao voce deseja usar: \n1 - Gerenciar Hotel\n2 - Gerenciar Clientes\n3 - Realizar Reserva\n4 - Realizar Check-in\n5 - Sair\n");
         scanf("%d", &opcao_menu1);
 
         switch (opcao_menu1) {
@@ -45,7 +46,11 @@ int main(void) {
             case 3:
                 login_clientes();
                 break;
-            case 4:
+            
+            case 4: 
+                checkin();
+                break;
+            case 5:
                 printf("Saindo do sistema...");
                 exit(0);
                 break;
