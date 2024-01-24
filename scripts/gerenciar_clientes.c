@@ -45,8 +45,6 @@ bool validar_email(char email[]) {
     return (arroba == 1 && ponto >= 1);
 }
 
-
-
 void cadastrar_cliente() {
     char nome[50], email[50], cidade_estado[100];
     char cpf[50], rg[50], telefone[50];
