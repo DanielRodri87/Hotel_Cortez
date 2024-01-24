@@ -92,14 +92,12 @@ void cadastrar_cliente() {
     }
     getchar();
 
-
     FILE *arquivo = fopen("db/clientes.txt", "a");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo para escrita.\n");
         return;
     }
-
     fprintf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, cidade_estado, email);
 
     fclose(arquivo);
