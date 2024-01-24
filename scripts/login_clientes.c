@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+// #include <time.h>
 
 int diferenca_dias(const char *data_entrada, const char *data_saida)
 {
@@ -195,6 +195,41 @@ void login_clientes()
                         tm_reserva_saida.tm_year = Dataf.ano;
                         tm_reserva_saida.tm_mon -= 1;
                         tm_reserva_saida.tm_year -= 1900;
+
+                        // Abrir o arquivo "datas.txt" para leitura
+                        FILE *arquivo = fopen("datas.txt", "r");
+                        if (arquivo == NULL)
+                        {
+                            perror("Erro ao abrir o arquivo");
+                            system("pause");
+                            return 1;
+                        }
+
+                        // Variáveis para armazenar as informações lidas do arquivo
+                        int numero_quarto;
+                        char nome_cliente[100];
+                        int valor_diaria;
+                        char data_inicio_reserva[20];
+                        char data_fim_reserva[20];
+                        int duracao_reserva;
+
+                        // Lê as informações do arquivo enquanto houver dados
+                        while (fscanf(arquivo, "%d %s %d %s %s %d", &numero_quarto, nome_cliente, &valor_diaria, data_inicio_reserva, data_fim_reserva, &duracao_reserva) == 6)
+                        {
+                            // Verifica se há sobreposição de datas com a reserva atual
+                            if ((Datai.ano < tm_reserva_saida.tm_year || (Datai.ano == tm_reserva_saida.tm_year && Datai.mes < tm_reserva_saida.tm_mon) ||
+                                 (Datai.ano == tm_reserva_saida.tm_year && Datai.mes == tm_reserva_saida.tm_mon && Datai.dia <= tm_reserva_saida.tm_mday)) &&
+                                (Dataf.ano > tm_reserva_entrada.tm_year || (Dataf.ano == tm_reserva_entrada.tm_year && Dataf.mes > tm_reserva_entrada.tm_mon) ||
+                                 (Dataf.ano == tm_reserva_entrada.tm_year && Dataf.mes == tm_reserva_entrada.tm_mon && Dataf.dia >= tm_reserva_entrada.tm_mday)))
+                            {
+                                printf("Quarto %d alugado para %s entre os dias %s e %s\n", numero_quarto, nome_cliente, data_inicio_reserva, data_fim_reserva);
+                            }
+                        }
+
+                        // Fechar o arquivo após a leitura
+                        fclose(arquivo);
+
+                        // Restante do seu código...
 
                         total_dias = diferenca_dias(data_entrada, data_saida);
 
