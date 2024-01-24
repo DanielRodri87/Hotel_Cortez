@@ -203,13 +203,45 @@ void login_clientes()
                             (Dataf.ano > tm_reserva_entrada.tm_year || (Dataf.ano == tm_reserva_entrada.tm_year && Dataf.mes > tm_reserva_entrada.tm_mon) ||
                              (Dataf.ano == tm_reserva_entrada.tm_year && Dataf.mes == tm_reserva_entrada.tm_mon && Dataf.dia >= tm_reserva_entrada.tm_mday)))
                         {
-                            printf("Erro: As novas datas devem estar fora do período da reserva atual.\n");
+                            printf("Erro: O quarto já se encontra reservado nesse período\n");
                             system("pause");
                         }
                         else
                         {
-                            printf("Aqui no futuro vai ter um código para atualizar a reserva.\n");
-                            system("pause");
+                            printf("Quarto reservado com sucesso!\n");
+
+                            int total_dias = diferenca_dias(data_entrada, data_saida);
+
+                            printf("Total de dias: %d\n", total_dias);
+
+                            FILE *arquivoQAtualizado = fopen("db/quartos_atualizado.txt", "w");
+                            if (arquivoQAtualizado == NULL)
+                            {
+                                printf("Erro ao abrir o arquivo para escrita.\n");
+                                return;
+                            }
+
+                            rewind(arquivoQ);
+
+                            while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                            {
+                                if (busca_quarto == numero)
+                                {
+                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
+                                }
+                                else
+                                {
+                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+                                }
+                            }
+
+                            fclose(arquivoQ);
+                            fclose(arquivoQAtualizado);
+
+                            remove("db/quartos.txt");
+                            rename("db/quartos_atualizado.txt", "db/quartos.txt");
+
+                            fprintf(arquivoD, "%d %s %d %s %s %d\n", id, nome, numero, data_entrada, data_saida, total_dias);
                         }
                     }
                 }
