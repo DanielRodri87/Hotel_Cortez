@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+// #include <time.h>
 
 int diferenca_dias(const char *data_entrada, const char *data_saida)
 {
@@ -104,13 +104,13 @@ void login_clientes()
 
             rewind(arquivoQ);
 
-            int quarto_encontrado = 0;
+            int quarto_encontrado = 0; // Flag para indicar se o quarto foi encontrado
 
             while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
             {
                 if (busca_quarto == numero)
                 {
-                    quarto_encontrado = 1;
+                    quarto_encontrado = 1; // Marca que o quarto foi encontrado
 
                     if (strcmp(status, "livre") == 0)
                     {
@@ -182,57 +182,39 @@ void login_clientes()
                         {
                             if (busca_quarto == numero)
                             {
+                                // Pegar a data no arquivo e converter para struct tm
                                 sscanf(data_entrada, "%d/%d/%d", &tm_reserva_entrada.tm_mday, &tm_reserva_entrada.tm_mon, &tm_reserva_entrada.tm_year);
                                 sscanf(data_saida, "%d/%d/%d", &tm_reserva_saida.tm_mday, &tm_reserva_saida.tm_mon, &tm_reserva_saida.tm_year);
 
-                                struct ReservaExistente
+                                // Convert struct tm to time_t using mktime
+                                time_t time_reserva_entrada = mktime(&tm_reserva_entrada);
+                                time_t time_reserva_saida = mktime(&tm_reserva_saida);
+
+                                // Check for date overlap
+                                if (!(time_reserva_saida < time_reserva_entrada || time_reserva_entrada > time_reserva_saida))
                                 {
-                                    struct Data datai;
-                                    struct Data dataf;
-                                };
-
-                                struct ReservaExistente reservaExistente;
-
-                                reservaExistente.datai.dia = tm_reserva_entrada.tm_mday;
-                                reservaExistente.datai.mes = tm_reserva_entrada.tm_mon;
-                                reservaExistente.datai.ano = tm_reserva_entrada.tm_year;
-
-                                reservaExistente.dataf.dia = tm_reserva_saida.tm_mday;
-                                reservaExistente.dataf.mes = tm_reserva_saida.tm_mon;
-                                reservaExistente.dataf.ano = tm_reserva_saida.tm_year;
-
-                                if ((Datai.ano < reservaExistente.dataf.ano || (Datai.ano == reservaExistente.dataf.ano && Datai.mes < reservaExistente.dataf.mes) ||
-                                     (Datai.ano == reservaExistente.dataf.ano && Datai.mes == reservaExistente.dataf.mes && Datai.dia <= reservaExistente.dataf.dia)) &&
-                                    (Dataf.ano > reservaExistente.datai.ano || (Dataf.ano == reservaExistente.datai.ano && Dataf.mes > reservaExistente.datai.mes) ||
-                                     (Dataf.ano == reservaExistente.datai.ano && Dataf.mes == reservaExistente.datai.mes && Dataf.dia >= reservaExistente.datai.dia)))
-                                {
+                                    // Dates overlap, reservation is invalid
                                     printf("A reserva não é válida devido à sobreposição de datas.\n");
-                                    system("pause");
+                                    // You may want to return from the function or handle it accordingly
                                     return;
-                                }
-                                else
-                                {
-                                    printf("Reserva realizada com sucesso!\n");
-                                    fprintf(arquivoD, "%d %s %d %s %s %d\n", id, nome, numero, data_entrada, data_saida, total_dias);
-                                    system("pause");
                                 }
                             }
                         }
                     }
                 }
-            }
 
-            if (!quarto_encontrado)
-            {
-                printf("Quarto não encontrado!\n");
-                system("pause");
-            }
+                if (!quarto_encontrado)
+                {
+                    printf("Quarto não encontrado!\n");
+                    system("pause");
+                }
 
-            break;
+                break;
+            }
         }
-    }
 
-    fclose(arquivoC);
-    fclose(arquivoQ);
-    fclose(arquivoD);
+        fclose(arquivoC);
+        fclose(arquivoQ);
+        fclose(arquivoD);
+    }
 }
