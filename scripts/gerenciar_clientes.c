@@ -251,6 +251,87 @@ int consultar_cliente() {
     }
 }
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void editar_clientes() {
+    system("clear || cls");
+    printf("\n=============================================\n");
+    printf("Editar Clientes:\n");
+    printf("=============================================\n");
+
+    FILE *arquivo, *temporario;
+
+    char nome[50], consulta_nome[50], email[50], consulta_email[50];
+    char cpf[50], consulta_cpf[50], rg[50], consulta_rg[50], telefone[50], consulta_telefone[50];
+    int menu_editar_clientes;
+
+    arquivo = fopen("db/clientes.txt", "r");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        
+    }
+
+    temporario = fopen("db/temporarioclt.txt", "w");
+
+    if (temporario == NULL) {
+        printf("Erro ao criar o arquivo temporário.\n");
+        fclose(arquivo);
+        
+    }
+
+    printf("Informe o Nome do Cliente que deseja editar: ");
+    scanf("%s", consulta_nome);
+
+    while (fscanf(arquivo, "%s %s %s %s %s\n", nome, cpf, rg, telefone, email) != EOF) {
+        if (strcmp(consulta_nome, nome) == 0) {
+            printf("Cliente encontrado\n");
+            printf("Informe o que deseja editar:\n1 - Nome\n2 - CPF\n3 - RG\n4 - Telefone\n5 - Email\n6 - Voltar\n");
+            scanf("%d", &menu_editar_clientes);
+
+            switch (menu_editar_clientes) {
+                case 1:
+                    printf("Informe o novo Nome do Cliente: ");
+                    scanf("%s", nome);
+                    break;
+                case 2:
+                    printf("Informe o novo CPF do Cliente: ");
+                    scanf("%s", cpf);
+                    break;
+                case 3:
+                    printf("Informe o novo RG do Cliente: ");
+                    scanf("%s", rg);
+                    break;
+                case 4:
+                    printf("Informe o novo telefone do Cliente: ");
+                    scanf("%s", telefone);
+                    break;
+                case 5:
+                    printf("Informe o novo email do Cliente: ");
+                    scanf("%s", email);
+                    break;
+                case 6:
+                    fclose(arquivo);
+                    fclose(temporario);
+                    remove("db/temporarioclt.txt");
+                    return;
+            }
+        }
+        fprintf(temporario, "%s %s %s %s %s\n", nome, cpf, rg, telefone, email);
+    }
+
+    fclose(arquivo);
+    fclose(temporario);
+
+    remove("db/clientes.txt");
+    rename("db/temporarioclt.txt", "db/clientes.txt");
+
+    system("pause");
+    editar_clientes();
+
+}
 
 void clientes()
 {
@@ -275,6 +356,9 @@ void clientes()
         }
         break;
         
+    case 3:  editar_clientes();
+             break;
+    
     default:
         break;
     }
