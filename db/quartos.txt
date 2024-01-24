@@ -1,1 +1,3 @@
-34 100 simples 30.000000 reservado
+34 100 simples 30.00 reservado
+63 101 suite 100.00 reservado
+229 102 simples 20.00 reservado
