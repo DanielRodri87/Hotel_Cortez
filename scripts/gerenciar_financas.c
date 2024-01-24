@@ -2,7 +2,7 @@
 // #include <stdio.h>
 
 int financas() {
-    printf("Aqui vão as funções de finanças\n");
+    printf("Aqui vao as funcoes de financas\n");
     system("pause");
     return 0;
 }

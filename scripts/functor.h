@@ -8,6 +8,5 @@ void cadastrarQuarto();
 void login_clientes();
 int consultar_cliente();
 void checkin();
-void editar_clientes()
 
 #endif // FUNCTOR_H

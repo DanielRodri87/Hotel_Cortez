@@ -45,8 +45,6 @@ bool validar_email(char email[]) {
     return (arroba == 1 && ponto >= 1);
 }
 
-
-
 void cadastrar_cliente() {
     char nome[50], email[50], cidade_estado[100];
     char cpf[50], rg[50], telefone[50];
@@ -105,7 +103,7 @@ void cadastrar_cliente() {
     fprintf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, cidade_estado, email);
 
     fclose(arquivo);
-    printf("Cliente hóspede cadastrado com sucesso!\n");
+    printf("Cliente hospede cadastrado com sucesso!\n");
     system("Pause");
 }
 
@@ -129,7 +127,7 @@ int consultar_cliente() {
             return 1;
         }
 
-        printf("Escolha uma opção de busca:\n1 - Buscar por nome\n2 - Buscar por CPF\n3 - Buscar por RG\n4 - Buscar por Telefone\n5 - Buscar por Email\n6 - Sair\n");
+        printf("Escolha uma opcao de busca:\n1 - Buscar por nome\n2 - Buscar por CPF\n3 - Buscar por RG\n4 - Buscar por Telefone\n5 - Buscar por Email\n6 - Sair\n");
         scanf("%d", &opcao_menu_consultar_clientes);
 
         fseek(arquivo, 0, SEEK_SET);
@@ -251,87 +249,6 @@ int consultar_cliente() {
     }
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-void editar_clientes() {
-    system("clear || cls");
-    printf("\n=============================================\n");
-    printf("Editar Clientes:\n");
-    printf("=============================================\n");
-
-    FILE *arquivo, *temporario;
-
-    char nome[50], consulta_nome[50], email[50], consulta_email[50];
-    char cpf[50], consulta_cpf[50], rg[50], consulta_rg[50], telefone[50], consulta_telefone[50];
-    int menu_editar_clientes;
-
-    arquivo = fopen("db/clientes.txt", "r");
-
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo para leitura.\n");
-        
-    }
-
-    temporario = fopen("db/temporarioclt.txt", "w");
-
-    if (temporario == NULL) {
-        printf("Erro ao criar o arquivo temporário.\n");
-        fclose(arquivo);
-        
-    }
-
-    printf("Informe o Nome do Cliente que deseja editar: ");
-    scanf("%s", consulta_nome);
-
-    while (fscanf(arquivo, "%s %s %s %s %s\n", nome, cpf, rg, telefone, email) != EOF) {
-        if (strcmp(consulta_nome, nome) == 0) {
-            printf("Cliente encontrado\n");
-            printf("Informe o que deseja editar:\n1 - Nome\n2 - CPF\n3 - RG\n4 - Telefone\n5 - Email\n6 - Voltar\n");
-            scanf("%d", &menu_editar_clientes);
-
-            switch (menu_editar_clientes) {
-                case 1:
-                    printf("Informe o novo Nome do Cliente: ");
-                    scanf("%s", nome);
-                    break;
-                case 2:
-                    printf("Informe o novo CPF do Cliente: ");
-                    scanf("%s", cpf);
-                    break;
-                case 3:
-                    printf("Informe o novo RG do Cliente: ");
-                    scanf("%s", rg);
-                    break;
-                case 4:
-                    printf("Informe o novo telefone do Cliente: ");
-                    scanf("%s", telefone);
-                    break;
-                case 5:
-                    printf("Informe o novo email do Cliente: ");
-                    scanf("%s", email);
-                    break;
-                case 6:
-                    fclose(arquivo);
-                    fclose(temporario);
-                    remove("db/temporarioclt.txt");
-                    return;
-            }
-        }
-        fprintf(temporario, "%s %s %s %s %s\n", nome, cpf, rg, telefone, email);
-    }
-
-    fclose(arquivo);
-    fclose(temporario);
-
-    remove("db/clientes.txt");
-    rename("db/temporarioclt.txt", "db/clientes.txt");
-
-    system("pause");
-    editar_clientes();
-
-}
 
 void clientes()
 {
@@ -343,22 +260,19 @@ void clientes()
     {
     case 1:
         cadastrar_cliente();
-        printf("Cliente hóspede cadastrado com sucesso!\n");
+        printf("Cliente hospede cadastrado com sucesso!\n");
         break;
     case 2:
         resultado_consulta = consultar_cliente();
         if (resultado_consulta == 0)
         {
-            printf("Cliente não encontrado!");
+            printf("Cliente nao encontrado!");
         } else if (resultado_consulta == 1)
         {
             printf("Cliente encontrado!");
         }
         break;
         
-    case 3:  editar_clientes();
-             break;
-    
     default:
         break;
     }
