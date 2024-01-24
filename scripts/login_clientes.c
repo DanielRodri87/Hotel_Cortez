@@ -155,7 +155,6 @@ void login_clientes()
                     }
                     else if (strcmp(status, "reservado") == 0)
                     {
-
                         struct Data
                         {
                             int dia;
@@ -166,22 +165,15 @@ void login_clientes()
                         struct tm tm_reserva_entrada = {0};
                         struct tm tm_reserva_saida = {0};
 
-                        struct tm tm_nova_reserva_entrada = {0};
-                        struct tm tm_nova_reserva_saida = {0};
+                        struct Data Datai, Dataf;
 
                         char data_entrada[20], data_saida[20];
                         int total_dias;
 
-                        sscanf(data_entrada, "%d/%d/%d", &tm_reserva_entrada.tm_mday, &tm_reserva_entrada.tm_mon, &tm_reserva_entrada.tm_year);
-                        sscanf(data_saida, "%d/%d/%d", &tm_reserva_saida.tm_mday, &tm_reserva_saida.tm_mon, &tm_reserva_saida.tm_year);
-
-                        tm_reserva_entrada.tm_mon -= 1;
-                        tm_reserva_entrada.tm_year -= 1900;
-
-                        tm_reserva_saida.tm_mon -= 1;
-                        tm_reserva_saida.tm_year -= 1900;
-
-                        struct Data Datai, Dataf;
+                        printf("Informe a data de entrada (formato DD/MM/YYYY): ");
+                        scanf("%s", data_entrada);
+                        printf("Informe a data de saída (formato DD/MM/YYYY): ");
+                        scanf("%s", data_saida);
 
                         sscanf(data_entrada, "%d/%d/%d", &Datai.dia, &Datai.mes, &Datai.ano);
                         sscanf(data_saida, "%d/%d/%d", &Dataf.dia, &Dataf.mes, &Dataf.ano);
@@ -192,10 +184,17 @@ void login_clientes()
                         Dataf.mes -= 1;
                         Dataf.ano -= 1900;
 
-                        printf("Informe a data de entrada (formato DD/MM/YYYY): ");
-                        scanf("%s", data_entrada);
-                        printf("Informe a data de saída (formato DD/MM/YYYY): ");
-                        scanf("%s", data_saida);
+                        tm_reserva_entrada.tm_mday = Datai.dia;
+                        tm_reserva_entrada.tm_mon = Datai.mes;
+                        tm_reserva_entrada.tm_year = Datai.ano;
+                        tm_reserva_entrada.tm_mon -= 1;
+                        tm_reserva_entrada.tm_year -= 1900;
+
+                        tm_reserva_saida.tm_mday = Dataf.dia;
+                        tm_reserva_saida.tm_mon = Dataf.mes;
+                        tm_reserva_saida.tm_year = Dataf.ano;
+                        tm_reserva_saida.tm_mon -= 1;
+                        tm_reserva_saida.tm_year -= 1900;
 
                         total_dias = diferenca_dias(data_entrada, data_saida);
 
