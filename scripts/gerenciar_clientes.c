@@ -31,6 +31,7 @@ bool validar_rg(char rg[]) {
     return (strlen(rg) == 7);
 }
 
+
 bool validar_email(char email[]) {
     int i, arroba = 0, ponto = 0;
     for (i = 0; i < strlen(email); i++) {
@@ -43,6 +44,8 @@ bool validar_email(char email[]) {
     }
     return (arroba == 1 && ponto >= 1);
 }
+
+
 
 void cadastrar_cliente() {
     char nome[50], email[50], cidade_estado[100];
@@ -84,6 +87,11 @@ void cadastrar_cliente() {
 
     printf("Informe o email do cliente: ");
     scanf("%s", email);
+    while (!validar_email(email)) {
+        printf("Email inválido. Informe novamente: ");
+        scanf("%s", email);
+        getchar();
+    }
     getchar();
 
 
