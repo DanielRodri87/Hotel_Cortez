@@ -199,7 +199,7 @@ void login_clientes()
                         {
                             printf("Quarto ocupado!\n");
                             system("pause");
-                            break; // Saia do loop após imprimir a mensagem
+                            break; 
                         }
                     }
                 }
@@ -211,7 +211,7 @@ void login_clientes()
                 system("pause");
             }
 
-            break; // Saia do loop após encontrar o cliente
+            break; 
         }
     }
 
