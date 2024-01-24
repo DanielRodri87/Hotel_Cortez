@@ -156,7 +156,7 @@ void login_clientes()
                     else if (strcmp(status, "reservado") == 0)
                     {
                         char data_reserva_entrada[20], data_reserva_saida[20];
-                        int total_dias_reserva;
+                        int total_dias_reserva, total_dias;
 
                         fscanf(arquivoD, "%*d %*s %*d %s %s %d\n", data_reserva_entrada, data_reserva_saida, &total_dias_reserva);
 
@@ -188,18 +188,59 @@ void login_clientes()
                         tm_saida_cliente.tm_mon -= 1;
                         tm_saida_cliente.tm_year -= 1900;
 
-                        if ((difftime(mktime(&tm_saida_cliente), mktime(&tm_reserva_entrada)) > 0) &&
-                            (difftime(mktime(&tm_reserva_saida), mktime(&tm_entrada_cliente)) > 0))
+                        if (difftime(mktime(&tm_entrada_cliente), mktime(&tm_reserva_entrada)) < 0 || difftime(mktime(&tm_saida_cliente), mktime(&tm_reserva_saida)) > 0)
                         {
-                            printf("O quarto já está reservado para o período solicitado.\n");
+                            printf("Quarto indisponível para reserva!\n");
                             system("pause");
-                            return;
+                            break;
                         }
                         else
                         {
-                            printf("Quarto ocupado!\n");
+                            printf("Quarto disponível para reserva!\n");
+
+                            FILE *arquivoDAtualizado = fopen("db/datas.txt", "a");
+                            if (arquivoDAtualizado == NULL)
+                            {
+                                printf("Erro ao abrir o arquivo datas.txt para escrita.\n");
+                                return;
+                            }
+
+                            total_dias = diferenca_dias(data_entrada, data_saida);
+
+                            fprintf(arquivoDAtualizado, "%d %s %d %s %s %d\n", id, nome, numero, data_entrada, data_saida, total_dias);
+
+                            fclose(arquivoDAtualizado);
+
+                            // Atualiza o status do quarto
+                            FILE *arquivoQAtualizado = fopen("db/quartos_atualizado.txt", "w");
+                            if (arquivoQAtualizado == NULL)
+                            {
+                                printf("Erro ao abrir o arquivo para escrita.\n");
+                                return;
+                            }
+
+                            rewind(arquivoQ);
+
+                            while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                            {
+                                if (busca_quarto == numero)
+                                {
+                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
+                                }
+                                else
+                                {
+                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+                                }
+                            }
+
+                            fclose(arquivoQ);
+                            fclose(arquivoQAtualizado);
+
+                            remove("db/quartos.txt");
+                            rename("db/quartos_atualizado.txt", "db/quartos.txt");
                             system("pause");
-                            break; 
+
+                            break;
                         }
                     }
                 }
@@ -211,7 +252,7 @@ void login_clientes()
                 system("pause");
             }
 
-            break; 
+            break;
         }
     }
 
