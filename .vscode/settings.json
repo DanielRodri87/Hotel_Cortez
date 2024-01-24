@@ -10,7 +10,8 @@
     "**/templates/**/*.html": "django-html",
     "**/base_templates/**/*.html": "django-html",
     "**/requirements{/**,*}.{txt,in}": "pip-requirements",
-    "functor.h": "c"
+    "functor.h": "c",
+    "COPIA.C": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
