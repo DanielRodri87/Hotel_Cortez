@@ -119,7 +119,7 @@ int consultar_cliente()
 {
     FILE *arquivo;
     char nome[50], consulta_nome[50], email[50], consulta_email[50];
-    char cpf[50], consulta_cpf[50], rg[50], consulta_rg[50], telefone[50], consulta_telefone[50];
+    char cpf[50], consulta_cpf[50], rg[50], consulta_rg[50], telefone[50], consulta_telefone[50], endereco[100];
     int opcao_menu_consultar_clientes;
     int encontrado = 0;
 
@@ -149,7 +149,7 @@ int consultar_cliente()
             printf("Informe o Nome do cliente para pesquisar: ");
             scanf("%s", consulta_nome);
 
-            while (fscanf(arquivo, "%s %s %s %s %s\n", nome, cpf, rg, telefone, email) == 5)
+            while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF)
             {
                 if (strcmp(consulta_nome, nome) == 0)
                 {
@@ -176,7 +176,7 @@ int consultar_cliente()
                 getchar();
             }
 
-            while (fscanf(arquivo, "%s %s %s %s %s\n", nome, cpf, rg, telefone, email) == 5)
+            while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF)
             {
                 if (strcmp(consulta_cpf, cpf) == 0)
                 {
@@ -203,7 +203,7 @@ int consultar_cliente()
                 getchar();
             }
 
-            while (fscanf(arquivo, "%s %s %s %s %s\n", nome, cpf, rg, telefone, email) == 5)
+            while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF)
             {
                 if (strcmp(consulta_rg, rg) == 0)
                 {
@@ -223,7 +223,7 @@ int consultar_cliente()
             printf("Informe o Telefone do cliente para pesquisar: ");
             scanf("%s", consulta_telefone);
             getchar();
-            while (fscanf(arquivo, "%s %s %s %s %s\n", nome, cpf, rg, telefone, email) == 5)
+            while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF)
             {
                 if (strcmp(consulta_telefone, telefone) == 0)
                 {
@@ -249,7 +249,7 @@ int consultar_cliente()
                 scanf("%s", consulta_email);
                 getchar();
             }
-            while (fscanf(arquivo, "%s %s %s %s %s\n", nome, cpf, rg, telefone, email) == 5)
+            while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF)
             {
                 if (strcmp(consulta_email, email) == 0)
                 {
@@ -289,7 +289,7 @@ void editar_clientes() {
     FILE *arquivo, *temporario;
 
     char nome[50], consulta_nome[50], email[50], consulta_email[50];
-    char cpf[50], consulta_cpf[50], rg[50], consulta_rg[50], telefone[50], consulta_telefone[50];
+    char cpf[50], consulta_cpf[50], rg[50], consulta_rg[50], telefone[50], consulta_telefone[50], endereco[100];
     int menu_editar_clientes;
 
     arquivo = fopen("db/clientes.txt", "r");
@@ -312,7 +312,7 @@ void editar_clientes() {
 
     int encontrado = 0;
 
-    while (fscanf(arquivo, "%s %s %s %s %s\n", nome, cpf, rg, telefone, email) == 5) {
+    while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF) {
         if (strcmp(consulta_nome, nome) == 0) {
             printf("Cliente encontrado\n");
             printf("Informe o que deseja editar:\n1 - Nome\n2 - CPF\n3 - RG\n4 - Telefone\n5 - Email\n6 - Voltar\n");
@@ -344,7 +344,7 @@ void editar_clientes() {
                 break;
             }
         }
-        fprintf(temporario, "%s %s %s %s %s\n", nome, cpf, rg, telefone, email);
+        fprintf(temporario, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email);
     }
 
     fclose(arquivo);
