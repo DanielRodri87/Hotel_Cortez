@@ -1,7 +1,2 @@
 210 999 simples 90.00 reservado
 100 888 simples 90.00 reservado
-<<<<<<< HEAD
-744 300 simples 40.00 livre
-=======
-38 300 simples 60.00 reservado
->>>>>>> c7972f97e27b52acf98be2b7a21b95fbbe4f0ab3
