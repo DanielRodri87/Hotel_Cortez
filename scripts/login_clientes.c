@@ -104,10 +104,14 @@ void login_clientes()
 
             rewind(arquivoQ);
 
+            int quarto_encontrado = 0; // Flag para indicar se o quarto foi encontrado
+
             while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
             {
                 if (busca_quarto == numero)
                 {
+                    quarto_encontrado = 1; // Marca que o quarto foi encontrado
+
                     if (strcmp(status, "livre") == 0)
                     {
                         printf("Quarto reservado com sucesso!\n");
@@ -151,7 +155,7 @@ void login_clientes()
                     }
                     else if (strcmp(status, "reservado") == 0)
                     {
-                        char data_reserva_entrada[20], data_reserva_saida[20], data_entrada[20], data_saida[20];
+                        char data_reserva_entrada[20], data_reserva_saida[20];
                         int total_dias_reserva;
 
                         fscanf(arquivoD, "%*d %*s %*d %s %s %d\n", data_reserva_entrada, data_reserva_saida, &total_dias_reserva);
@@ -168,11 +172,12 @@ void login_clientes()
                         tm_reserva_saida.tm_mon -= 1;
                         tm_reserva_saida.tm_year -= 1900;
 
-                        struct tm tm_entrada_cliente = {0};
-                        struct tm tm_saida_cliente = {0};
-
+                        char data_entrada[20], data_saida[20];
                         obter_data_valida("Informe a data de entrada (formato DD/MM/YYYY): ", data_entrada);
                         obter_data_valida("Informe a data de saída (formato DD/MM/YYYY): ", data_saida);
+
+                        struct tm tm_entrada_cliente = {0};
+                        struct tm tm_saida_cliente = {0};
 
                         sscanf(data_entrada, "%d/%d/%d", &tm_entrada_cliente.tm_mday, &tm_entrada_cliente.tm_mon, &tm_entrada_cliente.tm_year);
                         sscanf(data_saida, "%d/%d/%d", &tm_saida_cliente.tm_mday, &tm_saida_cliente.tm_mon, &tm_saida_cliente.tm_year);
@@ -194,16 +199,19 @@ void login_clientes()
                         {
                             printf("Quarto ocupado!\n");
                             system("pause");
+                            break; // Saia do loop após imprimir a mensagem
                         }
-                        break;
                     }
                 }
             }
-        }
-        else
-        {
-            printf("Cliente nao encontrado!\n");
-            system("pause");
+
+            if (!quarto_encontrado)
+            {
+                printf("Quarto não encontrado!\n");
+                system("pause");
+            }
+
+            break; // Saia do loop após encontrar o cliente
         }
     }
 
