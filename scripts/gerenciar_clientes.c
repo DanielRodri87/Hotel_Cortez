@@ -118,7 +118,7 @@ void cadastrar_cliente()
 int consultar_cliente()
 {
     FILE *arquivo;
-    char nome[50], consulta_nome[50], email[50], consulta_email[50];
+    char nome[50], consulta_nome[50], email[50], consulta_email[50], consulta_endereco[100];
     char cpf[50], consulta_cpf[50], rg[50], consulta_rg[50], telefone[50], consulta_telefone[50], endereco[100];
     int opcao_menu_consultar_clientes;
     int encontrado = 0;
@@ -238,26 +238,19 @@ int consultar_cliente()
                 }
             }
             break;
-
         case 5:
-            printf("Informe o Email do cliente para pesquisar: ");
-            scanf("%s", consulta_email);
+            printf("Informe o Telefone do cliente para pesquisar: ");
+            scanf("%s", consulta_telefone);
             getchar();
-            while (!validar_email(consulta_email))
-            {
-                printf("Email inválido. Informe novamente: ");
-                scanf("%s", consulta_email);
-                getchar();
-            }
             while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF)
             {
-                if (strcmp(consulta_email, email) == 0)
+                if (strcmp(consulta_telefone, telefone) == 0)
                 {
                     printf("Cliente cadastrado!\n");
                     printf("Nome: %s\n", nome);
                     printf("CPF: %s\n", cpf);
                     printf("RG: %s\n", rg);
-                    printf("Telefone: %s\n", telefone);
+                    printf("Email: %s\n", email);
                     encontrado = 1;
                     system("pause");
                     break;
@@ -265,7 +258,27 @@ int consultar_cliente()
             }
             break;
 
-        case 6:
+       case 6:
+            printf("Informe o Endereço do cliente para pesquisar: ");
+            scanf("%s", consulta_endereco);
+            getchar();
+            while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF)
+            {
+                if (strcmp(consulta_endereco, endereco) == 0)
+                {
+                    printf("Cliente cadastrado!\n");
+                    printf("Nome: %s\n", nome);
+                    printf("CPF: %s\n", cpf);
+                    printf("RG: %s\n", rg);
+                    printf("Telefone: %s\n", telefone);
+                    printf("Email: %s\n", email);
+                    encontrado = 1;
+                    system("pause");
+                    break;
+                }
+            }
+            break;
+        case 7:
             fclose(arquivo);
             return encontrado;
             break;
@@ -336,10 +349,14 @@ void editar_clientes() {
                 scanf("%s", telefone);
                 break;
             case 5:
+                printf("Informe o novo endereço do Cliente: ");
+                scanf("%s", endereco);
+                break;
+            case 6:
                 printf("Informe o novo email do Cliente: ");
                 scanf("%s", email);
                 break;
-            case 6:
+            case 7:
                 encontrado = 1;  // Marcar como encontrado para evitar a escrita do registro original
                 break;
             }
