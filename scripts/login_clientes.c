@@ -155,67 +155,61 @@ void login_clientes()
                     }
                     else if (strcmp(status, "reservado") == 0)
                     {
-                        int id, numero, total_dias;
-                        char nome[20], data_entrada[20], data_saida[20], status[20];
+
+                        struct Data
+                        {
+                            int dia;
+                            int mes;
+                            int ano;
+                        };
 
                         struct tm tm_reserva_entrada = {0};
                         struct tm tm_reserva_saida = {0};
 
-                        struct tm tm_entrada_cliente = {0};
-                        struct tm tm_saida_cliente = {0};
+                        struct tm tm_nova_reserva_entrada = {0};
+                        struct tm tm_nova_reserva_saida = {0};
 
-                        if (mktime(&tm_reserva_saida) > mktime(&tm_entrada_cliente) || mktime(&tm_reserva_entrada) <= mktime(&tm_saida_cliente))
+                        char data_entrada[20], data_saida[20];
+                        int total_dias;
+
+                        sscanf(data_entrada, "%d/%d/%d", &tm_reserva_entrada.tm_mday, &tm_reserva_entrada.tm_mon, &tm_reserva_entrada.tm_year);
+                        sscanf(data_saida, "%d/%d/%d", &tm_reserva_saida.tm_mday, &tm_reserva_saida.tm_mon, &tm_reserva_saida.tm_year);
+
+                        tm_reserva_entrada.tm_mon -= 1;
+                        tm_reserva_entrada.tm_year -= 1900;
+
+                        tm_reserva_saida.tm_mon -= 1;
+                        tm_reserva_saida.tm_year -= 1900;
+
+                        struct Data Datai, Dataf;
+
+                        sscanf(data_entrada, "%d/%d/%d", &Datai.dia, &Datai.mes, &Datai.ano);
+                        sscanf(data_saida, "%d/%d/%d", &Dataf.dia, &Dataf.mes, &Dataf.ano);
+
+                        Datai.mes -= 1;
+                        Datai.ano -= 1900;
+
+                        Dataf.mes -= 1;
+                        Dataf.ano -= 1900;
+
+                        printf("Informe a data de entrada (formato DD/MM/YYYY): ");
+                        scanf("%s", data_entrada);
+                        printf("Informe a data de saída (formato DD/MM/YYYY): ");
+                        scanf("%s", data_saida);
+
+                        total_dias = diferenca_dias(data_entrada, data_saida);
+
+                        if ((Datai.ano < tm_reserva_saida.tm_year || (Datai.ano == tm_reserva_saida.tm_year && Datai.mes < tm_reserva_saida.tm_mon) ||
+                             (Datai.ano == tm_reserva_saida.tm_year && Datai.mes == tm_reserva_saida.tm_mon && Datai.dia <= tm_reserva_saida.tm_mday)) &&
+                            (Dataf.ano > tm_reserva_entrada.tm_year || (Dataf.ano == tm_reserva_entrada.tm_year && Dataf.mes > tm_reserva_entrada.tm_mon) ||
+                             (Dataf.ano == tm_reserva_entrada.tm_year && Dataf.mes == tm_reserva_entrada.tm_mon && Dataf.dia >= tm_reserva_entrada.tm_mday)))
                         {
-                            printf("Quarto disponível para reserva!\n");
-
-                            FILE *arquivoDAtualizado = fopen("db/datas.txt", "a");
-                            if (arquivoDAtualizado == NULL)
-                            {
-                                printf("Erro ao abrir o arquivo datas.txt para escrita.\n");
-                                return;
-                            }
-
-                            fprintf(arquivoDAtualizado, "%d %s %d %s %s %d\n", id, nome, numero, data_entrada, data_saida, total_dias);
-                            fclose(arquivoDAtualizado);
-
-                            // Atualize o arquivo quartos.txt
-                            FILE *arquivoQAtualizado = fopen("db/quartos_atualizado.txt", "w");
-                            if (arquivoQAtualizado == NULL)
-                            {
-                                printf("Erro ao abrir o arquivo para escrita.\n");
-                                return;
-                            }
-
-                            FILE *arquivoQ = fopen("db/quartos.txt", "r");
-                            if (arquivoQ == NULL)
-                            {
-                                printf("Erro ao abrir o arquivo quartos.txt para leitura.\n");
-                                fclose(arquivoQAtualizado);
-                                return;
-                            }
-
-                            while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, &tipo, &valor, &status) != EOF)
-                            {
-                                if (busca_quarto == numero)
-                                {
-                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
-                                }
-                                else
-                                {
-                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
-                                }
-                            }
-
-                            fclose(arquivoQ);
-                            fclose(arquivoQAtualizado);
-
-                            remove("db/quartos.txt");
-                            rename("db/quartos_atualizado.txt", "db/quartos.txt");
+                            printf("Erro: As novas datas devem estar fora do período da reserva atual.\n");
                             system("pause");
                         }
                         else
                         {
-                            printf("Quarto indisponível para reserva!\n");
+                            printf("Aqui no futuro vai ter um código para atualizar a reserva.\n");
                             system("pause");
                         }
                     }
