@@ -10,7 +10,6 @@
 #include "scripts/login_clientes.c"
 #include "scripts/checkin.c"
 
-
 int main(void) {
     int opcao_menu1, opcao_menu_hotel, opcao_menu_cliente;
 

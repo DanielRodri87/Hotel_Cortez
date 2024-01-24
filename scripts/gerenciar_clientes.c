@@ -105,7 +105,7 @@ void cadastrar_cliente() {
     fprintf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, cidade_estado, email);
 
     fclose(arquivo);
-    printf("Cliente hóspede cadastrado com sucesso!\n");
+    printf("Cliente hospede cadastrado com sucesso!\n");
     system("Pause");
 }
 
@@ -129,7 +129,7 @@ int consultar_cliente() {
             return 1;
         }
 
-        printf("Escolha uma opção de busca:\n1 - Buscar por nome\n2 - Buscar por CPF\n3 - Buscar por RG\n4 - Buscar por Telefone\n5 - Buscar por Email\n6 - Sair\n");
+        printf("Escolha uma opcao de busca:\n1 - Buscar por nome\n2 - Buscar por CPF\n3 - Buscar por RG\n4 - Buscar por Telefone\n5 - Buscar por Email\n6 - Sair\n");
         scanf("%d", &opcao_menu_consultar_clientes);
 
         fseek(arquivo, 0, SEEK_SET);
@@ -262,13 +262,13 @@ void clientes()
     {
     case 1:
         cadastrar_cliente();
-        printf("Cliente hóspede cadastrado com sucesso!\n");
+        printf("Cliente hospede cadastrado com sucesso!\n");
         break;
     case 2:
         resultado_consulta = consultar_cliente();
         if (resultado_consulta == 0)
         {
-            printf("Cliente não encontrado!");
+            printf("Cliente nao encontrado!");
         } else if (resultado_consulta == 1)
         {
             printf("Cliente encontrado!");
