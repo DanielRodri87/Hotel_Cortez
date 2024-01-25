@@ -180,6 +180,7 @@ void login_clientes()
                     }
                     else if (strcmp(status, "reservado") == 0)
                     {
+
                         printf("Quarto atualmente reservado.\n");
 
                         char data_entrada_atual[20], data_saida_atual[20];
@@ -228,30 +229,28 @@ void login_clientes()
                                 return;
                             }
 
-                            // Adicione a nova reserva como uma linha adicional ao final do arquivo
                             fprintf(arquivoDAtualizado, "%d %s %d %s %s %d %s %s %s\n", id, status, numero, nova_data_entrada, nova_data_saida, total_dias, hora_entrada, hora_saida, status_pagamento);
 
                             fclose(arquivoDAtualizado);
 
-                            // Continue com o restante do seu código aqui...
-
-                            system("pause");
+                            remove("db/datas.txt");
+                            rename("db/datas_atualizado.txt", "db/datas.txt");
                         }
                     }
                 }
-            }
 
-            if (!quarto_encontrado)
-            {
-                printf("Quarto não encontrado!\n");
-                system("pause");
-            }
+                if (!quarto_encontrado)
+                {
+                    printf("Quarto não encontrado!\n");
+                    system("pause");
+                }
 
-            break;
+                break;
+            }
         }
-    }
 
-    fclose(arquivoC);
-    fclose(arquivoQ);
-    fclose(arquivoD);
+        fclose(arquivoC);
+        fclose(arquivoQ);
+        fclose(arquivoD);
+    }
 }
