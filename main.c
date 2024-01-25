@@ -17,30 +17,36 @@ int main(void)
     while (1)
     {
         system("clear || cls");
-        printf("=============================================\n");
-        printf("|    SEJA BEM-VINDO AO SISTEMA DO HOTEL      |\n");
-        printf("|                                            |\n");
-        printf("|          H O T E L   C O R T E Z           |\n");
-        printf("|                                            |\n");
-        printf("|            __   __   __   __   __          |\n");
-        printf("|           |  | |  | |  | |  | |  |         |\n");
-        printf("|           |__| |__| |__| |__| |__|         |\n");
-        printf("|            __   __   __   __   __          |\n");
-        printf("|           |  | |  | |  | |  | |  |         |\n");
-        printf("|           |__| |__| |__| |__| |__|         |\n");
-        printf("|                                            |\n");
-        printf("=============================================\n\n");
+        printf("                       =====                      \n");
+        printf("               ====================               \n");
+        printf("          =============================           \n");
+        printf("      =====================================       \n");
+        printf("==================================================\n");
+        printf("  |                                            |  \n");
+        printf("  |     SEJA BEM-VINDO AO SISTEMA DO HOTEL     |  \n");
+        printf("  |                                            |  \n");
+        printf("  |          H O T E L   C O R T E Z           |  \n");
+        printf("  |                                            |  \n");
+        printf("  |            __   __   __   __   __          |  \n");
+        printf("  |           |  | |  | |  | |  | |  |         |  \n");
+        printf("  |           |__| |__| |__| |__| |__|         |  \n");
+        printf("  |            __   __   __   __   __          |  \n");
+        printf("  |           |  | |  | |  | |  | |  |         |  \n");
+        printf("  |           |__| |__| |__| |__| |__|         |  \n");
+        printf("  |                                            |  \n");
+        printf("  ==============================================\n\n");
 
-        printf("=============================================\n");
-        printf("|  Escolha uma operacao:                    |\n");
-        printf("|                              __   __      |\n");
-        printf("|  1 - Gerenciar Hotel        |  | |  |     |\n");
-        printf("|  2 - Gerenciar Clientes     |__| |__|     |\n");
-        printf("|  3 - Realizar Reserva        __   __      |\n");
-        printf("|  4 - Realizar Check-in      |  | |  |     |\n");
-        printf("|  5 - Sair                   |__| |__|     |\n");
-        printf("|                                           |\n");
-        printf("=============================================\n");
+        printf("  =============================================\n");
+        printf("  |  Escolha uma operacao:                    |\n");
+        printf("  |                              __   __      |\n");
+        printf("  |  1 - Gerenciar Hotel        |  | |  |     |\n");
+        printf("  |  2 - Gerenciar Clientes     |__| |__|     |\n");
+        printf("  |  3 - Realizar Reserva        __   __      |\n");
+        printf("  |  4 - Realizar Check-in      |  | |  |     |\n");
+        printf("  |  5 - Sair                   |__| |__|     |\n");
+        printf("  |                                           |\n");
+        printf("  =============================================\n");
+        printf("-> ");
         scanf("%d", &opcao_menu1);
 
         switch (opcao_menu1)
@@ -51,12 +57,13 @@ int main(void)
             printf("|  Seja bem-vindo ao gerenciamento do Hotel  |\n");
             printf("|  Escolha a opcao desejada:                 |\n");
             printf("|                                __   __     |\n");
-            printf("|  1 - Gerenciar Quartos        |  | |  |    |\n");
-            printf("|  2 - Gerenciar Financas       |__| |__|    |\n");
-            printf("|  3 - Voltar                    __   __     |\n");
             printf("|                               |  | |  |    |\n");
+            printf("|  1 - Gerenciar Quartos        |__| |__|    |\n");
+            printf("|  2 - Gerenciar Financas        __   __     |\n");
+            printf("|  3 - Voltar                   |  | |  |    |\n");
             printf("|                               |__| |__|    |\n");
             printf("=============================================\n");
+            printf("-> ");
             scanf("%d", &opcao_menu_hotel);
             switch (opcao_menu_hotel)
             {
@@ -67,7 +74,9 @@ int main(void)
                 financas();
                 break;
             case 3:
-                printf("Voltando ao menu principal...");
+                    printf("=============================================\n");
+                    printf("|        Voltando ao menu principal...      |\n");
+                    printf("=============================================\n");
             default:
                 break;
             }
@@ -83,7 +92,9 @@ int main(void)
             checkin();
             break;
         case 5:
-            printf("Saindo do sistema...");
+                printf("=============================================\n");
+                printf("|          Encerrando Aplicacao...           |\n");
+                printf("=============================================\n");
             exit(0);
             break;
         }
