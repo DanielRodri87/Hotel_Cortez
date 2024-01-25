@@ -3,6 +3,13 @@
 #include <string.h>
 #include <time.h>
 
+struct Data
+{
+    int dia;
+    int mes;
+    int ano;
+};
+
 int diferenca_dias(const char *data_entrada, const char *data_saida)
 {
     struct tm tm_entrada = {0};
@@ -61,6 +68,18 @@ void obter_data_valida(const char *prompt, char *data)
     } while (!validar_data(data));
 }
 
+// Função para verificar se há sobreposição de datas
+int verifica_sobreposicao(struct Data data_entrada, struct Data data_saida,
+                          struct Data reserva_ini, struct Data reserva_fim)
+{
+    return (data_entrada.ano < reserva_fim.ano ||
+            (data_entrada.ano == reserva_fim.ano && data_entrada.mes < reserva_fim.mes) ||
+            (data_entrada.ano == reserva_fim.ano && data_entrada.mes == reserva_fim.mes && data_entrada.dia <= reserva_fim.dia)) &&
+           (data_saida.ano > reserva_ini.ano ||
+            (data_saida.ano == reserva_ini.ano && data_saida.mes > reserva_ini.mes) ||
+            (data_saida.ano == reserva_ini.ano && data_saida.mes == reserva_ini.mes && data_saida.dia >= reserva_ini.dia));
+}
+
 void login_clientes()
 {
     system("clear || cls");
@@ -78,7 +97,7 @@ void login_clientes()
     printf("Data atual: %d/%d/%d\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 
     int busca_quarto, id, numero;
-    char tipo[20], status[20];
+    char tipo[20], status[20], hora_entrada[20], hora_saida[20], status_pagamento[20];
     float valor;
 
     printf("Informe o CPF do cliente: ");
@@ -117,8 +136,14 @@ void login_clientes()
                         printf("Quarto reservado com sucesso!\n");
 
                         char data_entrada[20], data_saida[20];
+
                         obter_data_valida("Informe a data de entrada (formato DD/MM/YYYY): ", data_entrada);
-                        obter_data_valida("Informe a data de saída (formato DD/MM/YYYY): ", data_saida);
+                        printf("Informe a hora de entrada (formato HH:MM): ");
+                        scanf("%s", hora_entrada);
+
+                        obter_data_valida("Informe a data de saida (formato DD/MM/YYYY): ", data_saida);
+                        printf("Informe a hora de saida (formato HH:MM): ");
+                        scanf("%s", hora_saida);
 
                         int total_dias = diferenca_dias(data_entrada, data_saida);
 
@@ -151,72 +176,66 @@ void login_clientes()
                         remove("db/quartos.txt");
                         rename("db/quartos_atualizado.txt", "db/quartos.txt");
 
-                        fprintf(arquivoD, "%d %s %d %s %s %d\n", id, nome, numero, data_entrada, data_saida, total_dias);
+                        fprintf(arquivoD, "%d %s %d %s %s %d %s %s %s\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "pendente");
                     }
                     else if (strcmp(status, "reservado") == 0)
                     {
-                        struct Data
-                        {
-                            int dia;
-                            int mes;
-                            int ano;
-                        };
+                        printf("Quarto atualmente reservado.\n");
 
-                        struct tm tm_reserva_entrada = {0};
-                        struct tm tm_reserva_saida = {0};
+                        char data_entrada_atual[20], data_saida_atual[20];
 
-                        struct Data Datai, Dataf;
-
-                        char data_entrada[20], data_saida[20];
-                        int total_dias;
-
-                        printf("Informe a data de entrada (formato DD/MM/YYYY): ");
-                        scanf("%s", data_entrada);
-                        printf("Informe a data de saída (formato DD/MM/YYYY): ");
-                        scanf("%s", data_saida);
-
-                        sscanf(data_entrada, "%d/%d/%d", &Datai.dia, &Datai.mes, &Datai.ano);
-                        sscanf(data_saida, "%d/%d/%d", &Dataf.dia, &Dataf.mes, &Dataf.ano);
-
-                        while (fscanf(arquivoD, "%d %s %d %s %s %d\n", &id, nome, &numero, data_entrada, data_saida, &total_dias) != EOF)
+                        while (fscanf(arquivoD, "%d %*s %d %s %s %*d %s %s %s\n", &id, &busca_quarto, data_entrada_atual, data_saida_atual, hora_entrada, hora_saida, status_pagamento) != EOF)
                         {
                             if (busca_quarto == numero)
                             {
-                                sscanf(data_entrada, "%d/%d/%d", &tm_reserva_entrada.tm_mday, &tm_reserva_entrada.tm_mon, &tm_reserva_entrada.tm_year);
-                                sscanf(data_saida, "%d/%d/%d", &tm_reserva_saida.tm_mday, &tm_reserva_saida.tm_mon, &tm_reserva_saida.tm_year);
-
-                                struct ReservaExistente
-                                {
-                                    struct Data datai;
-                                    struct Data dataf;
-                                };
-
-                                struct ReservaExistente reservaExistente;
-
-                                reservaExistente.datai.dia = tm_reserva_entrada.tm_mday;
-                                reservaExistente.datai.mes = tm_reserva_entrada.tm_mon;
-                                reservaExistente.datai.ano = tm_reserva_entrada.tm_year;
-
-                                reservaExistente.dataf.dia = tm_reserva_saida.tm_mday;
-                                reservaExistente.dataf.mes = tm_reserva_saida.tm_mon;
-                                reservaExistente.dataf.ano = tm_reserva_saida.tm_year;
-
-                                if ((Datai.ano < reservaExistente.dataf.ano || (Datai.ano == reservaExistente.dataf.ano && Datai.mes < reservaExistente.dataf.mes) ||
-                                     (Datai.ano == reservaExistente.dataf.ano && Datai.mes == reservaExistente.dataf.mes && Datai.dia <= reservaExistente.dataf.dia)) &&
-                                    (Dataf.ano > reservaExistente.datai.ano || (Dataf.ano == reservaExistente.datai.ano && Dataf.mes > reservaExistente.datai.mes) ||
-                                     (Dataf.ano == reservaExistente.datai.ano && Dataf.mes == reservaExistente.datai.mes && Dataf.dia >= reservaExistente.datai.dia)))
-                                {
-                                    printf("A reserva não é válida devido à sobreposição de datas.\n");
-                                    system("pause");
-                                    return;
-                                }
-                                else
-                                {
-                                    printf("Reserva realizada com sucesso!\n");
-                                    fprintf(arquivoD, "%d %s %d %s %s %d\n", id, nome, numero, data_entrada, data_saida, total_dias);
-                                    system("pause");
-                                }
+                                printf("Período atual de reserva: %s a %s\n", data_entrada_atual, data_saida_atual);
+                                break;
                             }
+                        }
+
+                        char nova_data_entrada[20], nova_data_saida[20];
+                        int total_dias;
+
+                        obter_data_valida("Informe a nova data de entrada (formato DD/MM/YYYY): ", nova_data_entrada);
+                        printf("Informe a nova hora de entrada (formato HH:MM): ");
+                        scanf("%s", hora_entrada);
+
+                        obter_data_valida("Informe a nova data de saida (formato DD/MM/YYYY): ", nova_data_saida);
+                        printf("Informe a nova hora de saida (formato HH:MM): ");
+                        scanf("%s", hora_saida);
+
+                        struct Data tm_entrada, tm_saida, reservaExistenteIni, reservaExistenteFim;
+
+                        sscanf(nova_data_entrada, "%d/%d/%d", &tm_entrada.dia, &tm_entrada.mes, &tm_entrada.ano);
+                        sscanf(nova_data_saida, "%d/%d/%d", &tm_saida.dia, &tm_saida.mes, &tm_saida.ano);
+                        sscanf(data_entrada_atual, "%d/%d/%d", &reservaExistenteIni.dia, &reservaExistenteIni.mes, &reservaExistenteIni.ano);
+                        sscanf(data_saida_atual, "%d/%d/%d", &reservaExistenteFim.dia, &reservaExistenteFim.mes, &reservaExistenteFim.ano);
+
+                        if (verifica_sobreposicao(tm_entrada, tm_saida, reservaExistenteIni, reservaExistenteFim))
+                        {
+                            printf("Não é possível reservar neste período devido à sobreposição de datas.\n");
+                            system("pause");
+                        }
+                        else
+                        {
+                            printf("Reserva atualizada com sucesso!\n");
+
+                            FILE *arquivoDAtualizado = fopen("db/datas_atualizado.txt", "a");
+                            if (arquivoDAtualizado == NULL)
+                            {
+                                printf("Erro ao abrir o arquivo de datas para escrita.\n");
+                                system("pause");
+                                return;
+                            }
+
+                            // Adicione a nova reserva como uma linha adicional ao final do arquivo
+                            fprintf(arquivoDAtualizado, "%d %s %d %s %s %d %s %s %s\n", id, status, numero, nova_data_entrada, nova_data_saida, total_dias, hora_entrada, hora_saida, status_pagamento);
+
+                            fclose(arquivoDAtualizado);
+
+                            // Continue com o restante do seu código aqui...
+
+                            system("pause");
                         }
                     }
                 }

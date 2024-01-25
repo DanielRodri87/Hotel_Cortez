@@ -1,4 +1,3 @@
-466 208 simple 80.00 livre
-642 204 duplo 80.00 livre
-484 204 simples 40.00 livre
-631 101 simples 30.00 livre
+832 204 duplo 40.00 reservado
+110 208 simples 40.00 reservado
+754 111 simples 20.00 reservado
