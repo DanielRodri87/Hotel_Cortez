@@ -393,6 +393,7 @@ void editar_clientes() {
 }
 
 void excluir_cliente() {
+
     system("cls || clear");
     printf("\n=============================================\n");
     printf("Excluir Cliente:\n");
@@ -400,8 +401,10 @@ void excluir_cliente() {
 
     FILE *arquivo, *temporario;
 
-    char nome[50], consultadados[50], email[50];
-    char cpf[50], rg[50], telefone[50], endereco[100];
+    char nome[50], cpf[50], rg[50], telefone[50], endereco[100], email[50];
+    char consulta[50];
+
+    int encontrado = 0;
 
     arquivo = fopen("db/clientes.txt", "r");
 
@@ -419,21 +422,35 @@ void excluir_cliente() {
     }
 
     printf("Informe o Nome, CPF, RG, Telefone, Endereço ou Email do Cliente que deseja excluir: ");
-    scanf("%s", consultadados);
-    
-
-    int encontrado = 0;
+    scanf("%s", consulta);
 
     while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF) {
-        if (strcmp(consultadados, nome) == 0 ||  // Busca por nome
-            strcmp(consultadados, cpf) == 0 ||    // Busca por CPF
-            strcmp(consultadados, rg) == 0 ||     // Busca por RG
-            strcmp(consultadados, telefone) == 0 ||  // Busca por telefone
-            strcmp(consultadados, endereco) == 0 ||  // Busca por endereço
-            strcmp(consultadados, email) == 0) {    // Busca por email
+        if (strcmp(consulta, nome) == 0 ||
+            strcmp(consulta, cpf) == 0 ||
+            strcmp(consulta, rg) == 0 ||
+            strcmp(consulta, telefone) == 0 ||
+            strcmp(consulta, endereco) == 0 ||
+            strcmp(consulta, email) == 0) {
 
-            printf("Cliente encontrado e excluído\n");
-            encontrado = 1;
+            printf("\nCliente encontrado:\n");
+            printf("Nome: %s\n", nome);
+            printf("CPF: %s\n", cpf);
+            printf("RG: %s\n", rg);
+            printf("Telefone: %s\n", telefone);
+            printf("Endereço: %s\n", endereco);
+            printf("Email: %s\n", email);
+
+            printf("Deseja realmente excluir o cliente? (1 - Sim / 2 - Não): ");
+            int opcao_menu_busca_clientes;
+            scanf("%d", &opcao_menu_busca_clientes);
+            while (getchar() != '\n');
+            if (opcao_menu_busca_clientes == 1) {
+                encontrado = 1;
+                while (fgetc(arquivo) != '\n')
+                    ;
+            } else {
+                fprintf(temporario, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email);
+            }
         } else {
             fprintf(temporario, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email);
         }
@@ -442,19 +459,15 @@ void excluir_cliente() {
     fclose(arquivo);
     fclose(temporario);
 
-    if (!encontrado) {
-        printf("Cliente não encontrado.\n");
-        remove("db/temporario.txt");
-    } else {
+    if (encontrado) {
         remove("db/clientes.txt");
         rename("db/temporario.txt", "db/clientes.txt");
-        printf("Cliente excluído com sucesso!\n");
+        printf("\nCliente excluído com sucesso!\n");
+    } else {
+        remove("db/temporario.txt");
+        printf("\nCliente não encontrado.\n");
     }
-
-    printf("Pressione Enter para continuar...");
-    while (getchar() != '\n');
 }
-
 
 void clientes()
 {
@@ -489,7 +502,8 @@ void clientes()
 
     case 4:
         printf("Excluir Clientes: ");
-        excluir_cliente;
+        excluir_cliente();
+        system("pause");
         break;
     }
 }
