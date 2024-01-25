@@ -340,38 +340,39 @@ void editar_clientes() {
     while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF) {
         if (strcmp(consulta_nome, nome) == 0) {
             printf("Cliente encontrado\n");
-            printf("Informe o que deseja editar:\n1 - Nome\n2 - CPF\n3 - RG\n4 - Telefone\n5 - Endereço\n6 - Email\n7- Voltar");
+            printf("Informe o que deseja editar:\n1 - Nome\n2 - CPF\n3 - RG\n4 - Telefone\n5 - Endereço\n6 - Email\n7 - Voltar\n");
             scanf("%d", &menu_editar_clientes);
 
             switch (menu_editar_clientes) {
-            case 1:
-                printf("Informe o novo Nome do Cliente: ");
-                scanf("%s", nome);
-                break;
-            case 2:
-                printf("Informe o novo CPF do Cliente: ");
-                scanf("%s", cpf);
-                break;
-            case 3:
-                printf("Informe o novo RG do Cliente: ");
-                scanf("%s", rg);
-                break;
-            case 4:
-                printf("Informe o novo telefone do Cliente: ");
-                scanf("%s", telefone);
-                break;
-            case 5:
-                printf("Informe o novo endereço do Cliente: ");
-                scanf("%s", endereco);
-                break;
-            case 6:
-                printf("Informe o novo email do Cliente: ");
-                scanf("%s", email);
-                break;
-            case 7:
-               default:
-                break;
+                case 1:
+                    printf("Informe o novo Nome do Cliente: ");
+                    scanf("%s", nome);
+                    break;
+                case 2:
+                    printf("Informe o novo CPF do Cliente: ");
+                    scanf("%s", cpf);
+                    break;
+                case 3:
+                    printf("Informe o novo RG do Cliente: ");
+                    scanf("%s", rg);
+                    break;
+                case 4:
+                    printf("Informe o novo telefone do Cliente: ");
+                    scanf("%s", telefone);
+                    break;
+                case 5:
+                    printf("Informe o novo endereço do Cliente: ");
+                    scanf("%s", endereco);
+                    break;
+                case 6:
+                    printf("Informe o novo email do Cliente: ");
+                    scanf("%s", email);
+                    break;
+                case 7:
+                    default:
+                        break;
             }
+            encontrado = 1;  // Cliente encontrado, atualiza a flag
         }
         fprintf(temporario, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email);
     }
@@ -390,6 +391,70 @@ void editar_clientes() {
 
     pausar();
 }
+
+void excluir_cliente() {
+    system("cls || clear");
+    printf("\n=============================================\n");
+    printf("Excluir Cliente:\n");
+    printf("=============================================\n");
+
+    FILE *arquivo, *temporario;
+
+    char nome[50], consultadados[50], email[50];
+    char cpf[50], rg[50], telefone[50], endereco[100];
+
+    arquivo = fopen("db/clientes.txt", "r");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return;
+    }
+
+    temporario = fopen("db/temporario.txt", "w");
+
+    if (temporario == NULL) {
+        printf("Erro ao criar o arquivo temporário.\n");
+        fclose(arquivo);
+        return;
+    }
+
+    printf("Informe o Nome, CPF, RG, Telefone, Endereço ou Email do Cliente que deseja excluir: ");
+    scanf("%s", consultadados);
+    
+
+    int encontrado = 0;
+
+    while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF) {
+        if (strcmp(consultadados, nome) == 0 ||  // Busca por nome
+            strcmp(consultadados, cpf) == 0 ||    // Busca por CPF
+            strcmp(consultadados, rg) == 0 ||     // Busca por RG
+            strcmp(consultadados, telefone) == 0 ||  // Busca por telefone
+            strcmp(consultadados, endereco) == 0 ||  // Busca por endereço
+            strcmp(consultadados, email) == 0) {    // Busca por email
+
+            printf("Cliente encontrado e excluído\n");
+            encontrado = 1;
+        } else {
+            fprintf(temporario, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email);
+        }
+    }
+
+    fclose(arquivo);
+    fclose(temporario);
+
+    if (!encontrado) {
+        printf("Cliente não encontrado.\n");
+        remove("db/temporario.txt");
+    } else {
+        remove("db/clientes.txt");
+        rename("db/temporario.txt", "db/clientes.txt");
+        printf("Cliente excluído com sucesso!\n");
+    }
+
+    printf("Pressione Enter para continuar...");
+    while (getchar() != '\n');
+}
+
 
 void clientes()
 {
@@ -420,6 +485,11 @@ void clientes()
     case 3:
         printf("Editar clientes: ");
         editar_clientes();
+        break;
+
+    case 4:
+        printf("Excluir Clientes: ");
+        excluir_cliente;
         break;
     }
 }
