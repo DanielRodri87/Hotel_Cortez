@@ -213,7 +213,7 @@ void buscar_quartos()
                 }
             }
             break;
-
+            
         case 3:
             printf("Informe o Valor para pesquisar: ");
             scanf("%f", &busca_valor);
