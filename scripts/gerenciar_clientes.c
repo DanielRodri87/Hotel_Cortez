@@ -471,7 +471,7 @@ void clientes()
 {
     int opcao_menu_cliente, resultado_consulta;
     printf("Gerenciar Clientes \n");
-    printf("Digite a opcao que deseja escolher:\n1 - Cadastrar Cliente\n2 - Consultar Cliente\n3 - Editar Cliente\n4 - Excluir Cliente\n ");
+    printf("Digite a opcao que deseja escolher:\n1 - Cadastrar Cliente\n2 - Consultar Cliente\n3 - Editar Cliente\n4 - Excluir Cliente\n5 - Sair\n ");
     scanf("%d", &opcao_menu_cliente);
     switch (opcao_menu_cliente)
     {
@@ -502,6 +502,11 @@ void clientes()
         printf("Excluir Clientes: ");
         excluir_cliente();
         system("pause");
+        break;
+
+    case 5:
+        printf("Sair.");
+        return;
         break;
     }
 }
