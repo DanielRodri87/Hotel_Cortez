@@ -9,5 +9,6 @@ void login_clientes();
 int consultar_cliente();
 void checkin();
 void editar_clientes();
+void excluir_cliente();
 
 #endif // FUNCTOR_H
