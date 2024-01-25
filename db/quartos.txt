@@ -1,3 +1,6 @@
 832 204 duplo 40.00 reservado
 110 208 simples 40.00 reservado
 754 111 simples 20.00 reservado
+940 333 simples 40.00 reservado
+210 444 simples 40.00 reservado
+241 208 simples 4.00 reservado
