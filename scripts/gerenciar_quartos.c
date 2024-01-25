@@ -179,7 +179,7 @@ void buscar_quartos()
             {
                 if (busca_numero == numero)
                 {
-                            system("clear || cls");
+                    system("clear || cls");
 
                     printf("============================================================================\n");
                     printf("|                                  QUARTO ENCONTRADO                            |\n");
@@ -189,7 +189,6 @@ void buscar_quartos()
                     printf("| %-15d | %-10d | %-10s | %-15.2f | %-10s |\n", id, numero, tipo, valor, status);
                     printf("============================================================================\n");
                     system("pause");
-                    break;
                 }
             }
             break;
@@ -202,7 +201,7 @@ void buscar_quartos()
             {
                 if (strcmp(busca_tipo, tipo) == 0)
                 {
-                            system("clear || cls");
+                    system("clear || cls");
                     printf("============================================================================\n");
                     printf("|                                  QUARTO ENCONTRADO                            |\n");
                     printf("============================================================================\n");
@@ -211,7 +210,6 @@ void buscar_quartos()
                     printf("| %-15d | %-10d | %-10s | %-15.2f | %-10s |\n", id, numero, tipo, valor, status);
                     printf("============================================================================\n");
                     system("pause");
-                    break;
                 }
             }
             break;
@@ -224,7 +222,7 @@ void buscar_quartos()
             {
                 if (busca_valor == valor)
                 {
-                            system("clear || cls");
+                    system("clear || cls");
                     printf("============================================================================\n");
                     printf("|                                  QUARTO ENCONTRADO                            |\n");
                     printf("============================================================================\n");
@@ -233,7 +231,6 @@ void buscar_quartos()
                     printf("| %-15d | %-10d | %-10s | %-15.2f | %-10s |\n", id, numero, tipo, valor, status);
                     printf("============================================================================\n");
                     system("pause");
-                    break;
                 }
             }
             break;
@@ -255,7 +252,6 @@ void buscar_quartos()
                     printf("| %-15d | %-10d | %-10s | %-15.2f | %-10s |\n", id, numero, tipo, valor, status);
                     printf("============================================================================\n");
                     system("pause");
-                    break;
                 }
             }
             break;
@@ -268,9 +264,6 @@ void buscar_quartos()
         fclose(arquivo);
     }
 }
-
-#include <stdio.h>
-#include <stdlib.h>
 
 void editar_quartos()
 {
