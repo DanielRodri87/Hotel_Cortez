@@ -440,16 +440,14 @@ void excluir_cliente() {
             printf("Endereço: %s\n", endereco);
             printf("Email: %s\n", email);
 
-            printf("Deseja realmente excluir o cliente? (1 - Sim / 2 - Não): ");
+            
+            printf("Deseja realmente excluir o cliente? (1 - Sim / 2 - Nao): ");
             int opcao_menu_busca_clientes;
             scanf("%d", &opcao_menu_busca_clientes);
             while (getchar() != '\n');
+
             if (opcao_menu_busca_clientes == 1) {
                 encontrado = 1;
-                while (fgetc(arquivo) != '\n')
-                    ;
-            } else {
-                fprintf(temporario, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email);
             }
         } else {
             fprintf(temporario, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email);
