@@ -368,6 +368,9 @@ void editar_quartos()
     system("pause");
 }
 
+#include <stdio.h>
+#include <stdlib.h>
+
 void excluir_quarto()
 {
     system("clear || cls");
@@ -382,7 +385,86 @@ void excluir_quarto()
     printf("|                                           |\n");
     printf("=============================================\n\n");
 
-  
+    FILE *arquivo, *temporario;
+
+    int id, numero, encontrado = 0;
+    float valor;
+    char tipo[20], status[20];
+    char busca_dados[50];
+
+    arquivo = fopen("db/quartos.txt", "r");
+
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return;
+    }
+
+    temporario = fopen("db/temporario.txt", "w");
+
+    if (temporario == NULL)
+    {
+        printf("Erro ao criar o arquivo temporário.\n");
+        fclose(arquivo);
+        return;
+    }
+
+    printf("Informe o ID, valor, tipo, status ou numero do quarto que deseja excluir: ");
+    scanf("%s", busca_dados);
+
+    while (fscanf(arquivo, "%d %f %s %s %d\n", &id, &valor, tipo, status, &numero) != EOF)
+    {
+        if (atoi(busca_dados) == id ||
+            atof(busca_dados) == valor ||
+            strcmp(busca_dados, tipo) == 0 ||
+            strcmp(busca_dados, status) == 0 ||
+            atoi(busca_dados) == numero)
+        {
+            printf("\nQuarto encontrado:\n");
+            printf("ID: %d\n", id);
+            printf("Valor: %.2f\n", valor);
+            printf("Tipo: %s\n", tipo);
+            printf("Status: %s\n", status);
+            printf("Número: %d\n", numero);
+
+            printf("Deseja realmente excluir o quarto? (1 - Sim / 2 - Não): ");
+            int opcao_menu_busca_quartos;
+
+            if (scanf("%d", &opcao_menu_busca_quartos) != 1)
+            {
+                printf("Erro ao ler a opção de exclusão.\n");
+                fclose(arquivo);
+                fclose(temporario);
+                return;
+            }
+
+            while (getchar() != '\n')
+                ;
+            if (opcao_menu_busca_quartos == 1)
+            {
+                encontrado = 1;
+            }
+        }
+        else
+        {
+            fprintf(temporario, "%d %.2f %s %s %d\n", id, valor, tipo, status, numero);
+        }
+    }
+
+    fclose(arquivo);
+    fclose(temporario);
+
+    if (encontrado)
+    {
+        remove("db/quartos.txt");
+        rename("db/temporario.txt", "db/quartos.txt");
+        printf("\nQuarto excluído com sucesso!\n");
+    }
+    else
+    {
+        remove("db/temporario.txt");
+        printf("\nQuarto não encontrado.\n");
+    }
 }
 
 void quantidade_quartos()
