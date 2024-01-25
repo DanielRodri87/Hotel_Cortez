@@ -1,3 +1,5 @@
 666 111 simples 10.00 reservado
 466 208 6 80.00 livre
 642 204 duplo 80.00 livre
+484 204 simples 40.00 livre
+631 101 simples 30.00 livre

@@ -95,7 +95,7 @@ int main(void)
             break;
         case 5:
             printf("=============================================\n");
-            printf("|          Encerrando Aplicacao...           |\n");
+            printf("|          Encerrando Aplicacao...          |\n");
             printf("=============================================\n");
             exit(0);
             break;
