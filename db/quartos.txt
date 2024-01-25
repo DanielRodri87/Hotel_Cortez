@@ -1,6 +1,3 @@
-832 204 duplo 40.00 reservado
-110 208 simples 40.00 reservado
-754 111 simples 20.00 reservado
-940 333 simples 40.00 reservado
-210 444 simples 40.00 reservado
-241 208 simples 4.00 reservado
+851 666 suite 100.00 reservado
+615 302 simples 35.00 reservado
+680 654 duplo 60.00 ocupado
