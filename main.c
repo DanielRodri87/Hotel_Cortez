@@ -36,6 +36,7 @@ int main(void)
         printf("  |                                            |  \n");
         printf("  ==============================================\n\n");
 
+        system("clear || cls");
         printf("  =============================================\n");
         printf("  |  Escolha uma operacao:                    |\n");
         printf("  |                              __   __      |\n");
@@ -74,9 +75,10 @@ int main(void)
                 financas();
                 break;
             case 3:
-                    printf("=============================================\n");
-                    printf("|        Voltando ao menu principal...      |\n");
-                    printf("=============================================\n");
+                printf("=============================================\n");
+                printf("|        Voltando ao menu principal...      |\n");
+                printf("=============================================\n");
+                break;
             default:
                 break;
             }
@@ -92,9 +94,9 @@ int main(void)
             checkin();
             break;
         case 5:
-                printf("=============================================\n");
-                printf("|          Encerrando Aplicacao...           |\n");
-                printf("=============================================\n");
+            printf("=============================================\n");
+            printf("|          Encerrando Aplicacao...           |\n");
+            printf("=============================================\n");
             exit(0);
             break;
         }
