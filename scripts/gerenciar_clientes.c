@@ -138,7 +138,7 @@ int consultar_cliente()
             return 1;
         }
 
-        printf("Escolha uma opcao de busca:\n1 - Buscar por nome\n2 - Buscar por CPF\n3 - Buscar por RG\n4 - Buscar por Telefone\n5 - Buscar por Email\n6 - Sair\n");
+        printf("Escolha uma opcao de busca:\n1 - Buscar por nome\n2 - Buscar por CPF\n3 - Buscar por RG\n4 - Buscar por Telefone\n5 - Buscar por Endereçoo\n6 - Buscar por Email\n7 - Sair\n");
         scanf("%d", &opcao_menu_consultar_clientes);
 
         fseek(arquivo, 0, SEEK_SET);
@@ -245,10 +245,9 @@ int consultar_cliente()
 
         case 5:
         printf("Informe o Endereço do cliente para pesquisar: ");
-        scanf(" %s", consulta_endereco); // Lê até a quebra de linha ou até 99 caracteres
-        getchar(); // Limpar o buffer de entrada
-
-        while (fscanf(arquivo, "%s %s %s %s %99[^\n] %s\n", nome, cpf, rg, telefone, endereco, email) != EOF)
+        scanf("%s", consulta_endereco);
+        getchar(); 
+        while (fscanf(arquivo, "%s %s %s %s %s %s\n", nome, cpf, rg, telefone, endereco, email) != EOF)
         {
             if (strcmp(consulta_endereco, endereco) == 0)
             {
@@ -291,7 +290,7 @@ int consultar_cliente()
             }
             break;
 
-        case 7:
+        case 7: 
             fclose(arquivo);
             return encontrado;
             break;
