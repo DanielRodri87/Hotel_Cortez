@@ -1,1 +1,2 @@
 749 111 simples 40.00 ocupado
+55 500 suite 899.00 reservado

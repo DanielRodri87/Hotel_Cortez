@@ -213,7 +213,7 @@ void buscar_quartos()
                 }
             }
             break;
-            
+
         case 3:
             printf("Informe o Valor para pesquisar: ");
             scanf("%f", &busca_valor);
@@ -368,102 +368,39 @@ void editar_quartos()
     system("pause");
 }
 
-#include <stdio.h>
-#include <stdlib.h>
+void apagarQuartoPorNumero(const char *arquivo, int numero) {
+    FILE *arquivoOriginal = fopen(arquivo, "r");
+    FILE *arquivoTemporario = fopen("temporario.txt", "w");
 
-void excluir_quarto()
-{
-    system("clear || cls");
-    printf("=============================================\n");
-    printf("|                Excluir quartos            |\n");
-    printf("|                                           |\n");
-    printf("|              __   __  __   __   __        |\n");
-    printf("|             |  | |  ||  | |  | |  |       |\n");
-    printf("|             |__| |__||__| |__| |__|       |\n");
-    printf("|                                           |\n");
-    printf("|              Excluir quartos:             |\n");
-    printf("|                                           |\n");
-    printf("=============================================\n\n");
+    if (arquivoOriginal == NULL || arquivoTemporario == NULL) {
+        perror("Erro ao abrir os arquivos");
+        exit(EXIT_FAILURE);
+    }
 
-    FILE *arquivo, *temporario;
-
-    int id, numero, encontrado = 0;
-    float valor;
+    char linha[256];
+    int id, numeroQuarto;
     char tipo[20], status[20];
-    char busca_dados[50];
+    float valor;
 
-    arquivo = fopen("db/quartos.txt", "r");
-
-    if (arquivo == NULL)
-    {
-        printf("Erro ao abrir o arquivo para leitura.\n");
-        return;
-    }
-
-    temporario = fopen("db/temporario.txt", "w");
-
-    if (temporario == NULL)
-    {
-        printf("Erro ao criar o arquivo temporário.\n");
-        fclose(arquivo);
-        return;
-    }
-
-    printf("Informe o ID, valor, tipo, status ou numero do quarto que deseja excluir: ");
-    scanf("%s", busca_dados);
-
-    while (fscanf(arquivo, "%d %f %s %s %d\n", &id, &valor, tipo, status, &numero) != EOF)
-    {
-        if (atoi(busca_dados) == id ||
-            atof(busca_dados) == valor ||
-            strcmp(busca_dados, tipo) == 0 ||
-            strcmp(busca_dados, status) == 0 ||
-            atoi(busca_dados) == numero)
-        {
-            printf("\nQuarto encontrado:\n");
-            printf("ID: %d\n", id);
-            printf("Valor: %.2f\n", valor);
-            printf("Tipo: %s\n", tipo);
-            printf("Status: %s\n", status);
-            printf("Número: %d\n", numero);
-
-            printf("Deseja realmente excluir o quarto? (1 - Sim / 2 - Não): ");
-            int opcao_menu_busca_quartos;
-
-            if (scanf("%d", &opcao_menu_busca_quartos) != 1)
-            {
-                printf("Erro ao ler a opção de exclusão.\n");
-                fclose(arquivo);
-                fclose(temporario);
-                return;
-            }
-
-            while (getchar() != '\n')
-                ;
-            if (opcao_menu_busca_quartos == 1)
-            {
-                encontrado = 1;
-            }
-        }
-        else
-        {
-            fprintf(temporario, "%d %.2f %s %s %d\n", id, valor, tipo, status, numero);
+    while (fscanf(arquivoOriginal, "%d %d %s %f %s", &id, &numeroQuarto, tipo, &valor, status) != EOF) {
+        if (numeroQuarto != numero || strcmp(status, "livre") != 0) {
+            fprintf(arquivoTemporario, "%d %d %s %.2f %s\n", id, numeroQuarto, tipo, valor, status);
+            printf("Quarto não encontrado ou nao esta livre.\n");
+            system("pause");
         }
     }
 
-    fclose(arquivo);
-    fclose(temporario);
+    fclose(arquivoOriginal);
+    fclose(arquivoTemporario);
 
-    if (encontrado)
-    {
-        remove("db/quartos.txt");
-        rename("db/temporario.txt", "db/quartos.txt");
-        printf("\nQuarto excluído com sucesso!\n");
+    if (remove(arquivo) != 0) {
+        perror("Erro ao remover o arquivo original");
+        exit(EXIT_FAILURE);
     }
-    else
-    {
-        remove("db/temporario.txt");
-        printf("\nQuarto não encontrado.\n");
+
+    if (rename("temporario.txt", arquivo) != 0) {
+        perror("Erro ao renomear o arquivo temporário");
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -533,7 +470,7 @@ void quartos()
 {
     while (1)
     {
-        int opcao_menu_quartos;
+        int opcao_menu_quartos, numeroQuarto;
         system("clear || cls");
         printf("  =============================================\n");
         printf("  |  Escolha uma operacao:                    |\n");
@@ -541,7 +478,7 @@ void quartos()
         printf("  |  1 - Cadastrar Quarto      |  | |  |      |\n");
         printf("  |  2 - Consultar Quarto      |__| |__|      |\n");
         printf("  |  3 - Editar Quarto          __   __       |\n");
-        printf("  |  4 - Exluir de Quarto      |  | |  |      |\n");
+        printf("  |  4 - Excluir de Quarto     |  | |  |      |\n");
         printf("  |  5 - Quantidade de Quarto  |__| |__|      |\n");
         printf("  |  6 - Sair                                 |\n");
         printf("  |                                           |\n");
@@ -562,7 +499,13 @@ void quartos()
             editar_quartos();
             break;
         case 4:
-            excluir_quarto();
+            printf("Digite o número do quarto a ser apagado: ");
+            scanf("%d", &numeroQuarto);
+
+            apagarQuartoPorNumero("db/quartos.txt", numeroQuarto);
+
+            printf("Quarto apagado com sucesso.\n");
+
             break;
         case 5:
             quantidade_quartos();
