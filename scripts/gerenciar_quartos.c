@@ -317,11 +317,9 @@ void editar_quartos()
             printf("  =============================================\n");
             printf("  |  Editar:                                  |\n");
             printf("  |                             __   __       |\n");
-            printf("  |  1 - Numero                |  | |  |      |\n");
-            printf("  |  2 - Tipo                  |__| |__|      |\n");
-            printf("  |  3 - Valor                  __   __       |\n");
-            printf("  |  4 - Status                |  | |  |      |\n");
-            printf("  |  5 - Voltar                |__| |__|      |\n");
+            printf("  |  1 - Tipo                  |__| |__|      |\n");
+            printf("  |  2 - Valor                  __   __       |\n");
+            printf("  |  3 - Voltar                |__| |__|      |\n");
             printf("  |                                           |\n");
             printf("  =============================================\n");
             printf("-> ");
@@ -330,22 +328,15 @@ void editar_quartos()
             switch (menu_editar_quartos)
             {
             case 1:
-                printf("Informe o novo numero do quarto: ");
-                scanf("%d", &numero);
-                break;
-            case 2:
                 printf("Informe o novo tipo do quarto: ");
                 scanf("%s", tipo);
                 break;
-            case 3:
+            case 2:
                 printf("Informe o novo valor da diária do quarto: ");
                 scanf("%f", &valor);
                 break;
-            case 4:
-                printf("Informe o novo status do quarto: ");
-                scanf("%s", status);
                 break;
-            case 5:
+            case 3:
                 fclose(arquivo);
                 fclose(temporario);
                 remove("db/temporario.txt");
@@ -505,6 +496,7 @@ void quartos()
             apagarQuartoPorNumero("db/quartos.txt", numeroQuarto);
 
             printf("Quarto apagado com sucesso.\n");
+            system("pause");
 
             break;
         case 5:
