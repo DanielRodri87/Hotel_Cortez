@@ -52,6 +52,7 @@ int main(void)
 
         switch (opcao_menu1)
         {
+            
         case 1:
             system("clear || cls");
             printf("=============================================\n");
