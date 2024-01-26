@@ -1,4 +1,5 @@
-851 666 suite 100.00 reservado
-615 302 simples 35.00 reservado
-680 654 duplo 60.00 ocupado
-573 407 simples 40.00 reservado
+851 666 suite 0.00 reservado
+615 302 simples 0.00 reservado
+680 654 duplo 0.00 ocupado
+573 407 simples 0.00 reservado
+919 999 simples 0.00 reservado
