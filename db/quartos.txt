@@ -1,5 +1,1 @@
-851 666 suite 0.00 reservado
-615 302 simples 0.00 reservado
-680 654 duplo 0.00 ocupado
-573 407 simples 0.00 reservado
-919 999 simples 0.00 reservado
+749 111 simples 40.00 reservado

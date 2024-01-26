@@ -120,92 +120,90 @@ void checkin()
                                     {
                                         printf("Pagamento realizado com sucesso!\n");
 
-                                        // em quartos.txt, mudar o status do quarto para ocupado e em datas.txt, mudar o status de pagamento para pago
                                         FILE *arquivoQ = fopen("db/quartos.txt", "r");
-                                        FILE *arquivoQ2 = fopen("db/quartos2.txt", "w");
-                                        if (arquivoQ == NULL)
+                                        FILE *arquivoQAtualizado = fopen("db/quartos_atualizado.txt", "w");
+
+                                        if (arquivoQ == NULL || arquivoQAtualizado == NULL)
                                         {
-                                            printf("Erro ao abrir o arquivo de quartos para leitura.\n");
+                                            printf("Erro ao abrir os arquivos de quartos.\n");
+                                            system("pause");
                                             return;
                                         }
 
-                                        // db/quartos.txt
-                                        // id numero tipo valor status
-                                        // 851 666 suite 100.00 reservado
-                                        // 615 302 simples 35.00 reservado
-                                        // 680 654 duplo 60.00 ocupado
-                                        // 573 407 simples 40.00 reservado
-
-                                        // int id, numero;
-                                        // char tipo[20], status[20];
-                                        // float valor;
-                                        int valor;
-                                        char status[20], tipo[20];
+                                        int id, numero_quarto = numero;
+                                        char tipo[20];
+                                        float valor;
+                                        char status[20];
 
                                         while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
                                         {
-                                            if (numero == busca_id)
+                                            if (numero == numero_quarto)
                                             {
-                                                fprintf(arquivoQ2, "%d %d %s %.2f ocupado\n", id, numero, tipo, valor);
+                                                fprintf(arquivoQAtualizado, "%d %d %s %.2f ocupado\n", id, numero, tipo, valor);
                                             }
                                             else
                                             {
-                                                fprintf(arquivoQ2, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+                                                fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
                                             }
                                         }
 
                                         fclose(arquivoQ);
-                                        fclose(arquivoQ2);
+                                        fclose(arquivoQAtualizado);
 
                                         remove("db/quartos.txt");
-                                        rename("db/quartos2.txt", "db/quartos.txt");
-
-                                        // db/datas.txt
-                                        // id nome_cliente numero data_entrada data_saida total_dias hora_entrada hora_saida status_pagamento valor_total
-                                        // 680 Rita 654 10/03/2024 15/03/2024 5 15:00 19:00 pendente 175.00
-                                        // 573 Daniel 407 20/02/2024 23/02/2024 3 10:00 10:00 pendente 120.00
-
-                                        // int id, numero, total_dias;
-                                        // char nome_cliente[50], data_entrada[11], data_saida[11], hora_entrada[6], hora_saida[6], status_pagamento[20];
-                                        // float valor_total;
+                                        rename("db/quartos_atualizado.txt", "db/quartos.txt");
 
                                         FILE *arquivoD = fopen("db/datas.txt", "r");
-                                        FILE *arquivoD2 = fopen("db/datas2.txt", "w");
+                                        FILE *arquivoDAtualizado = fopen("db/datas_atualizado.txt", "w");
 
-                                        if (arquivoD == NULL)
+                                        if (arquivoD == NULL || arquivoDAtualizado == NULL)
                                         {
-                                            printf("Erro ao abrir o arquivo de datas para leitura.\n");
+                                            printf("Erro ao abrir os arquivos de datas.\n");
                                             return;
                                         }
+
+                                        char nome_cliente[100], data_entrada[11], data_saida[11], hora_entrada[6], hora_saida[6], status_pagamento[20];
 
                                         while (fscanf(arquivoD, "%d %s %d %s %s %d %s %s %s %f\n", &id, nome_cliente, &numero, data_entrada, data_saida, &total_dias, hora_entrada, hora_saida, status_pagamento, &valor_total) != EOF)
                                         {
                                             if (id == busca_id)
                                             {
-                                                fprintf(arquivoD2, "%d %s %d %s %s %d %s %s pago %.2f\n", id, nome_cliente, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, valor_total);
+                                                fprintf(arquivoDAtualizado, "%d %s %d %s %s %d %s %s pago %.2f\n", id, nome_cliente, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, valor_total);
                                             }
                                             else
                                             {
-                                                fprintf(arquivoD2, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome_cliente, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, status_pagamento, valor_total);
+                                                fprintf(arquivoDAtualizado, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome_cliente, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, status_pagamento, valor_total);
                                             }
                                         }
 
                                         fclose(arquivoD);
-                                        fclose(arquivoD2);
+                                        fclose(arquivoDAtualizado);
 
                                         remove("db/datas.txt");
-                                        rename("db/datas2.txt", "db/datas.txt");
+                                        rename("db/datas_atualizado.txt", "db/datas.txt");
+                                        if (remove("db/datas.txt") != 0)
+                                        {
+                                            printf("Erro ao excluir o arquivo datas.txt\n");
+                                            system("pause");
+                                            return;
+                                        }
 
-                                        printf("Check-in realizado com sucesso!\n");
-                                        system("pause");
+                                        if (rename("db/datas_atualizado.txt", "db/datas.txt") != 0)
+                                        {
+                                            printf("Erro ao renomear o arquivo datas_atualizado.txt\n");
+                                            system("pause");
+                                            return;
+                                        }
                                     }
+
                                     else if (valor_pago > valor_total)
                                     {
                                         printf("Pagamento realizado com sucesso!\n");
                                         printf("Troco: %.2f\n", valor_pago - valor_total);
                                         printf("Check-in realizado com sucesso!\n");
                                         system("pause");
-                                    } else
+                                    }
+                                    else
                                     {
                                         printf("Valor pago insuficiente!\n");
                                         printf("Check-in cancelado!\n");
@@ -213,15 +211,13 @@ void checkin()
                                     }
 
                                     break;
-                                
+
                                 default:
                                     break;
                                 }
-
                             }
-                            
+
                             // continuar o checkin
-            
                         }
                         else
                         {
@@ -229,12 +225,11 @@ void checkin()
                             system("pause");
                         }
 
-
                         break;
                     }
                 }
 
-                fclose(arquivoD); 
+                fclose(arquivoD);
                 break;
             }
         }
