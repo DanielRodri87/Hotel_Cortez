@@ -1,101 +1,121 @@
-void checkin() {
-    int opcao;
-    char cpf[12], numero_quarto[4], data_entrada[11], data_saida[11], valor[10], dias[3];
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <conio.h>
 
-    FILE *datasArquivo; 
+int opcao_menu_checkin, busca_cpf, busca_id;
+char consuta_cpf[20];
+// variaveis necessarias
+int cpf, rg, telefone;
+char nome[50], email[50];
 
-    while (1) {
+void checkin()
+{
+    system("clear || cls");
+    printf("=============================================\n");
+    printf("|              Realize o Check-in           |\n");
+    printf("|                                           |\n");
+    printf("|              __   __  __   __   __        |\n");
+    printf("|             |  | |  ||  | |  | |  |       |\n");
+    printf("|             |__| |__||__| |__| |__|       |\n");
+    printf("|                                           |\n");
+    printf("|              Seja bem-vindo:              |\n");
+    printf("|                                           |\n");
+    printf("=============================================\n\n");
+
+    printf("  =============================================\n");
+    printf("  |  Escolha uma Opcao:                       |\n");
+    printf("  |                             __   __       |\n");
+    printf("  |  1 - Check-in              |  | |  |      |\n");
+    printf("  |  2 - Realizar reserva      |__| |__|      |\n");
+    printf("  |  3 - Consultar reservas                   |\n");
+    printf("  |  4 - Voltar                |__| |__|      |\n");
+    printf("  |                                           |\n");
+    printf("  =============================================\n");
+    printf("-> ");
+    scanf("%d", &opcao_menu_checkin);
+
+    switch (opcao_menu_checkin)
+    {
+    case 1:
         system("clear || cls");
-        printf("\n=============================================\n");
-        printf("Login dos Clientes:\n");
+        printf("=============================================\n");
+        printf("|               Tela de Check-in            |\n");
+        printf("|                                           |\n");
+        printf("|              __   __  __   __   __        |\n");
+        printf("|             |  | |  ||  | |  | |  |       |\n");
+        printf("|             |__| |__||__| |__| |__|       |\n");
+        printf("|                                           |\n");
         printf("=============================================\n");
 
-        printf("1 - Fazer Check-in\n");
-        printf("2 - Sair\n");
-        scanf("%d", &opcao);
+        printf("Informe o CPF do cliente: ");
+        scanf("%d", &busca_cpf);
 
-        switch (opcao) {
-            case 1:
-                printf("Digite o CPF do cliente: ");
-                scanf("%s", cpf);
+        FILE *arquivoC = fopen("db/clientes.txt", "r");
 
-                printf("Digite o numero do quarto: ");
-                scanf("%s", numero_quarto);
+        while (fscanf(arquivoC, "%s %d %d %d %s\n", nome, &cpf, &rg, &telefone, email) != EOF)
+        {
+            if (busca_cpf == cpf)
+            {
+                printf("Bem-vindo(a) %s!\n", nome);
+                printf("Informe o ID da reserva: ");
+                scanf("%d", &busca_id);
 
-                datasArquivo = fopen("datas.txt", "r"); 
+                int id, numero;
+                char nome_cliente[50], data_entrada[11], data_saida[11], hora_entrada[6], hora_saida[6], status_pagamento[20];
+                int total_dias;
+                float valor_total;
 
-                int encontrado = 0;
-
-                while (fscanf(datasArquivo, "%*d %*s %s %*s %*s %*s", numero_quarto) == 1) {
-                    if (strcmp(numero_quarto, numero_quarto) == 0) {
-                        encontrado = 1;
-                        break;
-                    }
+                // Open "datas.txt" for reading
+                FILE *arquivoD = fopen("db/datas.txt", "r");
+                if (arquivoD == NULL)
+                {
+                    printf("Erro ao abrir o arquivo de datas para leitura.\n");
+                    return;
                 }
 
-                system("pause");
-                fclose(datasArquivo);
-
-                if (!encontrado) {
-                    printf("Quarto não encontrado em datas.txt. Verifique o número do quarto.\n");
-                    continue;
-                }
-
-                datasArquivo = fopen("datas.txt", "r");  // Apenas atribuição, sem redefinição
-                FILE *tempArquivo = fopen("temp.txt", "w");
-
-                while (fscanf(datasArquivo, "%*d %*s %s %s %s %s", numero_quarto, data_entrada, data_saida, dias) == 4) {
-                    if (strcmp(numero_quarto, numero_quarto) == 0) {
-                        printf("Quarto encontrado!\n");
-                        printf("Data de entrada atual: %s\n", data_entrada);
-                        printf("Data de saída atual: %s\n", data_saida);
-
-                        printf("Deseja alterar as datas de entrada e saída? (1 - Sim, 0 - Não): ");
-                        int escolha;
-                        scanf("%d", &escolha);
-
-                        if (escolha == 1) {
-                            printf("Digite a nova data de entrada (formato: DD/MM/AAAA): ");
-                            scanf("%s", data_entrada);
-
-                            printf("Digite a nova data de saída (formato: DD/MM/AAAA): ");
-                            scanf("%s", data_saida);
-                        }
-                    }
-
-                    fprintf(tempArquivo, "%s %s %s %s\n", numero_quarto, data_entrada, data_saida, dias);
-                }
-
-                fclose(datasArquivo);
-                fclose(tempArquivo);
-
-                remove("datas.txt");
-                rename("temp.txt", "datas.txt");
-
-                FILE *quartosArquivo = fopen("quartos.txt", "r");
-                float valor_diaria;
-
-                while (fscanf(quartosArquivo, "%*d %s %*s %f %*s", numero_quarto, &valor_diaria) == 2) {
-                    if (strcmp(numero_quarto, numero_quarto) == 0) {
-                        printf("Valor da diária: %.2f\n", valor_diaria);
-
-                        int num_dias = atoi(dias);
-                        float valor_total = num_dias * valor_diaria;
-                        printf("Valor total da estadia: %.2f\n", valor_total);
-
-                        FILE *checkinArquivo = fopen("checkin.txt", "a");
-                        fprintf(checkinArquivo, "%s %s %s %s %.2f\n", cpf, numero_quarto, data_entrada, data_saida, valor_total);
-                        fclose(checkinArquivo);
+                // Search for the reservation ID in "datas.txt"
+                while (fscanf(arquivoD, "%d %s %d %s %s %d %s %s %s %f\n", &id, nome_cliente, &numero, data_entrada, data_saida, &total_dias, hora_entrada, hora_saida, status_pagamento, &valor_total) != EOF)
+                {
+                    if (busca_id == id)
+                    {
+                        printf("Reserva encontrada:\n");
+                        printf("ID: %d\n", id);
+                        printf("Cliente: %s\n", nome_cliente);
+                        printf("Número do quarto: %d\n", numero);
+                        printf("Data de entrada: %s\n", data_entrada);
+                        printf("Data de saída: %s\n", data_saida);
+                        printf("Total de dias: %d\n", total_dias);
+                        printf("Hora de entrada: %s\n", hora_entrada);
+                        printf("Hora de saída: %s\n", hora_saida);
+                        printf("Status de pagamento: %s\n", status_pagamento);
+                        printf("Valor total: %.2f\n", valor_total);
+                        system("pause");
 
                         break;
                     }
                 }
 
-                fclose(quartosArquivo);
+                fclose(arquivoD); 
                 break;
-
-            case 2:
-                return;
+            }
         }
+        break;
+
+    case 2:
+
+        break;
+
+    case 3:
+
+        break;
+
+    case 4:
+
+        break;
+
+    default:
+        printf("Opcao invalida!\n");
+        break;
     }
 }

@@ -51,8 +51,7 @@ int main(void)
         scanf("%d", &opcao_menu1);
 
         switch (opcao_menu1)
-        {
-            
+        {         
         case 1:
             system("clear || cls");
             printf("=============================================\n");

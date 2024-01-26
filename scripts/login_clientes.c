@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
 int diferenca_dias(const char *data_entrada, const char *data_saida)
 {
