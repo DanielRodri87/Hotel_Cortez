@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio.h>
 
 int opcao_menu_checkin, busca_cpf, busca_id;
 char consuta_cpf[20];
@@ -71,6 +70,17 @@ void checkin()
                 if (arquivoD == NULL)
                 {
                     printf("Erro ao abrir o arquivo de datas para leitura.\n");
+                    fclose(arquivoC);
+                    return;
+                }
+
+                // Open "datas_atualizado.txt" for writing
+                FILE *arquivoDAtualizado = fopen("db/datas_atualizado.txt", "w");
+                if (arquivoDAtualizado == NULL)
+                {
+                    printf("Erro ao abrir o arquivo de datas_atualizado.txt para escrita.\n");
+                    fclose(arquivoD);
+                    fclose(arquivoC);
                     return;
                 }
 
@@ -126,32 +136,52 @@ void checkin()
                                         if (arquivoQ == NULL || arquivoQAtualizado == NULL)
                                         {
                                             printf("Erro ao abrir os arquivos de quartos.\n");
-                                            system("pause");
+                                            fclose(arquivoD);
+                                            fclose(arquivoDAtualizado);
+                                            fclose(arquivoC);
                                             return;
                                         }
 
-                                        int id, numero_quarto = numero;
+                                        int id_q, numero_quarto;
                                         char tipo[20];
-                                        float valor;
+                                        float valor_q;
                                         char status[20];
 
-                                        while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                                        while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id_q, &numero_quarto, tipo, &valor_q, status) != EOF)
                                         {
-                                            if (numero == numero_quarto)
+                                            if (numero_quarto == numero)
                                             {
-                                                fprintf(arquivoQAtualizado, "%d %d %s %.2f ocupado\n", id, numero, tipo, valor);
+                                                fprintf(arquivoQAtualizado, "%d %d %s %.2f ocupado\n", id_q, numero_quarto, tipo, valor_q);
                                             }
                                             else
                                             {
-                                                fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+                                                fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id_q, numero_quarto, tipo, valor_q, status);
                                             }
                                         }
 
                                         fclose(arquivoQ);
                                         fclose(arquivoQAtualizado);
 
-                                        remove("db/quartos.txt");
-                                        rename("db/quartos_atualizado.txt", "db/quartos.txt");
+                                        if (remove("db/quartos.txt") != 0)
+                                        {
+                                            printf("Erro ao excluir o arquivo quartos.txt\n");
+                                            fclose(arquivoD);
+                                            fclose(arquivoDAtualizado);
+                                            fclose(arquivoC);
+                                            return;
+                                        }
+
+                                        if (rename("db/quartos_atualizado.txt", "db/quartos.txt") != 0)
+                                        {
+                                            printf("Erro ao renomear o arquivo quartos_atualizado.txt\n");
+                                            fclose(arquivoD);
+                                            fclose(arquivoDAtualizado);
+                                            fclose(arquivoC);
+                                            return;
+                                        }
+
+                                        fclose(arquivoD);
+                                        fclose(arquivoDAtualizado);
 
                                         FILE *arquivoD = fopen("db/datas.txt", "r");
                                         FILE *arquivoDAtualizado = fopen("db/datas_atualizado.txt", "w");
@@ -159,28 +189,30 @@ void checkin()
                                         if (arquivoD == NULL || arquivoDAtualizado == NULL)
                                         {
                                             printf("Erro ao abrir os arquivos de datas.\n");
+                                            fclose(arquivoC);
                                             return;
                                         }
 
+                                        int id_d, numero_d;
                                         char nome_cliente[100], data_entrada[11], data_saida[11], hora_entrada[6], hora_saida[6], status_pagamento[20];
+                                        int total_dias;
+                                        float valor_total_d;
 
-                                        while (fscanf(arquivoD, "%d %s %d %s %s %d %s %s %s %f\n", &id, nome_cliente, &numero, data_entrada, data_saida, &total_dias, hora_entrada, hora_saida, status_pagamento, &valor_total) != EOF)
+                                        while (fscanf(arquivoD, "%d %s %d %s %s %d %s %s %s %f\n", &id_d, nome_cliente, &numero_d, data_entrada, data_saida, &total_dias, hora_entrada, hora_saida, status_pagamento, &valor_total_d) != EOF)
                                         {
-                                            if (id == busca_id)
+                                            if (id_d == busca_id)
                                             {
-                                                fprintf(arquivoDAtualizado, "%d %s %d %s %s %d %s %s pago %.2f\n", id, nome_cliente, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, valor_total);
+                                                fprintf(arquivoDAtualizado, "%d %s %d %s %s %d %s %s pago %.2f\n", id_d, nome_cliente, numero_d, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, valor_total_d);
                                             }
                                             else
                                             {
-                                                fprintf(arquivoDAtualizado, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome_cliente, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, status_pagamento, valor_total);
+                                                fprintf(arquivoDAtualizado, "%d %s %d %s %s %d %s %s %s %.2f\n", id_d, nome_cliente, numero_d, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, status_pagamento, valor_total_d);
                                             }
                                         }
 
                                         fclose(arquivoD);
                                         fclose(arquivoDAtualizado);
 
-                                        remove("db/datas.txt");
-                                        rename("db/datas_atualizado.txt", "db/datas.txt");
                                         if (remove("db/datas.txt") != 0)
                                         {
                                             printf("Erro ao excluir o arquivo datas.txt\n");
@@ -209,7 +241,6 @@ void checkin()
                                         printf("Check-in cancelado!\n");
                                         system("pause");
                                     }
-
                                     break;
 
                                 default:
@@ -217,34 +248,31 @@ void checkin()
                                 }
                             }
 
-                            // continuar o checkin
                         }
                         else
                         {
                             printf("Check-in cancelado!\n");
                             system("pause");
                         }
-
                         break;
                     }
                 }
 
                 fclose(arquivoD);
+                fclose(arquivoDAtualizado);
                 break;
             }
         }
+        fclose(arquivoC);
         break;
 
     case 2:
-
         break;
 
     case 3:
-
         break;
 
     case 4:
-
         break;
 
     default:
