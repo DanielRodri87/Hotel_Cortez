@@ -159,7 +159,7 @@ int consultar_cliente()
         printf("  |  4 - Telefone               |  | |  |     |\n");
         printf("  |  5 - Endereco               |__| |__|     |\n");
         printf("  |  6 - Email                                |\n");
-        printf("  |  7 - Sair                                 |\n");
+        printf("  |  7 - Voltar                               |\n");
         printf("  |                                           |\n");
         printf("  =============================================\n");
         printf("-> ");
@@ -328,16 +328,21 @@ void pausar()
     printf("Pressione Enter para continuar...");
     while (getchar() != '\n')
         ;
-    getchar(); // Capturar o Enter
+    getchar();
 }
 
 void editar_clientes()
 {
-    system("cls || clear");
-    printf("\n=============================================\n");
-    printf("Editar Clientes:\n");
+    system("clear || cls");
     printf("=============================================\n");
-
+    printf("|               Edtar Clientes              |\n");
+    printf("|                                           |\n");
+    printf("|            __   __  __   __   __          |\n");
+    printf("|           |  | |  ||  | |  | |  |         |\n");
+    printf("|           |__| |__||__| |__| |__|         |\n");
+    printf("|                                           |\n");
+    printf("|                                           |\n");
+    printf("=============================================\n\n");
     FILE *arquivo, *temporario;
 
     char nome[50], consulta_nome[50], email[50], consulta_email[50];
@@ -349,6 +354,7 @@ void editar_clientes()
     if (arquivo == NULL)
     {
         printf("Erro ao abrir o arquivo para leitura.\n");
+        system("pause");
         return;
     }
 
@@ -370,8 +376,21 @@ void editar_clientes()
     {
         if (strcmp(consulta_nome, nome) == 0)
         {
-            printf("Cliente encontrado\n");
-            printf("Informe o que deseja editar:\n1 - Nome\n2 - CPF\n3 - RG\n4 - Telefone\n5 - Endereco\n6 - Email\n7 - Voltar\n");
+
+            system("clear || cls");
+            printf("  =============================================\n");
+            printf("  |  Buscar Por:                              |\n");
+            printf("  |                              __   __      |\n");
+            printf("  |  1 - Nome                   |  | |  |     |\n");
+            printf("  |  2 - CPF                    |__| |__|     |\n");
+            printf("  |  3 - RG                      __   __      |\n");
+            printf("  |  4 - Telefone               |  | |  |     |\n");
+            printf("  |  5 - Endereco               |__| |__|     |\n");
+            printf("  |  6 - Email                                |\n");
+            printf("  |  7 - Voltar                               |\n");
+            printf("  |                                           |\n");
+            printf("  =============================================\n");
+            printf("-> ");
             scanf("%d", &menu_editar_clientes);
 
             switch (menu_editar_clientes)
@@ -414,14 +433,16 @@ void editar_clientes()
 
     if (!encontrado)
     {
-        printf("Cliente não encontrado.\n");
+        printf("Cliente nao encontrado.\n");
         remove("db/temporario.txt");
+        system("pause");
     }
     else
     {
         remove("db/clientes.txt");
         rename("db/temporario.txt", "db/clientes.txt");
         printf("Cliente editado com sucesso!\n");
+        system("pause");
     }
 
     pausar();
@@ -430,11 +451,16 @@ void editar_clientes()
 void excluir_cliente()
 {
 
-    system("cls || clear");
-    printf("\n=============================================\n");
-    printf("Excluir Cliente:\n");
+    system("clear || cls");
     printf("=============================================\n");
-
+    printf("|              Excluir Clientes             |\n");
+    printf("|                                           |\n");
+    printf("|            __   __  __   __   __          |\n");
+    printf("|           |  | |  ||  | |  | |  |         |\n");
+    printf("|           |__| |__||__| |__| |__|         |\n");
+    printf("|                                           |\n");
+    printf("|                                           |\n");
+    printf("=============================================\n\n");
     FILE *arquivo, *temporario;
 
     char nome[50], cpf[50], rg[50], telefone[50], endereco[100], email[50];
@@ -447,6 +473,7 @@ void excluir_cliente()
     if (arquivo == NULL)
     {
         printf("Erro ao abrir o arquivo para leitura.\n");
+        system("pause");
         return;
     }
 
@@ -472,13 +499,13 @@ void excluir_cliente()
             strcmp(consulta, email) == 0)
         {
 
-            printf("\nCliente encontrado:\n");
-            printf("Nome: %s\n", nome);
-            printf("CPF: %s\n", cpf);
-            printf("RG: %s\n", rg);
-            printf("Telefone: %s\n", telefone);
-            printf("Endereco: %s\n", endereco);
-            printf("Email: %s\n", email);
+            printf("=============================================================================================================\n");
+            printf("|                                           INFORMACOES DO CLIENTE                                          |\n");
+            printf("=============================================================================================================\n");
+            printf("| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n", "Nome", "CPF", "RG", "Telefone", "Endereco", "Email");
+            printf("|-----------------|-----------------|-----------------|-----------------|-----------------|-----------------|\n");
+            printf("| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n", nome, cpf, rg, telefone, endereco, email);
+            printf("=============================================================================================================\n");
 
             printf("Deseja realmente excluir o cliente? (1 - Sim / 2 - Nao): ");
             int opcao_menu_busca_clientes;
@@ -509,27 +536,37 @@ void excluir_cliente()
     else
     {
         remove("db/temporario.txt");
-        printf("\nCliente não encontrado.\n");
+        printf("\nCliente nao encontrado.\n");
     }
 }
 
 void clientes()
 {
     int opcao_menu_cliente, resultado_consulta;
-    printf("Gerenciar Clientes \n");
-    printf("Digite a opcao que deseja escolher:\n1 - Cadastrar Cliente\n2 - Consultar Cliente\n3 - Editar Cliente\n4 - Excluir Cliente\n5 - Sair\n ");
+
+    system("clear || cls");
+    printf("  =============================================\n");
+    printf("  |  Escolha uma operacao:                    |\n");
+    printf("  |                              __   __      |\n");
+    printf("  |  1 - Cadastrar Cliente      |  | |  |     |\n");
+    printf("  |  2 - Consultar Cliente      |__| |__|     |\n");
+    printf("  |  3 - Editar Cliente          __   __      |\n");
+    printf("  |  4 - Excluir Cliente        |  | |  |     |\n");
+    printf("  |  5 - Voltar                 |__| |__|     |\n");
+    printf("  |                                           |\n");
+    printf("  =============================================\n");
+    printf("-> ");
     scanf("%d", &opcao_menu_cliente);
     switch (opcao_menu_cliente)
     {
     case 1:
         cadastrar_cliente();
-        printf("Cliente hóspede cadastrado com sucesso!\n");
         break;
     case 2:
         resultado_consulta = consultar_cliente();
         if (resultado_consulta == 0)
         {
-            printf("Cliente não encontrado!");
+            printf("Cliente nao encontrado!");
             system("pause");
         }
         else if (resultado_consulta == 1)
@@ -540,12 +577,10 @@ void clientes()
         break;
 
     case 3:
-        printf("Editar clientes: ");
         editar_clientes();
         break;
 
     case 4:
-        printf("Excluir Clientes: ");
         excluir_cliente();
         system("pause");
         break;
