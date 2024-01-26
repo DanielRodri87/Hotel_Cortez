@@ -185,7 +185,6 @@ int consultar_cliente()
                     printf("| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n", nome, cpf, rg, telefone, endereco, email);
                     printf("=============================================================================================================\n");
                     system("pause");
-                    break;
                 }
             }
             break;
@@ -213,7 +212,6 @@ int consultar_cliente()
                     printf("| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n", nome, cpf, rg, telefone, endereco, email);
                     printf("=============================================================================================================\n");
                     system("pause");
-                    break;
                 }
             }
             break;
@@ -241,8 +239,8 @@ int consultar_cliente()
                     printf("| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n", nome, cpf, rg, telefone, endereco, email);
                     printf("=============================================================================================================\n");
                     system("pause");
-                    break;
                 }
+
             }
             break;
 
@@ -262,8 +260,8 @@ int consultar_cliente()
                     printf("| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n", nome, cpf, rg, telefone, endereco, email);
                     printf("=============================================================================================================\n");
                     system("pause");
-                    break;
                 }
+
             }
             break;
 
@@ -283,8 +281,8 @@ int consultar_cliente()
                     printf("| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n", nome, cpf, rg, telefone, endereco, email);
                     printf("=============================================================================================================\n");
                     system("pause");
-                    break;
                 }
+
             }
             break;
 
@@ -310,8 +308,8 @@ int consultar_cliente()
                     printf("| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n", nome, cpf, rg, telefone, endereco, email);
                     printf("=============================================================================================================\n");
                     system("pause");
-                    break;
                 }
+
             }
             break;
 
@@ -506,7 +504,6 @@ void excluir_cliente()
             printf("|-----------------|-----------------|-----------------|-----------------|-----------------|-----------------|\n");
             printf("| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n", nome, cpf, rg, telefone, endereco, email);
             printf("=============================================================================================================\n");
-
             printf("Deseja realmente excluir o cliente? (1 - Sim / 2 - Nao): ");
             int opcao_menu_busca_clientes;
             scanf("%d", &opcao_menu_busca_clientes);
