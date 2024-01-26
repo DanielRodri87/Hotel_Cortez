@@ -316,6 +316,7 @@ void checkin()
                                             fclose(arquivoC);
                                             return;
                                         }
+                                        
 
                                         int id_q, numero_quarto;
                                         char tipo[20];
