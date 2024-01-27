@@ -168,27 +168,29 @@ void login_clientes()
                             return;
                         }
 
-                        rewind(arquivoQ);
+                            rewind(arquivoQ);
 
-                        while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
-                        {
-                            if (busca_quarto == numero)
+                            while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
                             {
-                                fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
+                                if (busca_quarto == numero)
+                                {
+                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
+                                    fprintf(arquivoD, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "pendente", valor_total);
+
+                                }
+                                else
+                                {
+                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+                                }
+
                             }
-                            else
-                            {
-                                fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
-                            }
-                        }
 
-                        fclose(arquivoQ);
-                        fclose(arquivoQAtualizado);
+                            fclose(arquivoQ);
+                            fclose(arquivoQAtualizado);
 
-                        remove("db/quartos.txt");
-                        rename("db/quartos_atualizado.txt", "db/quartos.txt");
+                            remove("db/quartos.txt");
+                            rename("db/quartos_atualizado.txt", "db/quartos.txt");
 
-                        fprintf(arquivoD, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "pendente", valor_total);
                     }
                     else if (strcmp(status, "reservado") == 0)
                     {
@@ -248,6 +250,8 @@ void login_clientes()
                                 if (busca_quarto == numero)
                                 {
                                     fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
+                                    fprintf(arquivoD, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "pendente", valor_total);
+
                                 }
                                 else
                                 {
@@ -261,7 +265,6 @@ void login_clientes()
                             remove("db/quartos.txt");
                             rename("db/quartos_atualizado.txt", "db/quartos.txt");
 
-                            fprintf(arquivoD, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "pendente", valor_total);
                         }
                     }
                 }

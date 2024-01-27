@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-136 204 duplo 40.00 livre
-169 208 suite 400.00 ocupado
-211 407 simples 20.00 ocupado
-592 999 simples 60.00 reservado
-=======
-480 407 simples 60.00 reservado
->>>>>>> c5dbc309ba7f75eaac702cb30e05ed90880a80b1
+202 202 simples 40.00 reservado
+101 101 simples 30.00 reservado
+558 407 simples 50.00 livre
