@@ -267,6 +267,7 @@ void login_clientes()
                                 return;
                             }
 
+                            id = id + 1;
                             fprintf(arquivoReserva, "%d %s %d %s %s %d %s %s %s %f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "reservado", valor_total);
 
                             fclose(arquivoReserva);
