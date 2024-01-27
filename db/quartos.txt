@@ -1,3 +1,1 @@
-749 111 simples 40.00 ocupado
-55 500 suite 899.00 reservado
-353 407 simples 50.00 ocupado
+480 407 simples 60.00 livre

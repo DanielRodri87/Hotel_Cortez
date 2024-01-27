@@ -9,7 +9,7 @@
 #include "scripts/gerenciar_clientes.c"
 #include "scripts/login_clientes.c"
 #include "scripts/checkin.c"
-
+#include "scripts/checkout.c"
 
 int main(void)
 {
@@ -45,14 +45,15 @@ int main(void)
         printf("  |  2 - Gerenciar Clientes     |__| |__|     |\n");
         printf("  |  3 - Realizar Reserva        __   __      |\n");
         printf("  |  4 - Realizar Check-in      |  | |  |     |\n");
-        printf("  |  5 - Sair                   |__| |__|     |\n");
+        printf("  |  5 - Realizar Check-Out     |__| |__|     |\n");
+        printf("  |  6 - Sair                                 |\n");
         printf("  |                                           |\n");
         printf("  =============================================\n");
         printf("-> ");
         scanf("%d", &opcao_menu1);
 
         switch (opcao_menu1)
-        {         
+        {
         case 1:
             system("clear || cls");
             printf("=============================================\n");
@@ -94,7 +95,11 @@ int main(void)
         case 4:
             checkin();
             break;
+
         case 5:
+            checkout();
+            break;
+        case 6:
             printf("=============================================\n");
             printf("|          Encerrando Aplicacao...          |\n");
             printf("=============================================\n");
