@@ -57,6 +57,41 @@ void obter_data_valida(const char *prompt, char *data)
     } while (!validar_data(data));
 }
 
+void mostrar_quartos_livres() {
+    printf("\n=============================================\n");
+    printf("Quartos Disponíveis:\n");
+    printf("=============================================\n");
+
+    FILE *arquivoQ = fopen("db/quartos.txt", "r");
+
+    if (arquivoQ == NULL) {
+        printf("Erro ao abrir o arquivo de quartos para leitura.\n");
+        return;
+    }
+
+    int id, numero;
+    char tipo[20], status[20];
+    float valor;
+
+    printf("%-5s %-10s %-15s %-10s\n", "ID", "Número", "Tipo", "Valor");
+    printf("=============================================\n");
+
+    while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF) {
+        if (strcmp(status, "livre") == 0) {
+            printf("%-5d %-10d %-15s %.2f\n", id, numero, tipo, valor);
+        }
+    }
+
+    fclose(arquivoQ);
+}
+
+int datas_conflitantes(struct tm tm_reserva_entrada, struct tm tm_reserva_saida, struct tm tm_entrada, struct tm tm_saida) {
+    return ((tm_reserva_entrada.tm_year < tm_saida.tm_year || (tm_reserva_entrada.tm_year == tm_saida.tm_year && tm_reserva_entrada.tm_mon < tm_saida.tm_mon) ||
+             (tm_reserva_entrada.tm_year == tm_saida.tm_year && tm_reserva_entrada.tm_mon == tm_saida.tm_mon && tm_reserva_entrada.tm_mday <= tm_saida.tm_mday)) &&
+            (tm_reserva_saida.tm_year > tm_entrada.tm_year || (tm_reserva_saida.tm_year == tm_entrada.tm_year && tm_reserva_saida.tm_mon > tm_entrada.tm_mon) ||
+             (tm_reserva_saida.tm_year == tm_entrada.tm_year && tm_reserva_saida.tm_mon == tm_entrada.tm_mon && tm_reserva_saida.tm_mday >= tm_entrada.tm_mday)));
+}
+
 void login_clientes()
 {
     system("clear || cls");
@@ -95,7 +130,8 @@ void login_clientes()
         if (busca_cpf == cpf)
         {
             printf("Bem-vindo senhor(a) %s\n", nome);
-            printf("Informe o numero do quarto que deseja reservar: ");
+            printf("De acordo com a tabela de quartos disponíveis, escolha o que deseja reservar: ");
+            mostrar_quartos_livres();
             scanf("%d", &busca_quarto);
 
             rewind(arquivoQ);
@@ -209,6 +245,8 @@ void login_clientes()
                              (Dataf.ano == tm_reserva_entrada.tm_year && Dataf.mes == tm_reserva_entrada.tm_mon && Dataf.dia >= tm_reserva_entrada.tm_mday)))
                         {
                             printf("Erro: O quarto já se encontra reservado nesse período\n");
+                            printf("Aqui está uma lista de quartos disponíveis para reserva: ");
+                            mostrar_quartos_livres();
                             system("pause");
                         }
                         else
@@ -266,3 +304,4 @@ void login_clientes()
     fclose(arquivoQ);
     fclose(arquivoD);
 }
+
