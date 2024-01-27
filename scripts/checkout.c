@@ -42,6 +42,16 @@ void checkout()
         {
             if (buscar_id_reserva == id)
             {
+                while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id_q, &numero_quarto, tipo, &valor_q, status) != EOF)
+                {
+                    if (strcmp(status, "livre") == 0 || strcmp(status, "reservado") == 0)
+                    {
+                        printf("Nao ha Checkin para realizar o Check-Out!\n");
+                        system("pause");
+                        return;
+                    }
+                }
+
                 printf("Reserva encontrada:\n");
                 printf("ID: %d\n", id);
                 printf("Cliente: %s\n", nome_cliente);

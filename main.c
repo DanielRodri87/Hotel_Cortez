@@ -11,6 +11,7 @@
 #include "scripts/checkin.c"
 #include "scripts/checkout.c"
 
+
 int main(void)
 {
     int opcao_menu1, opcao_menu_hotel, opcao_menu_cliente;

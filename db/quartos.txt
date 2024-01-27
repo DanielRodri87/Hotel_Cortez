@@ -1,1 +1,4 @@
-480 407 simples 60.00 livre
+136 204 duplo 40.00 livre
+169 208 suite 400.00 ocupado
+211 407 simples 20.00 ocupado
+592 999 simples 60.00 reservado
