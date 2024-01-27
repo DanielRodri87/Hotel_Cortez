@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Ritar/OneDrive/Documentos/trabalho algo2/Hotel_Cortez",
-      "program": "c:/Users/Ritar/OneDrive/Documentos/trabalho algo2/Hotel_Cortez/build/Debug/outDebug",
+      "cwd": "c:/Users/Ritar/OneDrive/Documentos/trabalhoHotel/Hotel_Cortez",
+      "program": "c:/Users/Ritar/OneDrive/Documentos/trabalhoHotel/Hotel_Cortez/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
