@@ -201,13 +201,8 @@ void login_clientes()
                         printf("O quarto já se encontra reservado. Por favor, informe datas diferentes para a reserva.\n");
                         printf("Informe a data de entrada (formato DD/MM/YYYY): ");
                         scanf("%s", data_entrada);
-                        printf("Informe a hora de entrada (formato HH:MM): ");
-                        scanf("%s", hora_entrada);
-
                         printf("Informe a data de saída (formato DD/MM/YYYY): ");
                         scanf("%s", data_saida);
-                        printf("Informe a hora de saída (formato HH:MM): ");
-                        scanf("%s", hora_saida);
 
                         sscanf(data_entrada, "%d/%d/%d", &tm_reserva_entrada.tm_mday, &tm_reserva_entrada.tm_mon, &tm_reserva_entrada.tm_year);
                         sscanf(data_saida, "%d/%d/%d", &tm_reserva_saida.tm_mday, &tm_reserva_saida.tm_mon, &tm_reserva_saida.tm_year);
@@ -260,33 +255,23 @@ void login_clientes()
                             total_dias = diferenca_dias(data_entrada, data_saida);
                             valor_total = total_dias * valor;
 
-                            FILE *arquivoQAtualizado = fopen("db/quartos_atualizado.txt", "w");
-                            if (arquivoQAtualizado == NULL)
+                            printf("Informe a hora de entrada (formato HH:MM): ");
+                            scanf("%s", hora_entrada);
+                            printf("Informe a hora de saída (formato HH:MM): ");
+                            scanf("%s", hora_saida);
+
+                            FILE *arquivoReserva = fopen("db/datas.txt", "a");
+                            if (arquivoReserva == NULL)
                             {
-                                printf("Erro ao abrir o arquivo para escrita.\n");
+                                printf("Erro ao abrir o arquivo de reservas para escrita.\n");
                                 return;
                             }
 
-                            rewind(arquivoQ);
+                            fprintf(arquivoReserva, "%d %s %d %s %s %d %s %s %s %f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "reservado", valor_total);
 
-                            while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
-                            {
-                                if (busca_quarto == numero)
-                                {
-                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
-                                    fprintf(arquivoD, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "pendente", valor_total);
-                                }
-                                else
-                                {
-                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
-                                }
-                            }
+                            fclose(arquivoReserva);
 
-                            fclose(arquivoQ);
-                            fclose(arquivoQAtualizado);
-
-                            remove("db/quartos.txt");
-                            rename("db/quartos_atualizado.txt", "db/quartos.txt");
+                            printf("Reserva realizada com sucesso!\n");
                         }
                     }
                 }
