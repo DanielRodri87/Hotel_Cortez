@@ -69,6 +69,33 @@ void checkout()
                 {
                     printf("Check-Out realizado com sucesso!\n");
                     printf("Obrigado pela preferencia!\n");
+
+                    FILE *arquivoQ = fopen("db/quartos.txt", "r");
+                    FILE *arquivoQAtualizado = fopen("db/quartos_atualizado.txt", "w");
+
+                    if (arquivoQ == NULL || arquivoQAtualizado == NULL)
+                    {
+                        printf("Erro ao abrir os arquivos de quartos.\n");
+                        return;
+                    }
+
+                    int id_q, numero_quarto;
+                    char tipo[20];
+                    float valor_q;
+                    char status[20];
+
+                    while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id_q, &numero_quarto, tipo, &valor_q, status) != EOF)
+                    {
+                        if (numero_quarto == numero)
+                        {
+                            fprintf(arquivoQAtualizado, "%d %d %s %.2f livre\n", id_q, numero_quarto, tipo, valor_q);
+                        }
+                        else
+                        {
+                            fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id_q, numero_quarto, tipo, valor_q, status);
+                        }
+                    }
+                    
                     fclose(arquivoD);
                     fclose(arquivoQ);
                     system("pause");

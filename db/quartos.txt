@@ -1,3 +1,2 @@
-202 202 simples 40.00 reservado
-101 101 simples 30.00 reservado
-558 407 simples 50.00 livre
+987 111 duplo 111.00 reservado
+337 999 simples 700.00 ocupado

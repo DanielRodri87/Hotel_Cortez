@@ -183,7 +183,7 @@ void checkin()
 
                         if (opcao_confirmar_checkin == 1)
                         {
-                            printf("Deseja realizar o pagamento agora?:\n1 - Sim\n2 - Nao\n");
+                            printf("Deseja realizar o pagamento agora?\n1 - Sim\n2 - Nao\n");
                             scanf("%d", &opcao_confirmar_pagamento);
 
                             if (opcao_confirmar_pagamento == 1)

@@ -47,6 +47,7 @@ int validar_data(const char *data)
     return 1;
 }
 
+
 void obter_data_valida(const char *prompt, char *data)
 {
     do
@@ -56,7 +57,7 @@ void obter_data_valida(const char *prompt, char *data)
 
         if (!validar_data(data))
         {
-            printf("Data inválida ou menor que a atual. Digite novamente.\n");
+            printf("Data invalida ou menor que atual. Digite novamente.\n");
         }
     } while (!validar_data(data));
 }
@@ -64,7 +65,7 @@ void obter_data_valida(const char *prompt, char *data)
 void mostrar_quartos_livres()
 {
     printf("\n=============================================\n");
-    printf("Quartos Disponíveis:\n");
+    printf("Quartos Disponiveis:\n");
     printf("=============================================\n");
 
     FILE *arquivoQ = fopen("db/quartos.txt", "r");
@@ -79,7 +80,7 @@ void mostrar_quartos_livres()
     char tipo[20], status[20];
     float valor;
 
-    printf("%-5s %-10s %-15s %-10s\n", "ID", "Número", "Tipo", "Valor");
+    printf("%-5s %-10s %-15s %-10s\n", "ID", "Numero", "Tipo", "Valor");
     printf("=============================================\n");
 
     while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
@@ -131,7 +132,7 @@ void login_clientes()
         if (busca_cpf == cpf)
         {
             printf("Bem-vindo senhor(a) %s\n", nome);
-            printf("De acordo com a tabela de quartos disponíveis, escolha o que deseja reservar: ");
+            printf("De acordo com a tabela de quartos disponiveis, escolha o que deseja reservar: ");
             mostrar_quartos_livres();
             scanf("%d", &busca_quarto);
 
@@ -154,8 +155,8 @@ void login_clientes()
                         printf("Informe a hora de entrada (formato HH:MM): ");
                         scanf("%s", hora_entrada);
 
-                        obter_data_valida("Informe a data de saída (formato DD/MM/YYYY): ", data_saida);
-                        printf("Informe a hora de saída (formato HH:MM): ");
+                        obter_data_valida("Informe a data de saida (formato DD/MM/YYYY): ", data_saida);
+                        printf("Informe a hora de saida (formato HH:MM): ");
                         scanf("%s", hora_saida);
 
                         int total_dias = diferenca_dias(data_entrada, data_saida);
@@ -198,10 +199,10 @@ void login_clientes()
 
                         char data_entrada[20], data_saida[20];
                         int total_dias;
-                        printf("O quarto já se encontra reservado. Por favor, informe datas diferentes para a reserva.\n");
+                        printf("O quarto ja se encontra reservado. Por favor, informe datas diferentes para a reserva.\n");
                         printf("Informe a data de entrada (formato DD/MM/YYYY): ");
                         scanf("%s", data_entrada);
-                        printf("Informe a data de saída (formato DD/MM/YYYY): ");
+                        printf("Informe a data de saida (formato DD/MM/YYYY): ");
                         scanf("%s", data_saida);
 
                         sscanf(data_entrada, "%d/%d/%d", &tm_reserva_entrada.tm_mday, &tm_reserva_entrada.tm_mon, &tm_reserva_entrada.tm_year);
@@ -243,8 +244,8 @@ void login_clientes()
                             (tm_reserva_saida.tm_year > tm_reserva_entrada_db.tm_year || (tm_reserva_saida.tm_year == tm_reserva_entrada_db.tm_year && tm_reserva_saida.tm_mon > tm_reserva_entrada_db.tm_mon) ||
                              (tm_reserva_saida.tm_year == tm_reserva_entrada_db.tm_year && tm_reserva_saida.tm_mon == tm_reserva_entrada_db.tm_mon && tm_reserva_saida.tm_mday >= tm_reserva_entrada_db.tm_mday)))
                         {
-                            printf("Erro: O quarto já se encontra reservado nesse período\n");
-                            printf("Aqui está uma lista de quartos disponíveis para reserva:\n ");
+                            printf("Erro: O quarto ja se encontra reservado nesse periodo\n");
+                            printf("Aqui esta uma lista de quartos disponiveis para reserva:\n ");
                             mostrar_quartos_livres();
                             system("pause");
                         }
@@ -257,7 +258,7 @@ void login_clientes()
 
                             printf("Informe a hora de entrada (formato HH:MM): ");
                             scanf("%s", hora_entrada);
-                            printf("Informe a hora de saída (formato HH:MM): ");
+                            printf("Informe a hora de saida (formato HH:MM): ");
                             scanf("%s", hora_saida);
 
                             FILE *arquivoReserva = fopen("db/datas.txt", "a");
@@ -274,6 +275,11 @@ void login_clientes()
 
                             printf("Reserva realizada com sucesso!\n");
                         }
+                    } else {
+                        printf("Erro: O quarto ja se encontra ocupado\n");
+                        printf("Aqui esta uma lista de quartos disponiveis para reserva:\n ");
+                        mostrar_quartos_livres();
+                        system("pause");
                     }
                 }
             }
