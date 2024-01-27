@@ -52,7 +52,7 @@ void obter_data_valida(const char *prompt, char *data)
     do
     {
         printf("%s", prompt);
-        scanf(" %s", data);  // Adicionado um espaço na string de formato
+        scanf(" %s", data); // Adicionado um espaço na string de formato
 
         if (!validar_data(data))
         {
@@ -168,38 +168,37 @@ void login_clientes()
                             return;
                         }
 
-                            rewind(arquivoQ);
+                        rewind(arquivoQ);
 
-                            while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                        while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                        {
+                            if (busca_quarto == numero)
                             {
-                                if (busca_quarto == numero)
-                                {
-                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
-                                    fprintf(arquivoD, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "pendente", valor_total);
-
-                                }
-                                else
-                                {
-                                    fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
-                                }
-
+                                fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
+                                fprintf(arquivoD, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "pendente", valor_total);
                             }
+                            else
+                            {
+                                fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+                            }
+                        }
 
-                            fclose(arquivoQ);
-                            fclose(arquivoQAtualizado);
+                        fclose(arquivoQ);
+                        fclose(arquivoQAtualizado);
 
-                            remove("db/quartos.txt");
-                            rename("db/quartos_atualizado.txt", "db/quartos.txt");
-
+                        remove("db/quartos.txt");
+                        rename("db/quartos_atualizado.txt", "db/quartos.txt");
                     }
                     else if (strcmp(status, "reservado") == 0)
                     {
                         struct tm tm_reserva_entrada = {0};
                         struct tm tm_reserva_saida = {0};
+                        struct tm tm_reserva_entrada_db = {0};
+                        struct tm tm_reserva_saida_db = {0};
 
                         char data_entrada[20], data_saida[20];
                         int total_dias;
-
+                        printf("O quarto já se encontra reservado. Por favor, informe datas diferentes para a reserva.\n");
                         printf("Informe a data de entrada (formato DD/MM/YYYY): ");
                         scanf("%s", data_entrada);
                         printf("Informe a hora de entrada (formato HH:MM): ");
@@ -219,10 +218,35 @@ void login_clientes()
                         tm_reserva_saida.tm_mon -= 1;
                         tm_reserva_saida.tm_year -= 1900;
 
-                        if ((tm_reserva_entrada.tm_year < tm_reserva_saida.tm_year || (tm_reserva_entrada.tm_year == tm_reserva_saida.tm_year && tm_reserva_entrada.tm_mon < tm_reserva_saida.tm_mon) ||
-                             (tm_reserva_entrada.tm_year == tm_reserva_saida.tm_year && tm_reserva_entrada.tm_mon == tm_reserva_saida.tm_mon && tm_reserva_entrada.tm_mday <= tm_reserva_saida.tm_mday)) &&
-                            (tm_reserva_saida.tm_year > tm_reserva_entrada.tm_year || (tm_reserva_saida.tm_year == tm_reserva_entrada.tm_year && tm_reserva_saida.tm_mon > tm_reserva_entrada.tm_mon) ||
-                             (tm_reserva_saida.tm_year == tm_reserva_entrada.tm_year && tm_reserva_saida.tm_mon == tm_reserva_entrada.tm_mon && tm_reserva_saida.tm_mday >= tm_reserva_entrada.tm_mday)))
+                        char data_entrada_bd[20], data_saida_bd[20];
+                        FILE *arquivoD = fopen("db/datas.txt", "r");
+                        if (arquivoD == NULL)
+                        {
+                            printf("Erro ao abrir o arquivo de datas para leitura.\n");
+                            return;
+                        }
+
+                        while (fscanf(arquivoD, "%d %s %d %s %s %d %s %s %s %f\n", &id, nome, &numero, data_entrada_bd, data_saida_bd, &total_dias, hora_entrada, hora_saida, status, &valor_total) != EOF)
+                        {
+                            if (busca_quarto == numero)
+                            {
+                                sscanf(data_entrada_bd, "%d/%d/%d", &tm_reserva_entrada_db.tm_mday, &tm_reserva_entrada_db.tm_mon, &tm_reserva_entrada_db.tm_year);
+                                sscanf(data_saida_bd, "%d/%d/%d", &tm_reserva_saida_db.tm_mday, &tm_reserva_saida_db.tm_mon, &tm_reserva_saida_db.tm_year);
+
+                                tm_reserva_entrada_db.tm_mon -= 1;
+                                tm_reserva_entrada_db.tm_year -= 1900;
+
+                                tm_reserva_saida_db.tm_mon -= 1;
+                                tm_reserva_saida_db.tm_year -= 1900;
+                            }
+                        }
+
+                        fclose(arquivoD);
+
+                        if ((tm_reserva_entrada.tm_year < tm_reserva_saida_db.tm_year || (tm_reserva_entrada.tm_year == tm_reserva_saida_db.tm_year && tm_reserva_entrada.tm_mon < tm_reserva_saida_db.tm_mon) ||
+                             (tm_reserva_entrada.tm_year == tm_reserva_saida_db.tm_year && tm_reserva_entrada.tm_mon == tm_reserva_saida_db.tm_mon && tm_reserva_entrada.tm_mday <= tm_reserva_saida_db.tm_mday)) &&
+                            (tm_reserva_saida.tm_year > tm_reserva_entrada_db.tm_year || (tm_reserva_saida.tm_year == tm_reserva_entrada_db.tm_year && tm_reserva_saida.tm_mon > tm_reserva_entrada_db.tm_mon) ||
+                             (tm_reserva_saida.tm_year == tm_reserva_entrada_db.tm_year && tm_reserva_saida.tm_mon == tm_reserva_entrada_db.tm_mon && tm_reserva_saida.tm_mday >= tm_reserva_entrada_db.tm_mday)))
                         {
                             printf("Erro: O quarto já se encontra reservado nesse período\n");
                             printf("Aqui está uma lista de quartos disponíveis para reserva:\n ");
@@ -251,7 +275,6 @@ void login_clientes()
                                 {
                                     fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
                                     fprintf(arquivoD, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "pendente", valor_total);
-
                                 }
                                 else
                                 {
@@ -264,7 +287,6 @@ void login_clientes()
 
                             remove("db/quartos.txt");
                             rename("db/quartos_atualizado.txt", "db/quartos.txt");
-
                         }
                     }
                 }
