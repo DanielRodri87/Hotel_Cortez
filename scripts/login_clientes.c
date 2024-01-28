@@ -53,7 +53,7 @@ void obter_data_valida(const char *prompt, char *data)
     do
     {
         printf("%s", prompt);
-        scanf(" %s", data); // Adicionado um espaço na string de formato
+        scanf(" %s", data); 
 
         if (!validar_data(data))
         {
@@ -138,13 +138,13 @@ void login_clientes()
 
             rewind(arquivoQ);
 
-            int quarto_encontrado = 0; // Flag para indicar se o quarto foi encontrado
+            int quarto_encontrado = 0; 
 
             while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
             {
                 if (busca_quarto == numero)
                 {
-                    quarto_encontrado = 1; // Marca que o quarto foi encontrado
+                    quarto_encontrado = 1; 
 
                     if (strcmp(status, "livre") == 0)
                     {
