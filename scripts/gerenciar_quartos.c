@@ -471,7 +471,7 @@ void quartos()
         printf("  |  3 - Editar Quarto          __   __       |\n");
         printf("  |  4 - Excluir de Quarto     |  | |  |      |\n");
         printf("  |  5 - Quantidade de Quarto  |__| |__|      |\n");
-        printf("  |  6 - Sair                                 |\n");
+        printf("  |  6 - Voltar                               |\n");
         printf("  |                                           |\n");
         printf("  =============================================\n");
         printf("-> ");

@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Daniel 07400333364 1234567 8994466610 acaua daniel@gmail.com
+=======
+Daniel 07400333364 3991950 89994444 acaua d@gmail.com
+>>>>>>> 1f28671945103c4184bb6c63f0393f8ae6d0eaec
