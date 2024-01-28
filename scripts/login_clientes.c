@@ -64,7 +64,6 @@ void obter_data_valida(const char *prompt, char *data)
 
 void mostrar_quartos_livres()
 {
-    system("clear || cls");
     printf("=============================================\n");
     printf("|              Quartos Disponiveis          |\n");
     printf("|                                           |\n");
@@ -103,6 +102,7 @@ void mostrar_quartos_livres()
 
 void login_clientes()
 {
+    system("clear || cls");
     printf("=============================================\n");
     printf("|              Realizar Reservaa            |\n");
     printf("|                                           |\n");
