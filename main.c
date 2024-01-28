@@ -12,6 +12,7 @@
 #include "scripts/checkout.c"
 
 
+
 int main(void)
 {
     int opcao_menu1, opcao_menu_hotel, opcao_menu_cliente;
@@ -75,7 +76,7 @@ int main(void)
                 quartos();
                 break;
             case 2:
-                financas();
+                gerenciar_financas();
                 break;
             case 3:
                 printf("=============================================\n");

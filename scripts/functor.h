@@ -11,4 +11,5 @@ void checkin();
 void editar_clientes();
 void excluir_cliente();
 void checkout();
+void gerenciar_financas();
 #endif // FUNCTOR_H
