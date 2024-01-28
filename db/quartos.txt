@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+670 100 simples 20.00 livre
+712 206 duplo 40.00 livre
+751 590 suite 60.00 livre
+797 478 duplo 40.00 reservado
+=======
 405 111 simples 10.00 livre
 448 222 simples 40.00 livre
 480 333 duplo 100.00 livre
+>>>>>>> 1f28671945103c4184bb6c63f0393f8ae6d0eaec
