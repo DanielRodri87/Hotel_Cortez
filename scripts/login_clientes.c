@@ -103,7 +103,6 @@ void mostrar_quartos_livres()
 
 void login_clientes()
 {
-    system("clear || cls");
     printf("=============================================\n");
     printf("|              Realizar Reservaa            |\n");
     printf("|                                           |\n");
