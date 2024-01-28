@@ -1,88 +1,174 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
-#define MAX_RESERVAS 100
+int id, numero, total_dias;
+float valor_total;
+char nome[50], hora_entrada[10], hora_saida[10], data_entrada[20], data_saida[20], status[10];
 
-struct Reserva
+void gerenciar_financas_pagas()
 {
-    int id;
-    char nome[50];
-    int numero;
-    char data_entrada[11];
-    char data_saida[11];
-    int qtd_dias;
-    char hora_entrada[6];
-    char hora_saida[6];
-    char status[10];
-    float valor_pago;
-};
-
-// Função para calcular o lucro total dentro de um intervalo de datas
-float calcular_lucro(struct Reserva reservas[], int num_reservas, const char *data_inicio, const char *data_fim)
-{
-    float lucro_total = 0.0;
-
-    for (int i = 0; i < num_reservas; i++)
-    {
-        if (strcmp(reservas[i].status, "pago") == 0 &&
-            strcmp(reservas[i].data_entrada, data_inicio) >= 0 &&
-            strcmp(reservas[i].data_saida, data_fim) <= 0)
-        {
-            lucro_total += reservas[i].valor_pago;
-        }
-    }
-
-    return lucro_total;
-}
-
-void gerenciar_financas()
-{
-    FILE *arquivo;
-    char linha[200];
-    struct Reserva reservas[MAX_RESERVAS];
-    int num_reservas = 0;
-
-    // Abrir o arquivo de reservas
-    arquivo = fopen("db/datas.txt", "r");
-    if (arquivo == NULL)
-    {
-        printf("Erro ao abrir o arquivo de reservas.\n");
+    FILE *arquivoD = fopen("db/datas.txt", "r");
+    if (arquivoD == NULL) {
+        printf("Erro ao abrir o arquivo de datas para leitura.\n");
+        system("pause");
         return;
     }
 
-    // Ler as reservas do arquivo
-    while (fgets(linha, sizeof(linha), arquivo))
-    {
-        sscanf(linha, "%d %s %d %s %s %d %s %s %s %f",
-               &reservas[num_reservas].id,
-               reservas[num_reservas].nome,
-               &reservas[num_reservas].numero,
-               reservas[num_reservas].data_entrada,
-               reservas[num_reservas].data_saida,
-               &reservas[num_reservas].qtd_dias,
-               reservas[num_reservas].hora_entrada,
-               reservas[num_reservas].hora_saida,
-               reservas[num_reservas].status,
-               &reservas[num_reservas].valor_pago);
+    char data_entrada[20], data_saida[20], status[10];
+    struct tm tm_reserva_entrada, tm_reserva_saida, tm_reserva_entrada_db, tm_reserva_saida_db;
 
-        num_reservas++;
+    float valor_total_intervalo = 0.0;
+
+    printf("Informe a data inicial (formato DD/MM/YYYY): ");
+    scanf("%s", data_entrada);
+    printf("Informe a data final (formato DD/MM/YYYY): ");
+    scanf("%s", data_saida);
+
+    sscanf(data_entrada, "%d/%d/%d", &tm_reserva_entrada.tm_mday, &tm_reserva_entrada.tm_mon, &tm_reserva_entrada.tm_year);
+    sscanf(data_saida, "%d/%d/%d", &tm_reserva_saida.tm_mday, &tm_reserva_saida.tm_mon, &tm_reserva_saida.tm_year);
+
+    tm_reserva_entrada.tm_mon -= 1;
+    tm_reserva_entrada.tm_year -= 1900;
+
+    tm_reserva_saida.tm_mon -= 1;
+    tm_reserva_saida.tm_year -= 1900;
+
+    while (fscanf(arquivoD, "%d %s %d %s %s %d %s %s %s %f\n", &id, nome, &numero, data_entrada, data_saida, &total_dias, hora_entrada, hora_saida, status, &valor_total) != EOF) {
+        sscanf(data_entrada, "%d/%d/%d", &tm_reserva_entrada_db.tm_mday, &tm_reserva_entrada_db.tm_mon, &tm_reserva_entrada_db.tm_year);
+        sscanf(data_saida, "%d/%d/%d", &tm_reserva_saida_db.tm_mday, &tm_reserva_saida_db.tm_mon, &tm_reserva_saida_db.tm_year);
+
+        tm_reserva_entrada_db.tm_mon -= 1;
+        tm_reserva_entrada_db.tm_year -= 1900;
+
+        tm_reserva_saida_db.tm_mon -= 1;
+        tm_reserva_saida_db.tm_year -= 1900;
+
+        if ((tm_reserva_entrada.tm_year < tm_reserva_saida_db.tm_year || (tm_reserva_entrada.tm_year == tm_reserva_saida_db.tm_year && tm_reserva_entrada.tm_mon < tm_reserva_saida_db.tm_mon) ||
+             (tm_reserva_entrada.tm_year == tm_reserva_saida_db.tm_year && tm_reserva_entrada.tm_mon == tm_reserva_saida_db.tm_mon && tm_reserva_entrada.tm_mday <= tm_reserva_saida_db.tm_mday)) &&
+            (tm_reserva_saida.tm_year > tm_reserva_entrada_db.tm_year || (tm_reserva_saida.tm_year == tm_reserva_entrada_db.tm_year && tm_reserva_saida.tm_mon > tm_reserva_entrada_db.tm_mon) ||
+             (tm_reserva_saida.tm_year == tm_reserva_entrada_db.tm_year && tm_reserva_saida.tm_mon == tm_reserva_entrada_db.tm_mon && tm_reserva_saida.tm_mday >= tm_reserva_entrada_db.tm_mday)) &&
+            strcmp(status, "pago") == 0) {
+                valor_total_intervalo += valor_total;
+        }
     }
 
-    fclose(arquivo);
+    fclose(arquivoD);
 
-    // Intervalo de datas fornecido pelo usuário
-    char data_inicio[11];
-    char data_fim[11];
-
-    printf("Informe a data de início (formato DD/MM/YYYY): ");
-    scanf("%s", data_inicio);
-    printf("Informe a data de fim (formato DD/MM/YYYY): ");
-    scanf("%s", data_fim);
-
-    // Calcular o lucro total dentro do intervalo de datas
-    float lucro_total = calcular_lucro(reservas, num_reservas, data_inicio, data_fim);
-
-    printf("O lucro total no período de %s a %s é: R$%.2f\n", data_inicio, data_fim, lucro_total);
+    printf("O valor total das reservas no intervalo e: %.2f\n", valor_total_intervalo);
     system("pause");
+}
+
+void gerenciar_financas_pendentes()
+{
+    FILE *arquivoD = fopen("db/datas.txt", "r");
+    if (arquivoD == NULL) {
+        printf("Erro ao abrir o arquivo de datas para leitura.\n");
+        system("pause");
+        return;
+    }
+
+    char data_entrada[20], data_saida[20], status[10];
+    struct tm tm_reserva_entrada, tm_reserva_saida, tm_reserva_entrada_db, tm_reserva_saida_db;
+
+    float valor_total_intervalo = 0.0;
+
+    printf("Informe a data inicial (formato DD/MM/YYYY): ");
+    scanf("%s", data_entrada);
+    printf("Informe a data final (formato DD/MM/YYYY): ");
+    scanf("%s", data_saida);
+
+    sscanf(data_entrada, "%d/%d/%d", &tm_reserva_entrada.tm_mday, &tm_reserva_entrada.tm_mon, &tm_reserva_entrada.tm_year);
+    sscanf(data_saida, "%d/%d/%d", &tm_reserva_saida.tm_mday, &tm_reserva_saida.tm_mon, &tm_reserva_saida.tm_year);
+
+    tm_reserva_entrada.tm_mon -= 1;
+    tm_reserva_entrada.tm_year -= 1900;
+
+    tm_reserva_saida.tm_mon -= 1;
+    tm_reserva_saida.tm_year -= 1900;
+
+    while (fscanf(arquivoD, "%d %s %d %s %s %d %s %s %s %f\n", &id, nome, &numero, data_entrada, data_saida, &total_dias, hora_entrada, hora_saida, status, &valor_total) != EOF) {
+        sscanf(data_entrada, "%d/%d/%d", &tm_reserva_entrada_db.tm_mday, &tm_reserva_entrada_db.tm_mon, &tm_reserva_entrada_db.tm_year);
+        sscanf(data_saida, "%d/%d/%d", &tm_reserva_saida_db.tm_mday, &tm_reserva_saida_db.tm_mon, &tm_reserva_saida_db.tm_year);
+
+        tm_reserva_entrada_db.tm_mon -= 1;
+        tm_reserva_entrada_db.tm_year -= 1900;
+
+        tm_reserva_saida_db.tm_mon -= 1;
+        tm_reserva_saida_db.tm_year -= 1900;
+
+        if ((tm_reserva_entrada.tm_year < tm_reserva_saida_db.tm_year || (tm_reserva_entrada.tm_year == tm_reserva_saida_db.tm_year && tm_reserva_entrada.tm_mon < tm_reserva_saida_db.tm_mon) ||
+             (tm_reserva_entrada.tm_year == tm_reserva_saida_db.tm_year && tm_reserva_entrada.tm_mon == tm_reserva_saida_db.tm_mon && tm_reserva_entrada.tm_mday <= tm_reserva_saida_db.tm_mday)) &&
+            (tm_reserva_saida.tm_year > tm_reserva_entrada_db.tm_year || (tm_reserva_saida.tm_year == tm_reserva_entrada_db.tm_year && tm_reserva_saida.tm_mon > tm_reserva_entrada_db.tm_mon) ||
+             (tm_reserva_saida.tm_year == tm_reserva_entrada_db.tm_year && tm_reserva_saida.tm_mon == tm_reserva_entrada_db.tm_mon && tm_reserva_saida.tm_mday >= tm_reserva_entrada_db.tm_mday)) &&
+            strcmp(status, "pendente") == 0) {
+                valor_total_intervalo += valor_total;
+        }
+    }
+
+    fclose(arquivoD);
+
+    printf("O valor total das reservas no intervalo e: %.2f\n", valor_total_intervalo);
+    system("pause");
+}
+
+void gerenciar_financas_totais() {
+    FILE *arquivoD = fopen("db/datas.txt", "r");
+    if (arquivoD == NULL) {
+        printf("Erro ao abrir o arquivo de datas para leitura.\n");
+        system("pause");
+        return;
+    }
+
+    float valor_total_todas_reservas = 0.0;
+
+    while (fscanf(arquivoD, "%d %s %d %s %s %d %s %s %s %f\n", &id, nome, &numero, data_entrada, data_saida, &total_dias, hora_entrada, hora_saida, status, &valor_total) != EOF) {
+        valor_total_todas_reservas += valor_total;
+    }
+
+    fclose(arquivoD);
+
+    // Exibe o valor total de todas as reservas
+    printf("O valor total de todas as reservas e: %.2f\n", valor_total_todas_reservas);
+    system("pause");
+}
+
+
+void gerenciar_financas()
+{
+    int opcao;
+
+    do {
+        system("clear || cls");
+        printf("  =============================================\n");
+        printf("  |  Verificar:                               |\n");
+        printf("  |                              __   __      |\n");
+        printf("  |  1 - Lucros recebidos       |  | |  |     |\n");
+        printf("  |  2 - Lucros futuros         |__| |__|     |\n");
+        printf("  |  3 - Lucro total             __   __      |\n");
+        printf("  |  4 - Voltar                 |  | |  |     |\n");
+        printf("  |                                           |\n");
+        printf("  =============================================\n");
+        printf("-> ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                gerenciar_financas_pagas();
+                break;
+            case 2:
+                gerenciar_financas_pendentes();
+                break;
+            case 3:
+                gerenciar_financas_totais();
+                break;
+            case 4:
+                break;
+            default:
+                printf("Opcao invalida!\n");
+                system("pause");
+                break;
+        }
+    } while (opcao != 4);
+
 }
