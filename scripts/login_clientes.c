@@ -162,32 +162,32 @@ void login_clientes()
                         valor_total = total_dias * valor;
 
                         FILE *arquivoQAtualizado = fopen("db/quartos_atualizado.txt", "w");
-                        if (arquivoQAtualizado == NULL)
-                        {
-                            printf("Erro ao abrir o arquivo para escrita.\n");
-                            return;
-                        }
+                if (arquivoQAtualizado == NULL)
+                {
+                    printf("Erro ao abrir o arquivo para escrita.\n");
+                    return;
+                }
 
-                        rewind(arquivoQ);
+                rewind(arquivoQ);
 
-                        while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
-                        {
-                            if (busca_quarto == numero)
-                            {
-                                fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
-                            }
-                            else
-                            {
-                                fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
-                            }
-                        }
+                while (fscanf(arquivoQ, "%d %d %s %f %s\n", &id, &numero, tipo, &valor, status) != EOF)
+                {
+                    if (busca_quarto == numero)
+                    {
+                        fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, "reservado");
+                    }
+                    else
+                    {
+                        fprintf(arquivoQAtualizado, "%d %d %s %.2f %s\n", id, numero, tipo, valor, status);
+                    }
+                }
 
-                        fclose(arquivoQ);
-                        fclose(arquivoQAtualizado);
+                fclose(arquivoQ);
+                fclose(arquivoQAtualizado);
 
-                        remove("db/quartos.txt");
-                        rename("db/quartos_atualizado.txt", "db/quartos.txt");
-
+                remove("db/quartos.txt");
+                rename("db/quartos_atualizado.txt", "db/quartos.txt");
+                
                         fprintf(arquivoD, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "pendente", valor_total);
                     }
                     else if (strcmp(status, "reservado") == 0)
