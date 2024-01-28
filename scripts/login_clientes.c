@@ -64,7 +64,7 @@ void obter_data_valida(const char *prompt, char *data)
 
 void mostrar_quartos_livres()
 {
-    printf("=============================================\n");
+    printf("\n=============================================\n");
     printf("|              Quartos Disponiveis          |\n");
     printf("|                                           |\n");
     printf("|              __   __  __   __   __        |\n");
@@ -144,8 +144,12 @@ void login_clientes()
         if (busca_cpf == cpf)
         {
             system("clear || cls");
-            printf("Bem-vindo(a) %s\n", nome);
-            printf("De acordo com a tabela de quartos disponiveis, escolha o que deseja reservar: ");
+            printf("======================================================\n");
+            printf("|                     Bem-vindo(a) %s                |\n", nome);
+            printf("|   De acordo com a tabela de quartos disponiveis,   |\n");
+            printf("|    digite o numero do quarto que deseja reservar:  |\n");
+            printf("|                                                    |\n");
+            printf("======================================================\n");
             mostrar_quartos_livres();
             scanf("%d", &busca_quarto);
 
@@ -203,6 +207,8 @@ void login_clientes()
 
                         remove("db/quartos.txt");
                         rename("db/quartos_atualizado.txt", "db/quartos.txt");
+                        printf("Reserva cadastrada com sucesso!");
+                        system("pause");
                     }
                     else if (strcmp(status, "reservado") == 0)
                     {
@@ -289,7 +295,7 @@ void login_clientes()
                             }
 
                             id = id + 1;
-                            fprintf(arquivoReserva, "%d %s %d %s %s %d %s %s %s %f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "reservado", valor_total);
+                            fprintf(arquivoReserva, "%d %s %d %s %s %d %s %s %s %.2f\n", id, nome, numero, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, "reservado", valor_total);
 
                             fclose(arquivoReserva);
 
