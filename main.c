@@ -37,7 +37,6 @@ int main(void)
         printf("  |                                            |  \n");
         printf("  ==============================================\n\n");
 
-        system("clear || cls");
         printf("  =============================================\n");
         printf("  |  Escolha uma operacao:                    |\n");
         printf("  |                              __   __      |\n");

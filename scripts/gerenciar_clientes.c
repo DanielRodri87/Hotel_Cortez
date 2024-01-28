@@ -377,7 +377,7 @@ void editar_clientes()
 
             system("clear || cls");
             printf("  =============================================\n");
-            printf("  |  Buscar Por:                              |\n");
+            printf("  |  Editar:                                  |\n");
             printf("  |                              __   __      |\n");
             printf("  |  1 - Nome                   |  | |  |     |\n");
             printf("  |  2 - CPF                    |__| |__|     |\n");
