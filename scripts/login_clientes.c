@@ -64,10 +64,16 @@ void obter_data_valida(const char *prompt, char *data)
 
 void mostrar_quartos_livres()
 {
-    printf("\n=============================================\n");
-    printf("Quartos Disponiveis:\n");
+    system("clear || cls");
     printf("=============================================\n");
-
+    printf("|              Quartos Disponiveis          |\n");
+    printf("|                                           |\n");
+    printf("|              __   __  __   __   __        |\n");
+    printf("|             |  | |  ||  | |  | |  |       |\n");
+    printf("|             |__| |__||__| |__| |__|       |\n");
+    printf("|                                           |\n");
+    printf("|                                           |\n");
+    printf("=============================================\n\n");
     FILE *arquivoQ = fopen("db/quartos.txt", "r");
 
     if (arquivoQ == NULL)
@@ -90,6 +96,7 @@ void mostrar_quartos_livres()
             printf("%-5d %-10d %-15s %.2f\n", id, numero, tipo, valor);
         }
     }
+    printf("=============================================\n");
 
     fclose(arquivoQ);
 }
@@ -97,9 +104,15 @@ void mostrar_quartos_livres()
 void login_clientes()
 {
     system("clear || cls");
-    printf("\n=============================================\n");
-    printf("Login dos Clientes:\n");
     printf("=============================================\n");
+    printf("|              Realizar Reservaa            |\n");
+    printf("|                                           |\n");
+    printf("|            __   __  __   __   __          |\n");
+    printf("|           |  | |  ||  | |  | |  |         |\n");
+    printf("|           |__| |__||__| |__| |__|         |\n");
+    printf("|                                           |\n");
+    printf("|                                           |\n");
+    printf("=============================================\n\n");
 
     char nome[50], email[50];
     int cpf, busca_cpf, rg, telefone;
@@ -131,7 +144,8 @@ void login_clientes()
     {
         if (busca_cpf == cpf)
         {
-            printf("Bem-vindo senhor(a) %s\n", nome);
+            system("clear || cls");
+            printf("Bem-vindo(a) %s\n", nome);
             printf("De acordo com a tabela de quartos disponiveis, escolha o que deseja reservar: ");
             mostrar_quartos_livres();
             scanf("%d", &busca_quarto);
@@ -148,6 +162,7 @@ void login_clientes()
 
                     if (strcmp(status, "livre") == 0)
                     {
+                        system("clear || cls");
                         printf("Quarto reservado com sucesso!\n");
 
                         char data_entrada[20], data_saida[20];
@@ -199,7 +214,8 @@ void login_clientes()
 
                         char data_entrada[20], data_saida[20];
                         int total_dias;
-                        printf("O quarto ja se encontra reservado. Por favor, informe datas diferentes para a reserva.\n");
+                        system("clear || cls");
+                        printf("O quarto ja se encontra reservado.\nPor favor, informe datas diferentes para a reserva.\n");
                         printf("Informe a data de entrada (formato DD/MM/YYYY): ");
                         scanf("%s", data_entrada);
                         printf("Informe a data de saida (formato DD/MM/YYYY): ");
@@ -219,6 +235,7 @@ void login_clientes()
                         if (arquivoD == NULL)
                         {
                             printf("Erro ao abrir o arquivo de datas para leitura.\n");
+                            system("pause");
                             return;
                         }
 
@@ -244,13 +261,17 @@ void login_clientes()
                             (tm_reserva_saida.tm_year > tm_reserva_entrada_db.tm_year || (tm_reserva_saida.tm_year == tm_reserva_entrada_db.tm_year && tm_reserva_saida.tm_mon > tm_reserva_entrada_db.tm_mon) ||
                              (tm_reserva_saida.tm_year == tm_reserva_entrada_db.tm_year && tm_reserva_saida.tm_mon == tm_reserva_entrada_db.tm_mon && tm_reserva_saida.tm_mday >= tm_reserva_entrada_db.tm_mday)))
                         {
+                            system("clear || cls");
                             printf("Erro: O quarto ja se encontra reservado nesse periodo\n");
-                            printf("Aqui esta uma lista de quartos disponiveis para reserva:\n ");
+                            printf("Aqui esta uma lista de quartos disponiveis para reserva:\n");
+                            system("pause");
                             mostrar_quartos_livres();
                             system("pause");
                         }
+
                         else
                         {
+                            system("clear || cls");
                             printf("Quarto reservado com sucesso!\n");
 
                             total_dias = diferenca_dias(data_entrada, data_saida);
@@ -276,6 +297,7 @@ void login_clientes()
                             printf("Reserva realizada com sucesso!\n");
                         }
                     } else {
+                        system("clear || cls");
                         printf("Erro: O quarto ja se encontra ocupado\n");
                         printf("Aqui esta uma lista de quartos disponiveis para reserva:\n ");
                         mostrar_quartos_livres();
@@ -286,7 +308,9 @@ void login_clientes()
 
             if (!quarto_encontrado)
             {
+                printf("=============================\n");
                 printf("Quarto não encontrado!\n");
+                printf("=============================\n");
                 system("pause");
             }
 

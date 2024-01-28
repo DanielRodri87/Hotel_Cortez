@@ -563,12 +563,10 @@ void clientes()
         resultado_consulta = consultar_cliente();
         if (resultado_consulta == 0)
         {
-            printf("Cliente nao encontrado!");
             system("pause");
         }
         else if (resultado_consulta == 1)
         {
-            printf("Cliente encontrado!");
             system("pause");
         }
         break;

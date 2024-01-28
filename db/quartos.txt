@@ -1,3 +1,1 @@
-405 111 simples 10.00 livre
-448 222 simples 40.00 livre
-480 333 duplo 100.00 livre
+228 111 simples 30.00 reservado
