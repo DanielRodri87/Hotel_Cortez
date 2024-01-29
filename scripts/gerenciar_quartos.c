@@ -118,7 +118,7 @@ void cadastrarQuarto()
     }
     else
     {
-        printf("Não e possível cadastrar mais quartos.\n");
+        printf("Não e possivel cadastrar mais quartos.\n");
         system("pause");
     }
 }
@@ -380,8 +380,7 @@ void apagarQuartoPorNumero(const char *arquivo, int numero)
         if (numeroQuarto != numero || strcmp(status, "livre") != 0)
         {
             fprintf(arquivoTemporario, "%d %d %s %.2f %s\n", id, numeroQuarto, tipo, valor, status);
-            printf("Quarto não encontrado ou nao esta livre.\n");
-            system("pause");
+            
         }
     }
 
@@ -405,13 +404,13 @@ void quantidade_quartos()
 {
     system("clear || cls");
     printf("=============================================\n");
-    printf("|       Verificar quartos  Disponíveis      |\n");
+    printf("|       Verificar quartos  Disponiveis      |\n");
     printf("|                                           |\n");
     printf("|            __   __  __   __   __          |\n");
     printf("|           |  | |  ||  | |  | |  |         |\n");
     printf("|           |__| |__||__| |__| |__|         |\n");
     printf("|                                           |\n");
-    printf("|  Descubra se existem quartos disponíveis: |\n");
+    printf("|  Descubra se existem quartos disponiveis: |\n");
     printf("|                                           |\n");
     printf("=============================================\n\n");
 

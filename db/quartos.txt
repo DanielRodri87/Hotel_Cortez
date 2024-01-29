@@ -1,2 +1,2 @@
-84 204 simples 40.00 livre
-234 208 simples 50.00 livre
+795 101 duplo 180.00 livre
+321 102 simples 170.00 livre
