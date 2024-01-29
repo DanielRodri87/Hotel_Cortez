@@ -15,7 +15,7 @@ void cadastrarQuarto()
 {
     int numero, quantidade_livre;
     float valor;
-    char tipo[20], status[20];
+    char tipo[20], status[20] = "livre";
     system("clear || cls");
     printf("=============================================\n");
     printf("|                Cadastro de quartos        |\n");
@@ -78,16 +78,6 @@ void cadastrarQuarto()
                 limparBufferEntrada();
             }
         } while (valor <= 0);
-
-        do
-        {
-            printf("Informe o status do quarto: (livre, ocupado ou reservado) ");
-            if (scanf("%19s", status) != 1)
-            {
-                printf("Por favor, digite um status de quarto válido.\n");
-                limparBufferEntrada();
-            }
-        } while (!(strcmp(status, "livre") == 0 || strcmp(status, "ocupado") == 0 || strcmp(status, "reservado") == 0));
 
         FILE *arquivo = fopen("db/quartos.txt", "a");
 
@@ -371,7 +361,7 @@ void apagarQuartoPorNumero(const char *arquivo, int numero)
     }
 
     char linha[256];
-    int id, numeroQuarto;
+    int id, numeroQuarto, contador = 0;
     char tipo[20], status[20];
     float valor;
 
@@ -380,8 +370,17 @@ void apagarQuartoPorNumero(const char *arquivo, int numero)
         if (numeroQuarto != numero || strcmp(status, "livre") != 0)
         {
             fprintf(arquivoTemporario, "%d %d %s %.2f %s\n", id, numeroQuarto, tipo, valor, status);
+            contador++;
             
         }
+    }
+
+    if (contador == 0)
+    {
+        printf("Quarto apagado com sucesso!\n");
+        return;
+    } else {
+        printf("Nao foi possivel apagar o quarto.\n");
     }
 
     fclose(arquivoOriginal);
@@ -395,7 +394,8 @@ void apagarQuartoPorNumero(const char *arquivo, int numero)
 
     if (rename("temporario.txt", arquivo) != 0)
     {
-        perror("Erro ao renomear o arquivo temporário");
+        perror("Erro ao renomear o arquivo temporario");
+
         exit(EXIT_FAILURE);
     }
 }
@@ -509,7 +509,6 @@ void quartos()
 
             apagarQuartoPorNumero("db/quartos.txt", numeroQuarto);
 
-            printf("Quarto apagado com sucesso.\n");
             system("pause");
 
             break;

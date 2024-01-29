@@ -99,6 +99,7 @@ void checkout()
                     
                     fclose(arquivoD);
                     fclose(arquivoQ);
+                    fclose(arquivoQAtualizado);
                     system("pause");
                 }
                 else
