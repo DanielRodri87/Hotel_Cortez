@@ -1,1 +1,2 @@
-530 204 simples 30.00 ocupado
+84 204 simples 40.00 livre
+234 208 simples 50.00 livre
