@@ -1144,6 +1144,58 @@ void checkin()
                                     return;
                                 }
 
+                                // mudar o status do pagamento para pendente
+                                // id nome numero data_entrada data_saida total_dias hora_entrada hora_saida status_pagamento valor_total
+                                fclose(arquivoD);
+                                fclose(arquivoDAtualizado);
+
+                                FILE *arquivoD = fopen("db/datas.txt", "r");
+                                FILE *arquivoDAtualizado = fopen("db/datas_atualizado.txt", "w");
+
+                                if (arquivoD == NULL || arquivoDAtualizado == NULL)
+                                {
+                                    printf("Erro ao abrir os arquivos de datas.\n");
+                                    fclose(arquivoC);
+                                    return;
+                                }
+
+                                int id_d, numero_d;
+                                char nome_cliente[100], data_entrada[11], data_saida[11], hora_entrada[6], hora_saida[6], status_pagamento[20];
+                                int total_dias;
+                                float valor_total_d;
+
+                                while (fscanf(arquivoD, "%d %s %d %s %s %d %s %s %s %f\n", &id_d, nome_cliente, &numero_d, data_entrada, data_saida, &total_dias, hora_entrada, hora_saida, status_pagamento, &valor_total_d) != EOF)
+                                {
+                                    if (id_d == busca_id)
+                                    {
+                                        fprintf(arquivoDAtualizado, "%d %s %d %s %s %d %s %s pendente %.2f\n", id_d, nome_cliente, numero_d, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, valor_total_d);
+                                    }
+                                    else
+                                    {
+                                        fprintf(arquivoDAtualizado, "%d %s %d %s %s %d %s %s %s %.2f\n", id_d, nome_cliente, numero_d, data_entrada, data_saida, total_dias, hora_entrada, hora_saida, status_pagamento, valor_total_d);
+                                    }
+                                }
+
+                                fclose(arquivoD);
+                                fclose(arquivoDAtualizado);
+
+
+                                if (remove("db/datas.txt") != 0)
+                                {
+                                    printf("Erro ao excluir o arquivo datas.txt\n");
+                                    system("pause");
+                                    return;
+                                }
+
+                                if (rename("db/datas_atualizado.txt", "db/datas.txt") != 0)
+                                {
+                                    printf("Erro ao renomear o arquivo datas_atualizado.txt\n");
+                                    system("pause");
+                                    return;
+                                }
+
+                                printf("Check-in realizado com sucesso!\n");
+                                system("pause");
                             }
                             fclose(arquivoD);
                             fclose(arquivoDAtualizado);

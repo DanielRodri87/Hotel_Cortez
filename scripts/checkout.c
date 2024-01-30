@@ -56,6 +56,16 @@ void checkout()
                 printf("Valor total: %.2f\n", valor_total);
                 system("pause");
 
+                // se status for "reservado", nao pode fazer check-out
+                if (strcmp(status_pagamento, "reservado") == 0)
+                {
+                    printf("O check-out so pode ser realizado apos o Check-In!\n");
+                    system("pause");
+                    fclose(arquivoD);
+                    fclose(arquivoQ);
+                    return;
+                }
+
                 if (strcmp(status_pagamento, "pago") == 0)
                 {
                     printf("Check-Out realizado com sucesso!\n");
@@ -89,6 +99,7 @@ void checkout()
                     
                     fclose(arquivoD);
                     fclose(arquivoQ);
+                    fclose(arquivoQAtualizado);
                     system("pause");
                 }
                 else

@@ -15,7 +15,7 @@ void cadastrarQuarto()
 {
     int numero, quantidade_livre;
     float valor;
-    char tipo[20], status[20];
+    char tipo[20], status[20] = "livre";
     system("clear || cls");
     printf("=============================================\n");
     printf("|                Cadastro de quartos        |\n");
@@ -79,16 +79,6 @@ void cadastrarQuarto()
             }
         } while (valor <= 0);
 
-        do
-        {
-            printf("Informe o status do quarto: (livre, ocupado ou reservado) ");
-            if (scanf("%19s", status) != 1)
-            {
-                printf("Por favor, digite um status de quarto válido.\n");
-                limparBufferEntrada();
-            }
-        } while (!(strcmp(status, "livre") == 0 || strcmp(status, "ocupado") == 0 || strcmp(status, "reservado") == 0));
-
         FILE *arquivo = fopen("db/quartos.txt", "a");
 
         if (arquivo == NULL)
@@ -118,7 +108,7 @@ void cadastrarQuarto()
     }
     else
     {
-        printf("Não e possível cadastrar mais quartos.\n");
+        printf("Não e possivel cadastrar mais quartos.\n");
         system("pause");
     }
 }
@@ -275,7 +265,7 @@ void editar_quartos()
     printf("|            |  | |  ||  | |  | |  |        |\n");
     printf("|            |__| |__||__| |__| |__|        |\n");
     printf("|                                           |\n");
-    printf("|       Edite os dados à sua escolha:       |\n");
+    printf("|       Edite os dados a sua escolha:       |\n");
     printf("|                                           |\n");
     printf("=============================================\n\n");
 
@@ -371,7 +361,7 @@ void apagarQuartoPorNumero(const char *arquivo, int numero)
     }
 
     char linha[256];
-    int id, numeroQuarto;
+    int id, numeroQuarto, contador = 0;
     char tipo[20], status[20];
     float valor;
 
@@ -380,9 +370,17 @@ void apagarQuartoPorNumero(const char *arquivo, int numero)
         if (numeroQuarto != numero || strcmp(status, "livre") != 0)
         {
             fprintf(arquivoTemporario, "%d %d %s %.2f %s\n", id, numeroQuarto, tipo, valor, status);
-            printf("Quarto não encontrado ou nao esta livre.\n");
-            system("pause");
+            contador++;
+            
         }
+    }
+
+    if (contador == 0)
+    {
+        printf("Nao foi possivel apagar o quarto.\n");
+        return;
+    } else {
+        printf("Quarto apagado com sucesso!\n");
     }
 
     fclose(arquivoOriginal);
@@ -396,7 +394,8 @@ void apagarQuartoPorNumero(const char *arquivo, int numero)
 
     if (rename("temporario.txt", arquivo) != 0)
     {
-        perror("Erro ao renomear o arquivo temporário");
+        perror("Erro ao renomear o arquivo temporario");
+
         exit(EXIT_FAILURE);
     }
 }
@@ -405,13 +404,13 @@ void quantidade_quartos()
 {
     system("clear || cls");
     printf("=============================================\n");
-    printf("|       Verificar quartos  Disponíveis      |\n");
+    printf("|       Verificar quartos  Disponiveis      |\n");
     printf("|                                           |\n");
     printf("|            __   __  __   __   __          |\n");
     printf("|           |  | |  ||  | |  | |  |         |\n");
     printf("|           |__| |__||__| |__| |__|         |\n");
     printf("|                                           |\n");
-    printf("|  Descubra se existem quartos disponíveis: |\n");
+    printf("|  Descubra se existem quartos disponiveis: |\n");
     printf("|                                           |\n");
     printf("=============================================\n\n");
 
@@ -510,7 +509,6 @@ void quartos()
 
             apagarQuartoPorNumero("db/quartos.txt", numeroQuarto);
 
-            printf("Quarto apagado com sucesso.\n");
             system("pause");
 
             break;

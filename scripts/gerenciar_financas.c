@@ -142,10 +142,10 @@ void gerenciar_financas()
         system("clear || cls");
         printf("  =============================================\n");
         printf("  |  Verificar:                               |\n");
-        printf("  |                              _   _      |\n");
+        printf("  |                              __   __      |\n");
         printf("  |  1 - Lucros recebidos       |  | |  |     |\n");
-        printf("  |  2 - Lucros futuros         |_| |_|     |\n");
-        printf("  |  3 - Lucro total             _   _      |\n");
+        printf("  |  2 - Lucros futuros         |__| |__|     |\n");
+        printf("  |  3 - Lucro total             _    _        |\n");
         printf("  |  4 - Voltar                 |  | |  |     |\n");
         printf("  |                                           |\n");
         printf("  =============================================\n");
