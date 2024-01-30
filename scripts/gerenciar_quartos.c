@@ -265,7 +265,7 @@ void editar_quartos()
     printf("|            |  | |  ||  | |  | |  |        |\n");
     printf("|            |__| |__||__| |__| |__|        |\n");
     printf("|                                           |\n");
-    printf("|       Edite os dados à sua escolha:       |\n");
+    printf("|       Edite os dados a sua escolha:       |\n");
     printf("|                                           |\n");
     printf("=============================================\n\n");
 
@@ -377,10 +377,10 @@ void apagarQuartoPorNumero(const char *arquivo, int numero)
 
     if (contador == 0)
     {
-        printf("Quarto apagado com sucesso!\n");
+        printf("Nao foi possivel apagar o quarto.\n");
         return;
     } else {
-        printf("Nao foi possivel apagar o quarto.\n");
+        printf("Quarto apagado com sucesso!\n");
     }
 
     fclose(arquivoOriginal);

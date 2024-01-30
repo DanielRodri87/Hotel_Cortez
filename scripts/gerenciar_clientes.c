@@ -347,6 +347,7 @@ void editar_clientes()
     printf("|                                           |\n");
     printf("|                                           |\n");
     printf("=============================================\n\n");
+
     FILE *arquivo, *temporario;
 
     char nome[50], consulta_nome[50], email[50], consulta_email[50];
@@ -358,6 +359,8 @@ void editar_clientes()
     if (arquivo == NULL)
     {
         printf("Erro ao abrir o arquivo para leitura.\n");
+        fclose(arquivo);
+        fclose(temporario);
         system("pause");
         return;
     }
@@ -367,6 +370,8 @@ void editar_clientes()
     if (temporario == NULL)
     {
         printf("Erro ao criar o arquivo temporario.\n");
+        fclose(arquivo);
+        fclose(temporario);
         fclose(arquivo);
         return;
     }
@@ -438,11 +443,15 @@ void editar_clientes()
     if (!encontrado)
     {
         printf("Cliente nao encontrado.\n");
+        fclose(arquivo);
+        fclose(temporario);
         remove("db/temporario.txt");
         system("pause");
     }
     else
     {
+        fclose(arquivo);
+        fclose(temporario);
         remove("db/clientes.txt");
         rename("db/temporario.txt", "db/clientes.txt");
         printf("Cliente editado com sucesso!\n");
