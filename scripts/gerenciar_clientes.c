@@ -543,7 +543,7 @@ void excluir_cliente()
     {
         remove("db/clientes.txt");
         rename("db/temporario.txt", "db/clientes.txt");
-        printf("\nCliente excluído com sucesso!\n");
+        printf("\nCliente excluido com sucesso!\n");
     }
     else
     {

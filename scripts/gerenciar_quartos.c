@@ -53,7 +53,7 @@ void cadastrarQuarto()
             printf("Informe o numero do quarto: ");
             if (scanf("%d", &numero) != 1 || numero <= 0)
             {
-                printf("Por favor, digite um numero de quarto válido.\n");
+                printf("Por favor, digite um numero de quarto valido.\n");
                 limparBufferEntrada();
             }
 
@@ -64,7 +64,7 @@ void cadastrarQuarto()
             printf("Informe o tipo do quarto: (simples, duplo ou suite) ");
             if (scanf("%19s", tipo) != 1)
             {
-                printf("Por favor, digite um tipo de quarto válido.\n");
+                printf("Por favor, digite um tipo de quarto valido.\n");
                 limparBufferEntrada();
             }
         } while (!(strcmp(tipo, "simples") == 0 || strcmp(tipo, "duplo") == 0 || strcmp(tipo, "suite") == 0));
@@ -74,7 +74,7 @@ void cadastrarQuarto()
             printf("Informe o valor da diaria do quarto: ");
             if (scanf("%f", &valor) != 1 || valor <= 0)
             {
-                printf("Por favor, digite um valor de diária válido.\n");
+                printf("Por favor, digite um valor de diaria valido.\n");
                 limparBufferEntrada();
             }
         } while (valor <= 0);
@@ -108,7 +108,7 @@ void cadastrarQuarto()
     }
     else
     {
-        printf("Não e possivel cadastrar mais quartos.\n");
+        printf("Nao e possivel cadastrar mais quartos.\n");
         system("pause");
     }
 }
@@ -291,7 +291,7 @@ void editar_quartos()
 
     if (temporario == NULL)
     {
-        printf("Erro ao criar o arquivo temporário.\n");
+        printf("Erro ao criar o arquivo temporario.\n");
         fclose(arquivo);
         return;
     }
@@ -322,7 +322,7 @@ void editar_quartos()
                 scanf("%s", tipo);
                 break;
             case 2:
-                printf("Informe o novo valor da diária do quarto: ");
+                printf("Informe o novo valor da diaria do quarto: ");
                 scanf("%f", &valor);
                 break;
                 break;

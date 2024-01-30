@@ -207,7 +207,7 @@ void login_clientes()
 
                         remove("db/quartos.txt");
                         rename("db/quartos_atualizado.txt", "db/quartos.txt");
-                        printf("Reserva cadastrada com sucesso!");
+                        printf("Reserva cadastrada com sucesso!\n");
                         system("pause");
                     }
                     else if (strcmp(status, "reservado") == 0)
@@ -313,7 +313,7 @@ void login_clientes()
             if (!quarto_encontrado)
             {
                 printf("=============================\n");
-                printf("Quarto não encontrado!\n");
+                printf("Quarto nao encontrado!\n");
                 printf("=============================\n");
                 system("pause");
             }
